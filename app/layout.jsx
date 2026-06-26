@@ -1,0 +1,70 @@
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { SiteNav } from "@/components/site-nav";
+import { PageTransition } from "@/components/page-transition";
+import { LogoMark } from "@/components/brand";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"]
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"]
+});
+
+export const metadata = {
+  title: {
+    default: "Souvik Skills",
+    template: "%s | Souvik Skills"
+  },
+  description: "Marketplace-ready agent skills by Souvik Dey.",
+  metadataBase: new URL("https://github.com/imsovikde/souvik-skills"),
+  icons: {
+    icon: "/icon.svg"
+  }
+};
+
+const themeScript = `
+(() => {
+  try {
+    const stored = localStorage.getItem("souvik-skills-theme");
+    const theme = stored === "dark" || stored === "light"
+      ? stored
+      : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.dataset.theme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "light";
+  }
+})();
+`;
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <SiteNav />
+        <PageTransition>{children}</PageTransition>
+        <footer className="section" style={{ background: "var(--panel)", color: "var(--panel-muted)" }}>
+          <div className="container" style={{ display: "grid", gap: 22 }}>
+            <LogoMark />
+            <p style={{ maxWidth: 620 }}>
+              Souvik Skills is a public skill marketplace for reusable agent workflows, maintained by Souvik Dey and
+              distributed through GitHub and NPM.
+            </p>
+            <div className="button-row">
+              <a className="button dark" href="https://github.com/imsovikde/souvik-skills" target="_blank" rel="noreferrer">
+                GitHub repository
+              </a>
+              <a className="button dark" href="https://www.npmjs.com/package/@imsovikde/skills" target="_blank" rel="noreferrer">
+                NPM package
+              </a>
+            </div>
+          </div>
+        </footer>
+      </body>
+    </html>
+  );
+}
