@@ -1,0 +1,66 @@
+{
+  "name": "@imsovikde/skills",
+  "version": "0.1.0",
+  "description": "Souvik Dey's marketplace-ready AI agent skill directory.",
+  "license": "MIT",
+  "author": "Souvik Dey <https://github.com/imsovikde>",
+  "homepage": "https://github.com/imsovikde/souvik-skills#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imsovikde/souvik-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/imsovikde/souvik-skills/issues"
+  },
+  "keywords": [
+    "codex",
+    "skills",
+    "ai-agents",
+    "github",
+    "git",
+    "repository-cleanup",
+    "motion",
+    "magento",
+    "adobe-commerce",
+    "ecommerce"
+  ],
+  "type": "module",
+  "bin": {
+    "souvik-skills": "./bin/souvik-skills.cjs"
+  },
+  "files": [
+    "AGENTS.md",
+    "NAMING.md",
+    "README.md",
+    "LICENSE",
+    "guidance.md",
+    "bin/souvik-skills.cjs",
+    "scripts/validate-skills.cjs",
+    "skills/*/SKILL.md",
+    "skills/*/agents/openai.yaml",
+    "skills/*/scripts/*",
+    "skills/*/references/*.md"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "serve out",
+    "list": "node bin/souvik-skills.cjs list",
+    "validate:skills": "node scripts/validate-skills.cjs",
+    "test": "npm run validate:skills"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "devDependencies": {
+    "lucide-react": "^1.21.0",
+    "motion": "^12.42.0",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "serve": "^14.2.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
