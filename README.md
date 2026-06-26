@@ -8,6 +8,8 @@ Souvik Skills is the public skill directory for reusable developer and research 
 
 The repository includes a Vercel-ready and Cloudflare Pages-ready static Next.js marketplace:
 
+- Vercel: [souvik-skills.vercel.app](https://souvik-skills.vercel.app)
+- Cloudflare Pages: [souvik-skills.pages.dev](https://souvik-skills.pages.dev)
 - `/` - product homepage
 - `/skills` - searchable skill marketplace
 - `/skills/<skill-name>` - independent page for every skill folder

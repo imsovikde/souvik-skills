@@ -4,7 +4,7 @@
   "description": "Souvik Dey's marketplace-ready AI agent skill directory.",
   "license": "MIT",
   "author": "Souvik Dey <https://github.com/imsovikde>",
-  "homepage": "https://github.com/imsovikde/souvik-skills#readme",
+  "homepage": "https://souvik-skills.vercel.app",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imsovikde/souvik-skills.git"

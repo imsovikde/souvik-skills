@@ -2,6 +2,11 @@
 
 Souvik Skills is a static Next.js App Router site. `next.config.mjs` uses `output: "export"`, so `npm run build` creates the deployable `out/` directory.
 
+Production deployments:
+
+- Vercel: <https://souvik-skills.vercel.app>
+- Cloudflare Pages: <https://souvik-skills.pages.dev>
+
 ## Required checks
 
 Run these before deploying:
