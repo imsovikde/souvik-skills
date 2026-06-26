@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+    open-pull-requests-limit: 10
+    groups:
+      next-stack:
+        patterns:
+          - next
+          - react
+          - react-dom
+      motion-ui:
+        patterns:
+          - motion
+          - lucide-react
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:30"
