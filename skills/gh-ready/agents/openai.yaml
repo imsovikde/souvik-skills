@@ -1,0 +1,4 @@
+interface:
+  display_name: "GH Ready"
+  short_description: "Prepare repositories for public release"
+  default_prompt: "Use $gh-ready to make this repository professional, trustworthy, and release-ready."

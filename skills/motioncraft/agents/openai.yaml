@@ -1,0 +1,4 @@
+interface:
+  display_name: "Motioncraft"
+  short_description: "Premium UI motion systems and interactions"
+  default_prompt: "Use $motioncraft to add premium, accessible, high-performance motion to this interface."

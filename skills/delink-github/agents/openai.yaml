@@ -1,0 +1,4 @@
+interface:
+  display_name: "Delink GitHub"
+  short_description: "Reset Git history and GitHub linkage"
+  default_prompt: "Use $delink-github to safely detach this repository from GitHub and start a clean local Git history."

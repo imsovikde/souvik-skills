@@ -1,0 +1,4 @@
+interface:
+  display_name: "Magento Team Lead"
+  short_description: "Lead Magento delivery and reviews."
+  default_prompt: "Use $magento-team-lead to lead Magento or Adobe Commerce architecture, delivery planning, reviews, debugging, and release readiness."
