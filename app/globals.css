@@ -531,6 +531,22 @@ html.theme-reveal-running::view-transition-new(root) {
   font-weight: 850;
 }
 
+.stat-link {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, var(--coral) 54%, transparent);
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition:
+    color var(--motion-hover) var(--ease-standard),
+    text-decoration-color var(--motion-hover) var(--ease-standard);
+}
+
+.stat-link:hover {
+  color: var(--coral-strong);
+  text-decoration-color: currentColor;
+}
+
 .mac-card {
   position: relative;
   min-width: 0;
@@ -581,6 +597,18 @@ html.theme-reveal-running::view-transition-new(root) {
   color: var(--panel-muted);
   font-family: var(--font-mono);
   font-size: 0.76rem;
+}
+
+.mac-title-link {
+  border-radius: 999px;
+  transition:
+    color var(--motion-hover) var(--ease-standard),
+    opacity var(--motion-hover) var(--ease-standard);
+}
+
+.mac-title-link:hover {
+  color: var(--panel-text);
+  opacity: 0.92;
 }
 
 .terminal-preview {

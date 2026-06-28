@@ -40,7 +40,7 @@ Use this file before changing the Souvik Skills website, marketplace cards, skil
 
 ## Brand Mark
 
-- Use the current interlocking Souvik Skills glyph in `app/icon.svg` and `components/brand.jsx`.
+- Use the current interlocking Souvik Skills glyph in `components/brand.jsx`, `app/icon.svg`, `app/favicon.ico`, and generated touch icons.
 - Logo SVGs must be self-contained, flat-fill, legible at favicon size, and readable on light/dark surfaces.
 - Do not use the rejected blocky prototype logo.
 

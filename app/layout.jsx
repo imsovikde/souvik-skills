@@ -3,6 +3,7 @@ import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
 import { PageTransition } from "@/components/page-transition";
 import { LogoMark } from "@/components/brand";
+import { githubUrl, npmUrl, siteUrl } from "@/lib/agents";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,10 +21,15 @@ export const metadata = {
     template: "%s | Souvik Skills"
   },
   description: "Marketplace-ready agent skills by Souvik Dey.",
-  metadataBase: new URL("https://github.com/imsovikde/souvik-skills"),
+  metadataBase: new URL(siteUrl),
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    shortcut: "/icon.svg"
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }]
   }
 };
 
@@ -63,10 +69,10 @@ export default function RootLayout({ children }) {
               distributed through GitHub and NPM.
             </p>
             <div className="button-row">
-              <a className="button dark" href="https://github.com/imsovikde/souvik-skills" target="_blank" rel="noreferrer">
+              <a className="button dark" href={githubUrl} target="_blank" rel="noreferrer">
                 GitHub repository
               </a>
-              <a className="button dark" href="https://www.npmjs.com/package/@imsovikde/skills" target="_blank" rel="noreferrer">
+              <a className="button dark" href={npmUrl} target="_blank" rel="noreferrer">
                 NPM package
               </a>
             </div>

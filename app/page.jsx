@@ -4,11 +4,12 @@ import { CopyButton } from "@/components/copy-button";
 import { InstallCard } from "@/components/install-card";
 import { SkillCard } from "@/components/skill-card";
 import { getSkills } from "@/lib/skills";
-import { npmPackage, repositorySource } from "@/lib/agents";
+import { githubUrl, npmPackage, npmUrl, repositorySource, siteUrl } from "@/lib/agents";
 
 export default function HomePage() {
   const skills = getSkills();
   const featured = skills.slice(0, 3);
+  const siteHost = new URL(siteUrl).hostname;
 
   return (
     <div id="content">
@@ -37,11 +38,19 @@ export default function HomePage() {
               </div>
               <div className="stat">
                 <dt>Package</dt>
-                <dd>{npmPackage}</dd>
+                <dd>
+                  <a className="stat-link" href={npmUrl} target="_blank" rel="noreferrer">
+                    {npmPackage}
+                  </a>
+                </dd>
               </div>
               <div className="stat">
                 <dt>Repository</dt>
-                <dd>{repositorySource}</dd>
+                <dd>
+                  <a className="stat-link" href={githubUrl} target="_blank" rel="noreferrer">
+                    {repositorySource}
+                  </a>
+                </dd>
               </div>
               <div className="stat">
                 <dt>License</dt>
@@ -55,7 +64,9 @@ export default function HomePage() {
               <span className="traffic red" />
               <span className="traffic amber" />
               <span className="traffic green" />
-              <span className="mac-title">souvik-skills.app</span>
+              <a className="mac-title mac-title-link" href={siteUrl} target="_blank" rel="noreferrer">
+                {siteHost}
+              </a>
             </div>
             <div className="terminal-preview">
               <div className="terminal-line">
