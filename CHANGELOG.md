@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.1.3](https://github.com/imsovikde/souvik-skills/compare/v0.1.2...v0.1.3) (2026-06-28)
+
+
+### Bug Fixes
+
+* support npm token publish fallback ([f1d184f](https://github.com/imsovikde/souvik-skills/commit/f1d184fac04640f29364eecf04d3e48541688159))
+
 ## 0.1.2 - 2026-06-28
 
 - Upgraded `gh-ready` into a professional repository launch protocol covering SEO/AEO/GEO discoverability, package metadata, badges, releases, GitHub settings, provenance, and AI-agent readiness.
