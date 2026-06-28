@@ -40,7 +40,7 @@ Use this file before changing the Souvik Skills website, marketplace cards, skil
 
 ## Brand Mark
 
-- Use the clean terminal-window S glyph: dark rounded square, cream S, coral bracket rails.
+- Use the current interlocking Souvik Skills glyph in `app/icon.svg` and `components/brand.jsx`.
 - Logo SVGs must be self-contained, flat-fill, legible at favicon size, and readable on light/dark surfaces.
 - Do not use the rejected blocky prototype logo.
 

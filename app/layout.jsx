@@ -22,7 +22,8 @@ export const metadata = {
   description: "Marketplace-ready agent skills by Souvik Dey.",
   metadataBase: new URL("https://github.com/imsovikde/souvik-skills"),
   icons: {
-    icon: "/icon.svg"
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg"
   }
 };
 
@@ -33,16 +34,23 @@ const themeScript = `
     const theme = stored === "dark" || stored === "light"
       ? stored
       : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    document.documentElement.dataset.theme = theme;
+    const root = document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
   } catch {
-    document.documentElement.dataset.theme = "light";
+    const root = document.documentElement;
+    root.classList.add("light");
+    root.dataset.theme = "light";
+    root.style.colorScheme = "light";
   }
 })();
 `;
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} light`} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <SiteNav />

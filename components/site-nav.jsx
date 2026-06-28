@@ -1,10 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import { GitHubIcon, LogoMark } from "./brand";
 import { ThemeToggle } from "./theme-toggle";
 import { githubUrl } from "@/lib/agents";
@@ -19,36 +17,52 @@ const links = [
 
 export function SiteNav() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-  const menuButtonRef = useRef(null);
+  const { scrollY } = useScroll();
+  const rawProgress = useTransform(scrollY, [0, 128], [0, 1], { clamp: true });
+  const headerProgress = useSpring(rawProgress, {
+    stiffness: 420,
+    damping: 42,
+    mass: 0.7
+  });
+  const headerWidth = useTransform(headerProgress, [0, 1], ["1200px", "860px"]);
+  const headerMinHeight = useTransform(headerProgress, [0, 1], ["76px", "68px"]);
+  const headerRadius = useTransform(headerProgress, [0, 1], ["22px", "999px"]);
+  const headerPaddingY = useTransform(headerProgress, [0, 1], ["12px", "9px"]);
+  const headerPaddingX = useTransform(headerProgress, [0, 1], ["15px", "13px"]);
+  const headerShadowY = useTransform(headerProgress, [0, 1], ["0px", "16px"]);
+  const headerShadowBlur = useTransform(headerProgress, [0, 1], ["0px", "44px"]);
+  const headerShadowAlpha = useTransform(headerProgress, [0, 1], [0, 0.14]);
+  const mobileGutter = useTransform(headerProgress, [0, 1], ["32px", "20px"]);
+  const mobileRadius = useTransform(headerProgress, [0, 1], ["18px", "26px"]);
+  const mobilePaddingY = useTransform(headerProgress, [0, 1], ["10px", "9px"]);
+  const mobilePaddingX = useTransform(headerProgress, [0, 1], ["10px", "9px"]);
 
   const isActive = (href) => (href === "/" ? pathname === href : pathname.startsWith(href));
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    function handleKeyDown(event) {
-      if (event.key === "Escape") {
-        setOpen(false);
-        menuButtonRef.current?.focus();
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open]);
 
   return (
     <header className="site-header">
       <a className="skip-link" href="#content">
         Skip to content
       </a>
-      <nav className="nav container" aria-label="Primary navigation">
-        <Link className="brand" href="/" onClick={() => setOpen(false)}>
+      <motion.nav
+        className="nav-shell"
+        aria-label="Primary navigation"
+        style={{
+          "--header-width": headerWidth,
+          "--header-min-height": headerMinHeight,
+          "--header-radius": headerRadius,
+          "--header-padding-y": headerPaddingY,
+          "--header-padding-x": headerPaddingX,
+          "--header-shadow-y": headerShadowY,
+          "--header-shadow-blur": headerShadowBlur,
+          "--header-shadow-alpha": headerShadowAlpha,
+          "--header-mobile-gutter": mobileGutter,
+          "--header-mobile-radius": mobileRadius,
+          "--header-mobile-padding-y": mobilePaddingY,
+          "--header-mobile-padding-x": mobilePaddingX
+        }}
+      >
+        <Link className="brand" href="/">
           <LogoMark />
           <span className="brand-word">Souvik Skills</span>
         </Link>
@@ -63,45 +77,12 @@ export function SiteNav() {
             <GitHubIcon />
             GitHub
           </a>
-          <ThemeToggle />
         </div>
 
-        <div className="nav-controls">
+        <div className="nav-theme">
           <ThemeToggle />
-          <button
-            ref={menuButtonRef}
-            className="menu-button"
-            type="button"
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
-            <span className="sr-only">Toggle navigation</span>
-          </button>
         </div>
-      </nav>
-
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-navigation"
-            className="mobile-panel"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-          >
-            {links.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
-                {link.label}
-              </Link>
-            ))}
-            <a href={githubUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
-              GitHub
-            </a>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      </motion.nav>
     </header>
   );
 }
