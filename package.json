@@ -1,6 +1,6 @@
 {
   "name": "@imsovikde/skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Souvik Dey's marketplace-ready AI agent skill directory.",
   "license": "MIT",
   "author": "Souvik Dey <https://github.com/imsovikde>",
@@ -16,6 +16,10 @@
     "codex",
     "skills",
     "ai-agents",
+    "github-readiness",
+    "repository-readiness",
+    "release-automation",
+    "seo",
     "github",
     "git",
     "repository-cleanup",
@@ -38,6 +42,7 @@
     "scripts/validate-skills.cjs",
     "skills/*/SKILL.md",
     "skills/*/agents/openai.yaml",
+    "skills/*/assets/**",
     "skills/*/scripts/*",
     "skills/*/references/*.md"
   ],
@@ -46,6 +51,7 @@
     "build": "next build",
     "start": "serve out",
     "list": "node bin/souvik-skills.cjs list",
+    "audit:gh-ready": "node skills/gh-ready/scripts/audit-gh-ready.cjs .",
     "validate:skills": "node scripts/validate-skills.cjs",
     "test": "npm run validate:skills"
   },

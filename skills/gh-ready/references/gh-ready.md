@@ -1,234 +1,324 @@
 # GH Ready Reference
 
-Production Standard for Professional GitHub Repositories
+Professional Repository Launch Standard
 
 ## Purpose
 
-A professional GitHub repository should make the project easy to understand, safe to evaluate, reliable to run, and trustworthy to contribute to. It should also make maintainership visible: tests pass, releases are explainable, security reporting is clear, and users know what to do next.
+Use this reference when preparing a repository for public GitHub release, open-source contribution, npm or package distribution, client delivery, hiring showcase, product launch, or internal handoff.
 
-This standard is for AI coding agents preparing repositories for public release, open source, client delivery, hiring showcase, product launch, package distribution, or team handoff.
+A finished repository should be:
+
+- understandable in under 30 seconds
+- runnable from copyable commands
+- discoverable by GitHub search, package registries, search engines, and AI answer engines
+- trustworthy through license, security, CI, releases, and provenance
+- maintainable by humans and AI coding agents
 
 ## Research Basis
 
-This standard synthesizes:
+This standard follows current public guidance from GitHub repository best practices, community health files, security features, protected branches, GitHub Actions package publishing, Google Search Central SEO basics, npm trusted publishing and provenance, Shields badge conventions, and Release Please release automation.
 
-- GitHub repository best practices and community profile guidance.
-- GitHub community health files: README, license, code of conduct, contributing guidelines, security policy, issue templates, and pull request templates.
-- GitHub protected branch and ruleset guidance: required reviews, status checks, conversation resolution, signed commits, linear history, and merge queues.
-- GitHub security features: Dependabot, code scanning, dependency review, secret scanning, and push protection.
-- Common release engineering practices: semantic versions, changelogs, signed/provenance-aware releases, CI verification, and package metadata.
-- Practical repository polish used by high-trust open-source and commercial projects.
+## 50-Point Readiness Score
 
-## Professional Repo Goals
+Score each category from 0 to 5.
 
-1. Identity: visitors understand the project in under 30 seconds.
-2. Usability: users can install, run, test, and troubleshoot without guessing.
-3. Trust: license, security policy, CI, tests, and release process are visible.
-4. Contribution: issues, PRs, code owners, and contribution rules are clear.
-5. Maintainability: repo structure, docs, automation, and versioning can scale.
-6. Safety: secrets, private traces, stale branding, and accidental artifacts are absent.
-7. AI readiness: agents can understand rules, commands, architecture, and review expectations.
-
-## Quick Scoring Rubric
-
-Score each category from 0 to 5:
-
-- Identity and README
-- Install and usage docs
-- Architecture and API docs
-- Tests and quality gates
-- CI and branch protection
-- Security posture
-- Community health files
-- Release process
-- Repo hygiene
-- AI/developer guidance
+1. Identity and positioning
+2. README as product page
+3. SEO, AEO, GEO, topics, and package keywords
+4. Install, quick start, examples, and troubleshooting
+5. Package metadata and package dry-run quality
+6. CI, tests, lint, typecheck, and build verification
+7. Security posture and secret hygiene
+8. Community health files and contribution workflow
+9. Release process, changelog, tags, and GitHub Releases
+10. Docs, examples, and AI-agent readiness
 
 Interpretation:
 
-- 45-50: professional and release-ready.
-- 35-44: credible, with polish gaps.
-- 25-34: usable but not fully professional.
-- 0-24: not ready for public release or serious handoff.
+- 45-50: professional and release-ready
+- 35-44: credible, with polish gaps
+- 25-34: usable, but not fully professional
+- 0-24: not ready for public release or serious handoff
 
-## Repository Identity
+## Operating Protocol
 
-Required:
+1. Inspect before editing:
+   - `git status --short`
+   - repo tree
+   - README, license, changelog, package manifests
+   - tests, scripts, CI workflows, docs, examples
+   - `.github/` community and security files
+   - package registry state when a package exists
+2. Classify the repository:
+   - library/package
+   - app/site
+   - CLI/tool
+   - template/starter
+   - skill/agent workflow
+   - internal handoff
+3. Identify the audience:
+   - end users
+   - contributors
+   - package consumers
+   - recruiters/hiring reviewers
+   - enterprise/security reviewers
+   - client stakeholders
+   - AI coding agents
+4. Produce a short gap report.
+5. Make scoped file changes.
+6. Verify with real commands.
+7. Report manual GitHub settings and release steps.
 
-- Clear repository name.
-- Concise description in GitHub settings.
-- Relevant topics/tags.
-- Social preview image for product-facing repos.
-- `README.md` with a direct explanation of the project.
-- `LICENSE` unless the project is intentionally private/internal.
-- Package metadata matches the public project name.
+## README As Product Page
 
-Recommended:
+Use this structure unless the repository already has a strong established format:
 
-- Logo or screenshot when the project has a UI.
-- Demo GIF/video only if it is small, current, and useful.
-- Hosted demo link if safe and maintained.
-- Badges for CI, package version, license, coverage, docs, or security only when they are accurate.
-
-Avoid:
-
-- Badge clutter.
-- Marketing claims without runnable examples.
-- Stale screenshots.
-- Private URLs or old product names.
-
-## README Standard
-
-Use this structure unless the project has a better established format:
-
-1. Project name and one-sentence value proposition.
-2. Screenshot, terminal example, or minimal demo for visual projects.
-3. What it does.
-4. Why it exists or what problem it solves.
-5. Installation.
-6. Quick start.
-7. Common commands.
-8. Configuration and environment variables.
-9. Usage examples.
-10. Project structure.
-11. Testing.
-12. Deployment or release notes, if applicable.
-13. Security and privacy notes.
-14. Contributing.
-15. License.
+1. Project name and one-sentence value proposition
+2. Accurate badges
+3. Screenshot, terminal demo, or hosted demo link when relevant
+4. What the project does
+5. Why it exists and who it is for
+6. Installation
+7. Quick start
+8. Common commands
+9. Usage examples
+10. Configuration and environment variables
+11. Project structure
+12. Testing and quality checks
+13. Deployment or release instructions
+14. Demo, docs, or interactive pages when relevant
+15. Troubleshooting
+16. Security and privacy
+17. Contributing
+18. Support
+19. License
 
 Quality rules:
 
 - The first screen must answer "What is this?" and "Should I care?"
-- The quick start must be copy-pasteable.
-- Commands must match actual package scripts and CI.
-- Mention supported platforms and versions.
-- Include `.env.example` instead of real secrets.
-- Link deeper docs instead of making the README enormous.
-- Keep examples current and tested.
+- The first command block must be copy-pasteable.
+- Every command in README should match `package.json`, CI, Makefile, or actual scripts.
+- Use deeper docs for detail; do not turn README into a dump.
+- Include screenshots only when they are current and helpful.
+- Link every useful interactive demo, docs page, package page, and hosted site from the README first screen or the closest relevant section.
+- Do not make claims that tests, package metadata, or release history cannot support.
 
-## Essential Files
+## SEO, AEO, And GEO Readiness
 
-### Root Files
+SEO helps search engines. AEO helps answer engines. GEO helps generative engines summarize the project accurately. For GitHub repositories, the practical work is clear metadata and copy.
 
-- `README.md`: primary public entry point.
-- `LICENSE`: legal terms for use.
-- `CHANGELOG.md`: notable changes by version/date.
-- `CONTRIBUTING.md`: how to set up, branch, test, and submit PRs.
-- `CODE_OF_CONDUCT.md`: behavior standards for public communities.
-- `SECURITY.md`: vulnerability reporting process and supported versions.
-- `SUPPORT.md`: where users get help.
-- `CITATION.cff`: academic/research projects.
-- `.gitignore`: generated and secret files excluded.
-- `.gitattributes`: line endings, linguist overrides, generated files.
-- `.editorconfig`: formatting consistency across editors.
-- `.env.example`: documented environment variables without secrets.
-- `AGENTS.md`: instructions for AI coding agents.
+Required:
 
-### `.github/` Files
+- GitHub description uses natural keywords and explains the outcome.
+- README title matches the project/package name.
+- First paragraph states category, audience, and value.
+- Important keywords appear naturally in headings and early copy.
+- GitHub topics match the ecosystem and use case.
+- Package keywords match README and GitHub topics.
+- Homepage/docs/package links are current.
+- Installation and quick-start commands are copyable.
+- FAQ or troubleshooting answers likely user questions.
+- License, support, security, and maintenance signals are visible.
 
+Recommended:
+
+- Social preview image for product-facing repositories.
+- `docs/` pages for architecture, configuration, deployment, API, and troubleshooting on larger projects.
+- `llms.txt` or docs index for documentation-heavy sites when the project intentionally targets AI-answer ingestion.
+- Canonical links between GitHub, package registry, docs, demo, and release page.
+
+Avoid:
+
+- Keyword stuffing.
+- Generic "AI powered" claims without examples.
+- Badges or screenshots that imply features that do not exist.
+- Empty docs sections.
+
+## Interactive Pages And README Integration
+
+For repositories with a UI, CLI, package, docs site, agent skill catalog, visual workflow, or product-like surface, create or improve browsable pages when they help visitors evaluate the project.
+
+Good page targets:
+
+- hosted homepage or landing page
+- docs index
+- getting-started page
+- live demo or interactive playground
+- examples gallery
+- API/reference page
+- release or changelog page
+- troubleshooting page
+
+Rules:
+
+- Use external websites only as inspiration for structure, clarity, interaction patterns, and trust signals; do not copy proprietary UI, text, logos, or assets.
+- If the repo already has a site, edit the existing site/pages instead of creating disconnected mockups.
+- Add current screenshots, terminal demos, short GIF/video links, or interactive examples only when they are accurate and maintainable.
+- Link new pages from `README.md`, package metadata `homepage`, GitHub repository homepage, and docs navigation when available.
+- Verify local build output and route accessibility for every new page.
+- Do not let pages become marketing fluff; every page should help install, understand, compare, debug, or trust the project.
+
+## README Visual And Badge System
+
+Use a polished README structure when the project is public-facing. Keep it fast to scan and honest.
+
+Recommended first-screen order:
+
+1. Project title
+2. One-line value proposition
+3. Focused badge row
+4. Quick links row
+5. Screenshot, terminal preview, or short demo link when relevant
+6. Copyable install or quick-start command
+
+Useful badge set:
+
+```markdown
+[![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/<owner>/<repo>/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/<owner>/<repo>/actions/workflows/codeql.yml/badge.svg)](https://github.com/<owner>/<repo>/actions/workflows/codeql.yml)
+[![npm version](https://img.shields.io/npm/v/<encoded-package-name>)](https://www.npmjs.com/package/<package-name>)
+[![npm downloads](https://img.shields.io/npm/dm/<encoded-package-name>)](https://www.npmjs.com/package/<package-name>)
+[![GitHub stars](https://img.shields.io/github/stars/<owner>/<repo>?style=social)](https://github.com/<owner>/<repo>/stargazers)
+[![License](https://img.shields.io/github/license/<owner>/<repo>)](LICENSE)
+```
+
+Quick-link row pattern:
+
+```markdown
+[Website](<homepage>) · [Docs](docs/) · [Install](#installation) · [Examples](#examples) · [Releases](https://github.com/<owner>/<repo>/releases) · [Support](SUPPORT.md)
+```
+
+Feature-card table pattern:
+
+```markdown
+| Capability | What it gives users |
+| --- | --- |
+| Fast install | Copy-pasteable setup and quick start. |
+| Verified quality | CI, tests, package dry-run, and security checks. |
+| Clear release path | Changelog, GitHub Releases, and package provenance. |
+```
+
+Rules:
+
+- Prefer 4-8 meaningful badges over a wall of badges.
+- Add GitHub stars/forks/download badges only when they help visitors evaluate popularity or usage; do not pretend popularity exists.
+- Use `for-the-badge` style only for brand-heavy landing-style READMEs; use flat/default styles for library docs.
+- README visuals must degrade well in GitHub mobile and dark mode.
+- Use hosted pages for actual interactivity; README can link, preview, collapse sections, and show badges, but it should not be treated like a web app.
+
+## Badge Rules
+
+Badges should reduce uncertainty, not decorate.
+
+Good badges:
+
+- CI/build status
+- npm or package version
+- license
+- latest GitHub release
+- CodeQL/security scan when configured
+- coverage only when coverage is actually measured
+- docs/deployment only when a stable docs/deploy target exists
+
+Rules:
+
+- Use live badge URLs from trusted sources such as GitHub Actions, npm, Shields, Codecov, or the docs host.
+- Keep the first row to 3-6 badges.
+- Validate that every badge target link opens.
+- Remove broken or misleading badges.
+- Do not add a coverage badge without coverage automation.
+
+## Package Metadata Standard
+
+For npm packages, verify:
+
+- `name`
+- `version`
+- `description`
+- `license`
+- `author` or `maintainers`
+- `repository`
+- `homepage`
+- `bugs`
+- `keywords`
+- `bin` or `exports` when applicable
+- `files` or `.npmignore` limits package contents
+- `engines`
+- `publishConfig.access` for scoped public packages
+- package scripts used by README and CI
+
+Run:
+
+```bash
+npm view <package> --json
+npm pack --dry-run
+```
+
+The dry-run output should include only intended source, docs, license, package metadata, and required runtime files.
+
+## Release Standard
+
+Professional releases need a repeatable story.
+
+Required for package repositories:
+
+- semantic version in package metadata
+- changelog with user-facing changes
+- release notes or GitHub Releases
+- CI passes before publish
+- package dry-run reviewed
+- tags match package version
+- publish path documented
+
+Recommended:
+
+- Release Please or equivalent release PR automation
+- npm trusted publishing with GitHub OIDC
+- `npm publish --provenance` when supported
+- annotated or generated release notes
+- migration notes for breaking changes
+
+Never store npm tokens in the repository. If trusted publishing is unavailable, use a short-lived automation token only through secret storage and document rotation.
+
+## GitHub Metadata And Settings
+
+Inspect:
+
+```bash
+gh repo view --json name,description,homepageUrl,isPrivate,repositoryTopics,defaultBranchRef
+gh workflow list
+gh release list
+```
+
+Generate commands for approval before applying:
+
+```bash
+gh repo edit --description "<clear searchable description>" --homepage "<url>"
+gh repo edit --add-topic topic-one --add-topic topic-two
+gh release create vX.Y.Z --generate-notes
+```
+
+Branch protection, rulesets, secret scanning, push protection, private vulnerability reporting, and some security features may require GitHub UI/API access. Report exact next steps when they cannot be safely edited from files.
+
+## Community Health Files
+
+Add or improve:
+
+- `CONTRIBUTING.md`
+- `CODE_OF_CONDUCT.md`
+- `SECURITY.md`
+- `SUPPORT.md`
 - `.github/ISSUE_TEMPLATE/bug_report.yml`
 - `.github/ISSUE_TEMPLATE/feature_request.yml`
 - `.github/ISSUE_TEMPLATE/config.yml`
 - `.github/PULL_REQUEST_TEMPLATE.md`
 - `.github/CODEOWNERS`
-- `.github/dependabot.yml`
-- `.github/workflows/ci.yml`
-- `.github/workflows/release.yml` when releases are automated.
-- `.github/FUNDING.yml` when relevant.
 
-## CONTRIBUTING.md Standard
+Keep these files concrete. Generic files are better than missing files, but professional files name the actual commands, support channels, ownership model, and security process.
 
-Include:
+## CI And Quality Gates
 
-- Development prerequisites.
-- Setup commands.
-- Test/lint/typecheck/build commands.
-- Branch naming convention.
-- Commit message convention if used.
-- Pull request expectations.
-- Code style and formatting.
-- How to add tests.
-- How to update docs.
-- How to report bugs responsibly.
-
-Keep it friendly and concrete.
-
-## SECURITY.md Standard
-
-Include:
-
-- Supported versions.
-- Private vulnerability reporting channel.
-- Expected response window.
-- What information to include in a report.
-- Request not to open public issues for vulnerabilities.
-- Link to GitHub private vulnerability reporting if enabled.
-
-Do not ask reporters to disclose sensitive details publicly.
-
-## Issue And PR Templates
-
-Bug report fields:
-
-- Summary.
-- Environment.
-- Steps to reproduce.
-- Expected behavior.
-- Actual behavior.
-- Logs/screenshots.
-- Regression version if known.
-
-Feature request fields:
-
-- Problem.
-- Proposed solution.
-- Alternatives considered.
-- Use case.
-- Impact.
-
-Pull request template:
-
-- Summary.
-- Motivation.
-- Changes.
-- Tests run.
-- Screenshots or recordings for UI.
-- Breaking changes.
-- Checklist for docs, tests, and security.
-
-## CI Standard
-
-Minimum CI should run on pull requests and the default branch:
-
-- dependency installation with lockfile integrity
-- format check
-- lint
-- typecheck, if applicable
-- unit tests
-- build
-
-Add when relevant:
-
-- integration tests
-- end-to-end tests
-- coverage upload
-- package publish dry run
-- docs build
-- container build
-- security scan
-- license check
-
-CI rules:
-
-- CI commands must match README commands.
-- Keep job names unique so branch protection can target them clearly.
-- Use caching, but do not cache secrets.
-- Set least-privilege GitHub Actions permissions.
-- Avoid broad write tokens.
-- Pin third-party Actions to trusted versions; pin to SHAs for high-security projects.
-
-Example workflow shape:
+Minimum CI for Node/package repositories:
 
 ```yaml
 name: CI
@@ -242,7 +332,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -257,82 +347,37 @@ jobs:
       - run: npm run build --if-present
 ```
 
-Adapt package manager and language versions to the repo.
+Add CodeQL, dependency review, package dry-run, docs build, or e2e checks when the repository needs them.
 
-## Branch Protection And Rulesets
+CI rules:
 
-Recommend these GitHub settings for the default branch:
+- Commands must match README.
+- Job names should be stable for branch protection.
+- Use least-privilege permissions.
+- Do not expose secrets to pull requests.
+- Pin third-party actions to trusted versions; pin SHAs for high-security repos.
 
-- Require pull request before merge.
-- Require at least one approval.
-- Require code owner review for owned paths.
-- Dismiss stale approvals when new commits are pushed, for sensitive repos.
-- Require status checks to pass.
-- Require conversation resolution.
-- Require branches to be up to date, or use merge queue for busy repos.
-- Restrict force pushes.
-- Restrict branch deletion.
-- Consider signed commits for security-sensitive projects.
-- Consider linear history for projects that prefer clean revertability.
+## Security And Hygiene
 
-Manual note:
+Check for:
 
-Some branch protection settings must be configured in GitHub UI/API. File edits alone are not enough.
-
-## Security Posture
-
-Enable or configure:
-
-- Dependabot alerts.
-- Dependabot security updates.
-- Dependabot version updates for supported ecosystems.
-- Secret scanning.
-- Push protection where available.
-- Code scanning with CodeQL or equivalent.
-- Dependency review for pull requests when available.
-- Private vulnerability reporting for public projects.
-- Security policy.
-
-Repository hygiene:
-
-- No `.env` files with real values.
-- No private keys, tokens, cookies, database URLs, or OAuth secrets.
-- No production analytics keys unless intentionally public and safe.
-- No internal hostnames or customer data.
-- No source maps containing private source in public releases unless intended.
-- No logs with credentials.
+- committed `.env` files
+- private keys, certificates, tokens, cookies, or database URLs
+- local absolute paths
+- private hostnames
+- customer data
+- generated logs and caches
+- stale branding or old repository links
+- source maps or built artifacts that expose private source
 
 If a secret was committed:
 
-- Rotate/revoke the secret immediately.
-- Remove it from current code.
-- Consider history cleanup only with explicit confirmation and coordination.
-- Do not claim deletion alone makes the secret safe.
+1. Tell the user to rotate/revoke it.
+2. Remove it from current files.
+3. Consider history cleanup only with explicit confirmation.
+4. Do not claim that deleting the file makes the secret safe.
 
-## Release Standard
-
-Recommended:
-
-- Semantic versioning for libraries and APIs.
-- Calendar versioning only when it fits the product.
-- `CHANGELOG.md` with user-facing changes.
-- GitHub Releases with release notes.
-- Annotated tags.
-- Automated release notes for larger projects.
-- Package provenance/signing for packages where supported.
-- Migration notes for breaking changes.
-
-Release checklist:
-
-- CI passes on the release commit.
-- Version is updated in all package metadata.
-- Changelog has date and version.
-- Docs match behavior.
-- Artifacts are generated reproducibly.
-- Deprecated features are documented.
-- Security notes are included when relevant.
-
-## Documentation Structure
+## Documentation And Examples
 
 Small projects can keep docs in README. Larger projects should use:
 
@@ -344,152 +389,58 @@ docs/
   api.md
   deployment.md
   troubleshooting.md
-  security.md
 examples/
   basic/
   advanced/
 ```
 
-Architecture docs should explain:
+Architecture docs should explain module boundaries, data flow, external services, persistence, auth/security model, build/deployment pipeline, and testing strategy.
 
-- module boundaries
-- data flow
-- external services
-- persistence
-- auth/security model
-- build/deployment pipeline
-- testing strategy
+## AI-Agent Readiness
 
-## Codebase Hygiene
+Add `AGENTS.md` when agents will work in the repo. Include:
 
-Before public release:
+- project overview
+- setup commands
+- test/lint/typecheck/build commands
+- architecture map
+- coding style
+- files to avoid editing without permission
+- security/privacy rules
+- PR expectations
+- verification checklist
 
-- Run tests and build.
-- Run secret scanning.
-- Search for old names, private emails, local paths, and internal URLs.
-- Remove stale screenshots and logos.
-- Remove generated files that do not belong in source.
-- Remove dead branches from docs.
-- Ensure `.gitignore` covers caches, build output, local env files, logs, and editor junk.
-- Confirm license notices remain.
-- Confirm dependency licenses are acceptable.
-- Confirm package names, namespaces, app IDs, and URLs are public-ready.
+AI-ready repositories reduce hallucinated commands and accidental broad refactors.
 
-Use a repo sanitization tool or audit skill for high-stakes cleanup.
+## Final Report Format
 
-## AI Agent Readiness
+End with:
 
-Add `AGENTS.md` when AI coding agents will work in the repo.
+- readiness status
+- score out of 50
+- changed files
+- commands run and results
+- release/package state
+- manual GitHub settings still needed
+- risks or blockers
 
-Include:
+Use one status:
 
-- Project overview.
-- Setup commands.
-- Test commands.
-- Lint/typecheck/build commands.
-- Architecture map.
-- Coding style.
-- Files to avoid editing without permission.
-- Security and privacy rules.
-- PR expectations.
-- Verification checklist.
-
-AI-ready repos reduce hallucinated commands and accidental broad refactors.
-
-## Package Metadata
-
-For packages:
-
-- name, version, description
-- license
-- author/maintainers
-- repository URL
-- homepage/docs URL
-- bugs URL
-- keywords
-- exports/files configuration
-- supported engines/runtime versions
-- publish access configuration
-
-Make sure package metadata matches README and GitHub settings.
-
-## Professional Trust Signals
-
-Strong signals:
-
-- Clear README with real examples.
-- Recent passing CI.
-- License is visible.
-- Security policy exists.
-- Releases and changelog exist.
-- Maintainer response expectations are clear.
-- Issues and PRs have templates.
-- Tests are easy to run.
-- Repo topics are relevant.
-- Public demo or screenshots are current.
-
-Weak signals:
-
-- Broken badges.
-- Empty docs folders.
-- Stale roadmap.
-- Install instructions that fail.
-- Missing license.
-- No tests or CI.
-- Untriaged issue backlog.
-- Vague "TODO" sections.
-- Private traces or old product names.
-
-## Implementation Workflow For Agents
-
-1. Inspect:
-   - `git status --short`
-   - repo tree
-   - README/license/community files
-   - package metadata
-   - scripts and tests
-   - CI workflows
-   - `.github/`
-   - docs/examples
-2. Identify audience and release risk.
-3. Produce a gap report.
-4. Make scoped edits:
-   - README
-   - community files
-   - templates
-   - CI
-   - docs
-   - metadata
-5. Run verification.
-6. Report manual GitHub settings.
-7. Assign readiness status.
-
-## Readiness Checklist
-
-- [ ] README explains what, why, install, quick start, commands, configuration, tests, and license.
-- [ ] License is present or private/internal status is explicit.
-- [ ] Contributing guide exists for public or team repos.
-- [ ] Security policy exists.
-- [ ] Code of conduct exists for public community projects.
-- [ ] Issue templates exist.
-- [ ] PR template exists.
-- [ ] CI runs lint/test/typecheck/build as applicable.
-- [ ] Dependabot is configured.
-- [ ] Secret scanning and code scanning are recommended or enabled.
-- [ ] Branch protection/rulesets are documented.
-- [ ] Changelog and release process exist.
-- [ ] `.env.example` exists when environment variables are required.
-- [ ] `.gitignore`, `.gitattributes`, and `.editorconfig` are appropriate.
-- [ ] Package metadata is accurate.
-- [ ] Docs/examples are current.
-- [ ] No secrets, private traces, old branding, or local paths remain.
-- [ ] Legal notices and attribution are preserved.
-- [ ] AGENTS.md exists if agents will work in the repo.
+- `release-ready`
+- `needs GitHub settings`
+- `needs implementation`
+- `unsafe to publish`
 
 ## Source Links
 
 - GitHub repository best practices: https://docs.github.com/en/repositories/creating-and-managing-repositories/best-practices-for-repositories
 - GitHub community profiles: https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/about-community-profiles-for-public-repositories
+- GitHub repository topics: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics
 - GitHub protected branches: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches
 - GitHub security features: https://docs.github.com/en/code-security/getting-started/github-security-features
-- GitHub secret scanning: https://docs.github.com/en/code-security/concepts/secret-security/secret-scanning
+- GitHub Actions package publishing: https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-nodejs-packages
+- Google SEO starter guide: https://developers.google.com/search/docs/fundamentals/seo-starter-guide
+- npm trusted publishing: https://docs.npmjs.com/trusted-publishers
+- npm provenance: https://docs.npmjs.com/generating-provenance-statements
+- Release Please: https://github.com/googleapis/release-please
+- Shields badges: https://shields.io/badges

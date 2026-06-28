@@ -1,4 +1,4 @@
 interface:
   display_name: "GH Ready"
-  short_description: "Prepare repositories for public release"
-  default_prompt: "Use $gh-ready to make this repository professional, trustworthy, and release-ready."
+  short_description: "Make repositories SEO, package, release, and trust ready"
+  default_prompt: "Use $gh-ready to make this repository professional, SEO-friendly, package-ready, release-ready, and trustworthy for GitHub publication."

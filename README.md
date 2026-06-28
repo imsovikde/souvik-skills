@@ -2,7 +2,16 @@
 
 Marketplace-ready agent skills by Souvik Dey.
 
+[![CI](https://github.com/imsovikde/souvik-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/imsovikde/souvik-skills/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/imsovikde/souvik-skills/actions/workflows/codeql.yml/badge.svg)](https://github.com/imsovikde/souvik-skills/actions/workflows/codeql.yml)
+[![npm version](https://img.shields.io/npm/v/%40imsovikde%2Fskills)](https://www.npmjs.com/package/@imsovikde/skills)
+[![npm downloads](https://img.shields.io/npm/dm/%40imsovikde%2Fskills)](https://www.npmjs.com/package/@imsovikde/skills)
+[![GitHub stars](https://img.shields.io/github/stars/imsovikde/souvik-skills?style=social)](https://github.com/imsovikde/souvik-skills/stargazers)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Souvik Skills is the public skill directory for reusable developer and research workflows created by [Souvik Dey](https://github.com/imsovikde). The repository is designed to work like a professional skill catalog: every skill is a self-contained folder with a `SKILL.md`, optional resources, agent UI metadata, and an NPM-ready installer path.
+
+[Website](https://souvik-skills.vercel.app) · [Skills](https://souvik-skills.vercel.app/skills) · [Install](#cross-agent-install) · [Docs](https://souvik-skills.vercel.app/docs) · [Releases](https://github.com/imsovikde/souvik-skills/releases) · [NPM](https://www.npmjs.com/package/@imsovikde/skills)
 
 ## Marketplace Site
 
@@ -34,7 +43,7 @@ npm run build
 | Skill | Purpose |
 | --- | --- |
 | `delink-github` | Safely remove Git history, GitHub remotes, and root `.github` files before starting clean local history. |
-| `gh-ready` | Prepare repositories for professional GitHub publication, open-source release, client delivery, or package distribution. |
+| `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
 | `motioncraft` | Design and implement premium, accessible, high-performance interface motion systems. |
 
@@ -108,7 +117,7 @@ Example prompts:
 
 ```text
 Use $delink-github to safely detach this repository from GitHub and start clean local Git history.
-Use $gh-ready to make this project GitHub-ready and NPM-ready.
+Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, and release-ready.
 Use $magento-team-lead to lead this Adobe Commerce implementation review.
 Use $motioncraft to add premium accessible motion to this interface.
 ```
@@ -147,6 +156,14 @@ node bin/souvik-skills.cjs install all --dest ./tmp/codex-skills --force
 ## Deployment
 
 See [`docs/deployment.md`](docs/deployment.md) for Vercel, Cloudflare Pages, and NPM release commands.
+
+## Support And Troubleshooting
+
+- If `npx -y skills add ...` fails, confirm GitHub can access `imsovikde/souvik-skills` and rerun the command.
+- If `npx @imsovikde/skills ...` fails, verify the npm package with `npm view @imsovikde/skills version`.
+- If Codex does not show a newly installed skill, restart Codex after installation.
+- For bugs or feature requests, use the GitHub issue templates.
+- For security concerns, follow `SECURITY.md` instead of opening a public issue.
 
 ## License
 
