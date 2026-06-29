@@ -55,6 +55,212 @@ Objects should move from plausible origins, scale from the point of action, and 
 
 User input outranks choreography. Hover, press, drag, scroll, route changes, and keyboard navigation should cancel or retarget animation without awkward jumps.
 
+## Project Psychology And Motion Strategy
+
+Before choosing a library or timing value, identify the user's state of mind. Premium motion is not the same for a portfolio, a terminal-heavy developer tool, a clinical dashboard, and a playful mobile product.
+
+### User Psychology Questions
+
+Answer these quickly before implementing:
+
+- What is the user trying to trust, compare, understand, buy, operate, or remember?
+- Is the interface for repeated productivity or first-impression storytelling?
+- Should the product feel calm, fast, powerful, luxurious, playful, editorial, technical, or safe?
+- Where is the user likely to feel uncertainty, waiting, loss of context, or success?
+- Which one workflow deserves a memorable signature moment?
+- Which interactions must stay nearly invisible because users repeat them often?
+
+### Psychological Jobs
+
+Use these jobs in the motion intent map:
+
+- Feedback: the system heard the user.
+- Continuity: an object/state moved from here to there.
+- Orientation: the user still knows where they are after filtering, routing, expanding, or reordering.
+- Hierarchy: attention moves to the next useful thing.
+- Progress: waiting feels bounded and stable.
+- Reward: success feels satisfying without celebration spam.
+- Perceived performance: the interface feels faster because it acknowledges, stages, or optimistically resolves work.
+- Trust: motion settles cleanly and never feels slippery, random, or evasive.
+- Brand memory: one distinctive, repeatable motion idea expresses the product.
+
+## Product Archetype Playbooks
+
+### SaaS, Dashboard, Admin, CRM
+
+- Personality: fast, quiet, stable, low-noise.
+- Motion density: high frequency, low amplitude.
+- Use: 80-180 ms controls, shared tab indicators, FLIP/list reflow, optimistic feedback, subtle toasts.
+- Avoid: smooth scroll, large parallax, bouncy tables, delayed navigation, decorative loops.
+- Signature moment: one crisp command completion, saved state, or data reflow.
+
+### Docs, Devtools, CLI, Code-Heavy Products
+
+- Personality: precise, readable, terminal-literate, respectful of scroll.
+- Motion density: sparse and functional.
+- Use: copy success, command reveal, nav active-state continuity, collapsible sections, lightweight page transitions.
+- Avoid: scroll hijacking, animated code text that prevents copying, parallax on reading text, hidden scrollbars that harm use.
+- Signature moment: command copy/install success or live preview handoff.
+
+### Marketplace, Catalog, Skill Directory
+
+- Personality: browsable, structured, collectible, easy to compare.
+- Motion density: medium.
+- Use: filter reflow, category chip feedback, card reveal, install-copy success, detail page shared continuity.
+- Avoid: cards that all bounce, reorder motion without identity, hidden pricing/install actions, generic modal fireworks.
+- Signature moment: filter-to-card reflow or copy command glow.
+
+### Portfolio, Editorial, Personal Brand
+
+- Personality: authored, memorable, warm, confident.
+- Motion density: medium to expressive.
+- Use: hero sequencing, section reveals, text/media choreography, cursor-light response only if subtle, signature identity mark motion.
+- Avoid: template-looking fade-ins, random delays, text that moves while being read, motion that fights the story.
+- Signature moment: brand mark reveal or project case-study transition.
+
+### AI, Chat, Agent, Automation Tools
+
+- Personality: responsive, transparent, capable, calm under uncertainty.
+- Motion density: medium, with progress clarity.
+- Use: streaming rhythm, tool-call state transitions, thinking/progress states, optimistic draft insertion, interruptible panels.
+- Avoid: fake intelligence loops, spinners with no status, distracting ambient motion near text generation, slow drawer transitions.
+- Signature moment: agent action resolving into visible output.
+
+### Ecommerce, Booking, Conversion
+
+- Personality: confident, tactile, trustworthy.
+- Motion density: medium.
+- Use: add-to-cart continuity, image zoom within bounds, quantity feedback, checkout progress, validation near fields.
+- Avoid: motion that delays checkout, aggressive shake errors, scroll stories inside checkout, layout shift during price updates.
+- Signature moment: product-to-cart continuity or checkout completion settle.
+
+### Mobile-First App
+
+- Personality: tactile, direct, thumb-friendly.
+- Motion density: high but short.
+- Use: press compression, bottom-sheet physics, swipe handoff, route continuity, haptics only when platform supports them.
+- Avoid: tiny hover-only affordances, large desktop parallax, slow panels, focus jumps, text overflow from animated controls.
+- Signature moment: one gesture-driven interaction.
+
+### Creative, Game-Like, Music, Media
+
+- Personality: expressive and sensory while still controllable.
+- Motion density: high, but localized.
+- Use: audio/media-responsive states, longer hero rhythm, playful springs, drag/inertia, canvas/WebGL where justified.
+- Avoid: motion that blocks controls, endless CPU-heavy loops, inaccessible flashing, no reduced-motion equivalent.
+- Signature moment: media-reactive or object-physics interaction.
+
+## Benchmark Method
+
+Use live references when visual ambition matters, but copy principles only.
+
+1. Select 3-5 references that match the product archetype and audience.
+2. Inventory only the motion decisions: first response, route/page transition, menu, card/list behavior, scroll behavior, loading, success, reduced-motion treatment.
+3. Extract the principle: timing, sequencing, restraint level, spatial model, or emotional tone.
+4. Translate the principle into local tokens and components.
+5. Reject anything that conflicts with the current product, performance budget, accessibility, or user task.
+
+Never copy brand assets, exact layouts, proprietary copy, or a competitor's distinctive signature motion.
+
+## Motion Quality Rubric
+
+Score each category 0-5. Production motion should target 40+ out of 50; a flagship landing or showcase should target 45+.
+
+| Category | What 5/5 Means |
+| --- | --- |
+| Intent | Every major animation has a named job and removes ambiguity. |
+| Responsiveness | Direct input feedback starts within 50 ms and feels interruptible. |
+| Continuity | State changes preserve origin, direction, identity, and momentum. |
+| Hierarchy | Motion guides attention without fighting reading or task flow. |
+| Brand fit | Timing, bounce, distance, and density match the product personality. |
+| Accessibility | Reduced motion, focus, keyboard, and vestibular safety are handled. |
+| Performance | Uses compositor-friendly properties and avoids long-running waste. |
+| Coherence | Tokens and patterns repeat intentionally across components. |
+| Implementation quality | Motion primitives are reusable, maintainable, and stack-appropriate. |
+| Verification | Desktop, mobile, reduced motion, and key flows were tested in a browser. |
+
+## Signature Motion Recipes
+
+Use one signature moment per viewport or workflow. Keep the rest quiet.
+
+### Copy Success
+
+- Press compresses instantly to `0.96-0.98`.
+- Icon morphs or swaps to check within 100-160 ms.
+- A short glow or sweep may pass behind the command in 240-420 ms.
+- Toast enters from the nearest edge and exits quietly.
+- Reduced motion keeps color/icon feedback and skips sweep/translation.
+
+### Install Or Command Card
+
+- Treat the card like a terminal object: traffic lights, stable text, one corner action.
+- Tab indicator moves with a shared spring, not a full content jump.
+- Command text should not create visible nested scrollbars; wrap, fade, or allow hidden overflow with keyboard/touch access.
+- Copy button should be tactile but not comedic.
+
+### Dropdown Or Menu
+
+- Transform origin points to the trigger.
+- Enter with opacity plus 4-8 px movement, 120-180 ms.
+- Exit faster, 80-140 ms.
+- Large menus may stagger groups by 16-24 ms; small menus should not stagger.
+- Focus must move predictably and Escape must close.
+
+### Route Or Page Transition
+
+- Preserve app shell in product UIs; transition the content region.
+- Use 180-280 ms in productivity apps and 400-700 ms in marketing pages.
+- Prefer shared elements when moving from card/list to detail.
+- Restore scroll correctly and avoid blocking navigation for choreography.
+
+### Filter Reflow
+
+- Keep item identity with stable keys and layout animation or FLIP.
+- Fade removed items quickly, move surviving items with a spring, reveal new items after movement begins.
+- Cap total stagger under 360 ms in product/catalog UI.
+- Announce result count for assistive tech when needed.
+
+### Hero Reveal
+
+- Sequence brand/product signal first, then value copy, then proof/media, then CTA.
+- Use 16-48 px movement max for most text; larger movement belongs to media or objects.
+- Finish the first meaningful reveal quickly enough that the page feels loaded.
+- Do not animate paragraphs while users are trying to read them.
+
+### Drawer, Sheet, Modal
+
+- Move from the real edge or source action.
+- Separate overlay fade from panel movement.
+- Use 280-420 ms for large panels, faster for small popovers.
+- Lock background scroll only when required and restore focus on close.
+
+### Loading And Progress
+
+- Delay spinner/skeleton by 150-300 ms to avoid flicker.
+- Match skeleton geometry to final content.
+- Prefer determinate progress or staged status text when work takes longer than two seconds.
+- Avoid fake long loops that make the product feel slower.
+
+### Scroll Story
+
+- Use scroll-linked motion only for narrative or product storytelling.
+- Keep body text readable; text parallax should be 0-4 percent of viewport height.
+- Recalculate scene bounds on resize, font load, content load, and media load.
+- Disable smooth scroll and scrubbed effects in reduced motion.
+
+## Anti-Patterns
+
+- Adding fade-up reveals to every section with no product reason.
+- Using `transition: all`.
+- Animating `height`, `top`, `left`, `margin`, `padding`, or large `filter` effects in hot paths.
+- Bouncing serious enterprise controls.
+- Scroll hijacking documents, dashboards, forms, tables, or code surfaces.
+- Ambient loops near reading content.
+- Hiding essential feedback behind animation delay.
+- Creating hover-only motion for mobile-critical actions.
+- Shipping untested reduced-motion CSS.
+- Making motion compensate for weak layout, hierarchy, copy, contrast, or broken responsiveness.
+
 ## Motion Personalities To Borrow
 
 ### Apple
@@ -713,24 +919,29 @@ export function reveal(element: HTMLElement) {
 
 When an AI coding agent uses this file:
 
-1. Audit the current UI and identify existing libraries and motion patterns.
-2. Define a motion map for the requested surface:
+1. Audit the current UI, libraries, tokens, routes, mobile breakpoints, and performance constraints.
+2. Classify the product archetype and emotional tone before picking motion patterns.
+3. Create a motion intent map for:
    - direct controls
-   - overlays
-   - page/route changes
-   - lists/layout changes
-   - loading/progress
-   - scroll-linked moments
+   - overlays and menus
+   - page or route changes
+   - cards, lists, filters, and layout changes
+   - loading, progress, and async states
+   - success, copy, save, and completion feedback
+   - scroll-linked or hero moments
    - reduced-motion behavior
-3. Create or extend tokens before adding animations.
-4. Implement the smallest reusable primitives needed.
-5. Apply patterns component by component.
-6. Verify in browser, including reduced motion and mobile viewport.
-7. Remove or simplify anything that feels delayed, noisy, or hard to read.
+4. Use the quality rubric to identify weak or generic motion before editing.
+5. Create or extend tokens before adding animations.
+6. Implement the smallest reusable primitives needed.
+7. Apply patterns component by component and keep repeated interactions quiet.
+8. Verify in browser, including reduced motion and mobile viewport.
+9. Remove or simplify anything delayed, noisy, decorative, unreadable, or hard to operate.
 
 ## QA Checklist
 
 - [ ] Every animation has an intent.
+- [ ] Product archetype and emotional tone are stated.
+- [ ] Motion intent map exists for the changed surface.
 - [ ] Motion tokens are centralized.
 - [ ] Direct input feedback begins within 50 ms.
 - [ ] Repeated product interactions complete within 80-220 ms.
@@ -759,3 +970,8 @@ When an AI coding agent uses this file:
 - Material 3 easing and duration: https://m3.material.io/styles/motion/easing-and-duration
 - Stripe Connect front-end experience: https://stripe.com/blog/connect-front-end-experience
 - Linear design refresh: https://linear.app/now/behind-the-latest-design-refresh
+- MDN prefers-reduced-motion: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+- MDN View Transition API: https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API
+- WCAG 2.2 Animation from Interactions: https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html
+- GSAP ScrollTrigger: https://gsap.com/docs/v3/Plugins/ScrollTrigger/
+- web.dev animation performance: https://web.dev/articles/animations-guide

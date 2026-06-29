@@ -1,4 +1,4 @@
 interface:
   display_name: "Motioncraft"
-  short_description: "Premium UI motion systems and interactions"
-  default_prompt: "Use $motioncraft to add premium, accessible, high-performance motion to this interface."
+  short_description: "Project-specific premium motion systems"
+  default_prompt: "Use $motioncraft to design a project-specific, accessible, high-performance motion system with a motion intent map, tokens, reduced-motion variants, and browser verification."

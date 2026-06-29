@@ -45,7 +45,7 @@ npm run build
 | `delink-github` | Safely remove Git history, GitHub remotes, and root `.github` files before starting clean local history. |
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
-| `motioncraft` | Design and implement premium, accessible, high-performance interface motion systems. |
+| `motioncraft` | Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification. |
 
 ## Cross-Agent Install
 
@@ -119,7 +119,7 @@ Example prompts:
 Use $delink-github to safely detach this repository from GitHub and start clean local Git history.
 Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, and release-ready.
 Use $magento-team-lead to lead this Adobe Commerce implementation review.
-Use $motioncraft to add premium accessible motion to this interface.
+Use $motioncraft to design a project-specific premium motion system for this interface with a motion intent map, tokens, reduced-motion variants, and browser verification.
 ```
 
 ## Repository Standard
@@ -151,6 +151,7 @@ Smoke-test the installer locally:
 ```bash
 node bin/souvik-skills.cjs list
 node bin/souvik-skills.cjs install all --dest ./tmp/codex-skills --force
+npm run audit:motioncraft
 ```
 
 ## Deployment

@@ -52,6 +52,7 @@
     "start": "serve out",
     "list": "node bin/souvik-skills.cjs list",
     "audit:gh-ready": "node skills/gh-ready/scripts/audit-gh-ready.cjs .",
+    "audit:motioncraft": "node skills/motioncraft/scripts/audit-motioncraft.cjs .",
     "validate:skills": "node scripts/validate-skills.cjs",
     "test": "npm run validate:skills"
   },
