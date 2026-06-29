@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.3.0](https://github.com/imsovikde/souvik-skills/compare/v0.2.0...v0.3.0) (2026-06-29)
+
+
+### Features
+
+* document full agent sync protocol ([22648cc](https://github.com/imsovikde/souvik-skills/commit/22648ccb9a15105dd49902c5b5a737986d89b3cc))
+
 ## [0.2.0](https://github.com/imsovikde/souvik-skills/compare/v0.1.4...v0.2.0) (2026-06-29)
 
 
