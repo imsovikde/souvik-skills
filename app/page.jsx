@@ -8,7 +8,9 @@ import { githubUrl, npmPackage, npmUrl, repositorySource, siteUrl } from "@/lib/
 
 export default function HomePage() {
   const skills = getSkills();
-  const featured = skills.slice(0, 3);
+  const featured = [...skills]
+    .sort((a, b) => b.resourceCount - a.resourceCount || a.displayName.localeCompare(b.displayName))
+    .slice(0, 3);
   const siteHost = new URL(siteUrl).hostname;
 
   return (

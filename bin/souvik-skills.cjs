@@ -28,6 +28,19 @@ function defaultDestination() {
   return path.join(os.homedir(), ".codex", "skills");
 }
 
+function shouldCopy(sourcePath) {
+  const name = path.basename(sourcePath);
+  if (name === "__pycache__" || name === ".pytest_cache") {
+    return false;
+  }
+
+  if ([".pyc", ".pyo"].includes(path.extname(name))) {
+    return false;
+  }
+
+  return true;
+}
+
 function parseOptions(args) {
   const options = {
     dest: defaultDestination(),
@@ -56,7 +69,7 @@ function parseOptions(args) {
 
 function copyDirectory(source, destination) {
   fs.mkdirSync(path.dirname(destination), { recursive: true });
-  fs.cpSync(source, destination, { recursive: true });
+  fs.cpSync(source, destination, { recursive: true, filter: shouldCopy });
 }
 
 function installSkill(skillName, options) {

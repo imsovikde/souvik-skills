@@ -72,8 +72,8 @@ export default async function SkillPage({ params }) {
                     <div key={section.title}>
                       <h3 style={{ marginBottom: 8 }}>{section.title}</h3>
                       <ul className="list">
-                        {plainLines(section.content).map((line) => (
-                          <li key={line}>{line}</li>
+                        {plainLines(section.content).map((line, index) => (
+                          <li key={`${section.title}-${index}-${line}`}>{line}</li>
                         ))}
                       </ul>
                     </div>

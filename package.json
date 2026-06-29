@@ -48,6 +48,10 @@
     "skills/*/agents/openai.yaml",
     "skills/*/assets/**",
     "skills/*/scripts/**",
+    "!skills/*/scripts/**/__pycache__/**",
+    "!skills/*/scripts/**/.pytest_cache/**",
+    "!skills/*/scripts/**/*.pyc",
+    "!skills/*/scripts/**/*.pyo",
     "skills/*/references/**"
   ],
   "scripts": {

@@ -36,6 +36,8 @@ Before creating or changing a skill, read `guidance.md` and `NAMING.md`. Do not 
 - Before changing frontend routes, layouts, cards, install modules, copy buttons, logo assets, or responsive behavior, read `DESIGN.md` and `MOTION.md`.
 - The Next.js marketplace derives public skill pages from the `skills/` directory at build time.
 - Do not hard-code current public skill names as the source of truth for site routing or catalog generation.
+- After adding, removing, renaming, publishing, or materially updating any public skill, inspect and update the marketplace frontend where needed so `/`, `/skills`, `/skills/<skill-name>`, `/install`, and `/docs` reflect the current `skills/` content and install model.
+- Keep frontend catalog data derived from `skills/`, `SKILL.md`, and `agents/openai.yaml`; add or adjust shared inference/helpers when a new skill domain, resource shape, or install surface is introduced.
 - Preserve independent pages for `/`, `/skills`, `/skills/<skill-name>`, `/install`, `/docs`, and `/motion`.
 - Keep the install UI aligned with the Project, Global, and Try once command structure in `guidance.md` and `README.md`.
 - Verify zero horizontal overflow at 360px, 390px, 430px, tablet, desktop, and wide desktop before finishing frontend work.
@@ -48,13 +50,15 @@ Before creating or changing a skill, read `guidance.md` and `NAMING.md`. Do not 
 3. Create `skills/<skill-name>/agents/openai.yaml`.
 4. Add only resources the skill actually needs.
 5. Update `README.md` with the skill catalog row, project install, global install, try-once command, and example `$skill-name` prompt.
-6. Run:
+6. Check the frontend marketplace data and pages. Update shared frontend helpers when the new skill adds a category, nested resources, install behavior, or public content shape not already represented.
+7. Run:
 
 ```bash
 npm run validate:skills
 ```
 
-7. Add tests or examples when the skill includes scripts or deterministic behavior.
+8. Run `npm run build` when the new skill changes the public marketplace output.
+9. Add tests or examples when the skill includes scripts or deterministic behavior.
 
 ## Updating Existing Skills
 
@@ -62,6 +66,7 @@ When changing a skill:
 
 - Preserve its public install name unless the user explicitly approves a rename.
 - Update `README.md` if the public catalog, install commands, or usage prompts change.
+- Update the frontend helpers or pages if the skill update changes categories, resources, commands, public copy, routing, or install behavior.
 - Update `package.json` only when package metadata or CLI behavior changes.
 - Reinstall the updated skill into Codex when the change is meant for immediate local use.
 - Run validation before finishing.
