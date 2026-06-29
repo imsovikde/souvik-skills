@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.4.0](https://github.com/imsovikde/souvik-skills/compare/v0.3.0...v0.4.0) (2026-06-29)
+
+
+### Features
+
+* harden score2md marketplace release ([f86343a](https://github.com/imsovikde/souvik-skills/commit/f86343acd183000b94fb553a459c5829c99a7603))
+
 ## [0.3.0](https://github.com/imsovikde/souvik-skills/compare/v0.2.0...v0.3.0) (2026-06-29)
 
 
