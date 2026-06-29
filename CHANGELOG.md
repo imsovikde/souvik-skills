@@ -2,12 +2,6 @@
 
 All notable changes to Souvik Skills are documented here.
 
-## Unreleased
-
-- Upgraded `motioncraft` from a generic motion checklist into a project-specific motion engineering protocol with motion psychology, product archetype playbooks, benchmark method, signature recipes, anti-patterns, and a 50-point quality rubric.
-- Added a read-only Motioncraft audit script for motion tokens, reduced-motion support, `transition: all`, risky layout animation, scroll hijack risk, offscreen-loop hints, and animation library detection.
-- Added reusable Motioncraft templates for motion intent maps, CSS/TypeScript motion tokens, reduced-motion CSS, and motion QA.
-
 ## [0.1.4](https://github.com/imsovikde/souvik-skills/compare/v0.1.3...v0.1.4) (2026-06-28)
 
 
