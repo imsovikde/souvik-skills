@@ -20,6 +20,9 @@ pnpm-debug.log*
 # local tooling
 .vercel/
 .wrangler/
+.pytest_cache/
+__pycache__/
+*.py[cod]
 .DS_Store
 Thumbs.db
 

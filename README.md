@@ -46,6 +46,7 @@ npm run build
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
 | `motioncraft` | Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification. |
+| `score2md` | Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports. |
 
 ## Cross-Agent Install
 
@@ -58,6 +59,7 @@ npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent>
 ```
 
 ### Global
@@ -67,6 +69,7 @@ npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent> 
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent> -g
 ```
 
 ### Try Once
@@ -76,6 +79,7 @@ npx -y skills use imsovikde/souvik-skills@delink-github | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@gh-ready | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@magento-team-lead | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@motioncraft | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@score2md | <agent-cli>
 ```
 
 ## Codex Package Install
@@ -87,6 +91,7 @@ npx @imsovikde/skills install delink-github
 npx @imsovikde/skills install gh-ready
 npx @imsovikde/skills install magento-team-lead
 npx @imsovikde/skills install motioncraft
+npx @imsovikde/skills install score2md
 ```
 
 Install every skill:
@@ -120,6 +125,7 @@ Use $delink-github to safely detach this repository from GitHub and start clean 
 Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, and release-ready.
 Use $magento-team-lead to lead this Adobe Commerce implementation review.
 Use $motioncraft to design a project-specific premium motion system for this interface with a motion intent map, tokens, reduced-motion variants, and browser verification.
+Use $score2md to convert this MusicXML score into a verified playable Markdown ABC file.
 ```
 
 ## Repository Standard

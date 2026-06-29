@@ -24,6 +24,10 @@
     "git",
     "repository-cleanup",
     "motion",
+    "music",
+    "musicxml",
+    "abc-notation",
+    "sheet-music",
     "magento",
     "adobe-commerce",
     "ecommerce"
@@ -43,8 +47,8 @@
     "skills/*/SKILL.md",
     "skills/*/agents/openai.yaml",
     "skills/*/assets/**",
-    "skills/*/scripts/*",
-    "skills/*/references/*.md"
+    "skills/*/scripts/**",
+    "skills/*/references/**"
   ],
   "scripts": {
     "dev": "next dev",
@@ -53,6 +57,7 @@
     "list": "node bin/souvik-skills.cjs list",
     "audit:gh-ready": "node skills/gh-ready/scripts/audit-gh-ready.cjs .",
     "audit:motioncraft": "node skills/motioncraft/scripts/audit-motioncraft.cjs .",
+    "test:score2md": "python skills/score2md/scripts/run_tests.py",
     "validate:skills": "node scripts/validate-skills.cjs",
     "test": "npm run validate:skills"
   },
