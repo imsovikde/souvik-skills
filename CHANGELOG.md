@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.2.0](https://github.com/imsovikde/souvik-skills/compare/v0.1.4...v0.2.0) (2026-06-29)
+
+
+### Features
+
+* upgrade motioncraft strategy system ([06390e1](https://github.com/imsovikde/souvik-skills/commit/06390e14980c1cea4299af7337e912bdd27a92d8))
+
 ## [0.1.4](https://github.com/imsovikde/souvik-skills/compare/v0.1.3...v0.1.4) (2026-06-28)
 
 
