@@ -2,6 +2,14 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.6.0](https://github.com/imsovikde/souvik-skills/compare/v0.5.0...v0.6.0) (2026-06-30)
+
+
+### Features
+
+* guard score2md media transcription ([e862d21](https://github.com/imsovikde/souvik-skills/commit/e862d21bfc6ff4534dd257ad3e65fd94ff6e971c))
+* upgrade delink-github isolation ([9a16c5a](https://github.com/imsovikde/souvik-skills/commit/9a16c5a92d85fbc92234709a8f0f0648e22d03e3))
+
 ## [0.5.0](https://github.com/imsovikde/souvik-skills/compare/v0.4.0...v0.5.0) (2026-06-30)
 
 
