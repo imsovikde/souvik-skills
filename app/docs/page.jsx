@@ -73,6 +73,7 @@ export default function DocsPage() {
               <li>Read MOTION.md before adding animation, transition, route motion, or gesture feedback.</li>
               <li>Keep all marketplace pages generated from skills/ at build time.</li>
               <li>After any public skill is added or updated, confirm the homepage, catalog, skill detail, install, and docs pages reflect it.</li>
+              <li>Deploy public skill catalog changes to both Vercel and Cloudflare Pages, then verify the changed routes on both domains.</li>
               <li>Validate mobile at 360px, 390px, 430px, tablet, desktop, and wide desktop.</li>
             </ul>
           </div>

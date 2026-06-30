@@ -1,19 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
 import { PageTransition } from "@/components/page-transition";
 import { LogoMark } from "@/components/brand";
 import { githubUrl, npmUrl, siteUrl } from "@/lib/agents";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"]
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"]
-});
 
 export const metadata = {
   title: {
@@ -56,7 +45,7 @@ const themeScript = `
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} light`} suppressHydrationWarning>
+    <html lang="en" className="light" suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <SiteNav />

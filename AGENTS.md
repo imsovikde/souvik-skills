@@ -16,6 +16,7 @@ Before creating or changing a skill, read `guidance.md` and `NAMING.md`. Do not 
 
 ## Agent Rules
 
+0. Before creating, updating, publishing, or deploying a public skill, read this entire `AGENTS.md`, then read the repository Markdown guidance that applies to the change: root-level `*.md`, `docs/**/*.md`, the changed skill's `SKILL.md`, and any changed or referenced skill `references/**/*.md` or `assets/**/*.md` templates. For broad catalog or deployment work, also inspect all public `skills/**/SKILL.md` files so the catalog remains coherent.
 1. Keep every skill folder self-contained and installable.
 2. Keep `SKILL.md` concise and procedural.
 3. Use only `name` and `description` in `SKILL.md` frontmatter.
@@ -41,6 +42,10 @@ Before creating or changing a skill, read `guidance.md` and `NAMING.md`. Do not 
 - Preserve independent pages for `/`, `/skills`, `/skills/<skill-name>`, `/install`, `/docs`, and `/motion`.
 - Keep the install UI aligned with the Project, Global, and Try once command structure in `guidance.md` and `README.md`.
 - Verify zero horizontal overflow at 360px, 390px, 430px, tablet, desktop, and wide desktop before finishing frontend work.
+- After any public skill is added, removed, renamed, published, or materially updated, deploy the rebuilt marketplace to both production targets and verify the changed skill appears on Vercel and Cloudflare Pages:
+  - Vercel: `https://souvik-skills.vercel.app`
+  - Cloudflare Pages: `https://souvik-skills.pages.dev`
+  - Required routes: `/`, `/skills`, `/skills/<skill-name>`, `/install`, and `/docs`.
 - Run `npm run validate:skills` and `npm run build` after landing page or skill catalog updates.
 
 ## Creating A New Skill
@@ -58,7 +63,8 @@ npm run validate:skills
 ```
 
 8. Run `npm run build` when the new skill changes the public marketplace output.
-9. Add tests or examples when the skill includes scripts or deterministic behavior.
+9. Deploy and verify both hosted sites when the skill is public: Vercel and Cloudflare Pages must show the new skill before the task is done.
+10. Add tests or examples when the skill includes scripts or deterministic behavior.
 
 ## Updating Existing Skills
 
@@ -69,6 +75,7 @@ When changing a skill:
 - Update the frontend helpers or pages if the skill update changes categories, resources, commands, public copy, routing, or install behavior.
 - Update `package.json` only when package metadata or CLI behavior changes.
 - Reinstall the updated skill into Codex when the change is meant for immediate local use.
+- Redeploy and verify both hosted sites when the update changes public skill content or marketplace pages.
 - Run validation before finishing.
 
 ## GitHub And NPM Sync Protocol
@@ -124,7 +131,8 @@ npx -y @imsovikde/skills@latest install <skill-name> --dest <temp-dir> --force
 ```
 
 11. If the package changed but Release Please does not open a release PR, check the commit type. Use a release-triggering Conventional Commit such as `feat:` or `fix:` when the package contents must reach NPM/NPX.
-12. Finish only after reporting the GitHub commit, release PR or release URL, NPM version, package publish status, local Codex reinstall status, and any check that could not be run.
+12. Deploy the current `main` build to Vercel and Cloudflare Pages when public frontend or skill catalog output changed. Verify both hosted domains include the changed skill on `/`, `/skills`, `/skills/<skill-name>`, `/install`, and `/docs`.
+13. Finish only after reporting the GitHub commit, release PR or release URL, NPM version, package publish status, Vercel deployment status, Cloudflare Pages deployment status, local Codex reinstall status, and any check that could not be run.
 
 Do not commit NPM, GitHub, Vercel, Cloudflare, or other secrets. Use the existing GitHub Actions release automation; manual `npm publish` is only a fallback when the user explicitly asks and automation cannot complete.
 
@@ -136,5 +144,6 @@ A change is release-ready only when:
 - Relevant tests pass.
 - Install commands still work.
 - Documentation reflects the current skill names.
+- Vercel and Cloudflare Pages show the current public skill catalog when frontend or skill content changed.
 - License and ownership information remain intact.
 - Release Please and package publishing are verified when the user requested NPM/NPX sync.

@@ -17,12 +17,31 @@ npm test
 npm run build
 ```
 
+When a public skill is added, removed, renamed, published, or materially updated, deploy both hosted marketplaces and verify the new catalog state on:
+
+- `https://souvik-skills.vercel.app`
+- `https://souvik-skills.pages.dev`
+
+Required verification routes:
+
+- `/`
+- `/skills`
+- `/skills/<skill-name>`
+- `/install`
+- `/docs`
+
 ## Vercel
 
 Vercel can build the project from source:
 
 ```bash
 vercel --prod
+```
+
+For a stale production site, force a fresh production deployment from the current `main` build:
+
+```bash
+vercel --prod --force
 ```
 
 Expected settings:
@@ -38,6 +57,12 @@ Use Wrangler direct upload after a successful build:
 
 ```bash
 npx wrangler pages deploy out --project-name souvik-skills
+```
+
+For public skill catalog changes, deploy the current `out/` directory to the production branch:
+
+```bash
+npx wrangler pages deploy out --project-name souvik-skills --branch main
 ```
 
 Expected settings for a Git-connected Pages project:
