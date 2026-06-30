@@ -25,7 +25,8 @@ export function SkillCard({ skill, index = 0 }) {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: Math.min(index * 0.035, 0.22) }}
-      whileHover={{ y: -4, scale: 1.01 }}
+      whileHover={{ y: -2, scale: 1.008 }}
+      whileTap={{ scale: 0.996 }}
     >
       <div className="mac-toolbar">
         <span className="traffic red" />

@@ -21,9 +21,10 @@ export function InstallCard({ skillName, title = "Install skill" }) {
   return (
     <motion.section
       className="install-card"
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
+      transition={{ type: "spring", stiffness: 360, damping: 34, mass: 0.9 }}
     >
       <div className="install-inner">
         <div>

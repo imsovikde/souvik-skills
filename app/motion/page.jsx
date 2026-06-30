@@ -42,7 +42,7 @@ export default function MotionPage() {
           <div className="section-heading">
             <p className="eyebrow">Motion engineering</p>
             <div>
-              <h1 style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}>Responsive, not noisy.</h1>
+              <h1 className="page-title">Responsive, not noisy.</h1>
               <p className="lede" style={{ marginTop: 18 }}>
                 Motion on this site exists to confirm input, preserve orientation, and make install actions feel precise.
               </p>

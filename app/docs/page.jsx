@@ -39,7 +39,7 @@ export default function DocsPage() {
           <div className="section-heading">
             <p className="eyebrow">Documentation</p>
             <div>
-              <h1 style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}>A marketplace that documents itself.</h1>
+              <h1 className="page-title">A marketplace that documents itself.</h1>
               <p className="lede" style={{ marginTop: 18 }}>
                 Souvik Skills uses repository rules, design rules, and motion rules so future frontend work remains
                 consistent and mobile-safe.
@@ -79,7 +79,7 @@ export default function DocsPage() {
           </div>
 
           <div className="content-card">
-            <h2 className="display" style={{ fontSize: "clamp(2rem, 5vw, 4rem)" }}>
+            <h2 className="display compact">
               Current catalog
             </h2>
             <ul className="list">

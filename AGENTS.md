@@ -35,7 +35,9 @@ Before creating or changing a skill, read `guidance.md` and `NAMING.md`. Do not 
 
 ## Landing Page Maintenance
 
-- Before changing frontend routes, layouts, cards, install modules, copy buttons, logo assets, or responsive behavior, read `DESIGN.md` and `MOTION.md`.
+- Before changing frontend routes, layouts, cards, install modules, copy buttons, logo assets, typography, animation, theme behavior, or responsive behavior, read `DESIGN.md` and `MOTION.md` completely and treat them as the implementation contract. If a user says `notion.md` while discussing site motion, read and update `MOTION.md`.
+- Update `DESIGN.md` in the same change when the frontend visual language, typography, layout rules, color system, component styling, or responsive behavior materially changes.
+- Update `MOTION.md` in the same change when animation tokens, interaction feedback, route transitions, copy feedback, theme motion, reduced-motion behavior, or motion QA rules materially change.
 - The Next.js marketplace derives public skill pages from the `skills/` directory at build time.
 - Do not hard-code current public skill names as the source of truth for site routing or catalog generation.
 - After adding, removing, renaming, publishing, or materially updating any public skill, inspect and update the marketplace frontend where needed so `/`, `/skills`, `/skills/<skill-name>`, `/install`, and `/docs` reflect the current `skills/` content and install model.

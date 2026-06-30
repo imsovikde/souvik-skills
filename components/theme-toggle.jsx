@@ -41,7 +41,9 @@ export function ThemeToggle() {
 
     setTransitioning(true);
 
-    if (!document.startViewTransition) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!document.startViewTransition || reduceMotion) {
       applyTheme(nextTheme);
       setTheme(nextTheme);
       window.setTimeout(() => setTransitioning(false), 160);

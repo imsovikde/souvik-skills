@@ -42,7 +42,7 @@ npm run build
 
 | Skill | Purpose |
 | --- | --- |
-| `delink-github` | Safely remove Git history, GitHub remotes, and root `.github` files before starting clean local history. |
+| `delink-github` | Safely isolate copied repositories by removing Git history, GitHub workflow metadata, inherited license metadata, stale names, outside links, and author contacts before starting clean local history. |
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
 | `motioncraft` | Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification. |
@@ -121,7 +121,7 @@ After installation, restart Codex so the new skill metadata is loaded.
 Example prompts:
 
 ```text
-Use $delink-github to safely detach this repository from GitHub and start clean local Git history.
+Use $delink-github to safely detach, rename, clean inherited metadata, purge GitHub linkage, and start clean local Git history for this repository.
 Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, and release-ready.
 Use $magento-team-lead to lead this Adobe Commerce implementation review.
 Use $motioncraft to design a project-specific premium motion system for this interface with a motion intent map, tokens, reduced-motion variants, and browser verification.

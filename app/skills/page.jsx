@@ -16,7 +16,7 @@ export default function SkillsPage() {
           <div className="section-heading">
             <p className="eyebrow">Skill marketplace</p>
             <div>
-              <h1 style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}>Every skill gets a page.</h1>
+              <h1 className="page-title">Every skill gets a page.</h1>
               <p className="lede" style={{ marginTop: 18 }}>
                 Search the catalog, compare workflows, and open a complete page for installation and source context.
               </p>

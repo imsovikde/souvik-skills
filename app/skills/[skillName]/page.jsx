@@ -56,14 +56,14 @@ export default async function SkillPage({ params }) {
             <div style={{ display: "grid", gap: 20, minWidth: 0 }}>
               <div className="content-card">
                 <p className="eyebrow">{skill.category}</p>
-                <h1 style={{ maxWidth: "none", fontSize: "clamp(2.9rem, 8vw, 5.8rem)" }}>{skill.displayName}</h1>
+                <h1 className="skill-title">{skill.displayName}</h1>
                 <p className="lede" style={{ marginTop: 20 }}>
                   {skill.description}
                 </p>
               </div>
 
               <div className="content-card dark">
-                <h2 className="display" style={{ fontSize: "clamp(2rem, 5vw, 4rem)" }}>
+                <h2 className="display compact">
                   What this skill adds
                 </h2>
                 <div className="markdown-snippet" style={{ marginTop: 18, color: "var(--panel-muted)" }}>
@@ -82,7 +82,7 @@ export default async function SkillPage({ params }) {
               </div>
 
               <div className="content-card">
-                <h2 className="display" style={{ fontSize: "clamp(2rem, 5vw, 4rem)" }}>
+                <h2 className="display compact">
                   Default agent prompt
                 </h2>
                 <div className="command-strip" style={{ marginTop: 18, background: "var(--panel)" }}>

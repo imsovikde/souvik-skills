@@ -1,8 +1,21 @@
 import "./globals.css";
+import { Bricolage_Grotesque, Geist_Mono } from "next/font/google";
 import { SiteNav } from "@/components/site-nav";
 import { PageTransition } from "@/components/page-transition";
 import { LogoMark } from "@/components/brand";
 import { githubUrl, npmUrl, siteUrl } from "@/lib/agents";
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bricolage"
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono"
+});
 
 export const metadata = {
   title: {
@@ -45,7 +58,7 @@ const themeScript = `
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
+    <html lang="en" className={`light ${bricolage.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <SiteNav />

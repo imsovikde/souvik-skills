@@ -17,7 +17,7 @@ export default function InstallPage() {
           <div className="section-heading">
             <p className="eyebrow">Install matrix</p>
             <div>
-              <h1 style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}>Project, global, or try once.</h1>
+              <h1 className="page-title">Project, global, or try once.</h1>
               <p className="lede" style={{ marginTop: 18 }}>
                 Each skill gets the same macOS-style installer module with Core 6 agent support and animated copy actions.
               </p>

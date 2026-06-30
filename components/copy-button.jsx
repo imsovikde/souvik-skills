@@ -47,25 +47,28 @@ export function CopyButton({ value, label = "Copy command", className = "copy-bu
         type="button"
         aria-label={label}
         onClick={handleCopy}
-        whileTap={{ scale: 0.92 }}
-        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+        whileHover={{ scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 520, damping: 36, mass: 0.8 }}
       >
         <AnimatePresence mode="wait" initial={false}>
           {copied ? (
             <motion.span
               key="check"
-              initial={{ opacity: 0, scale: 0.55, rotate: -20 }}
+              initial={{ opacity: 0, scale: 0.72, rotate: -12 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.55, rotate: 20 }}
+              exit={{ opacity: 0, scale: 0.72, rotate: 12 }}
+              transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
               <Check size={18} aria-hidden="true" />
             </motion.span>
           ) : (
             <motion.span
               key="copy"
-              initial={{ opacity: 0, scale: 0.65 }}
+              initial={{ opacity: 0, scale: 0.78 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.65 }}
+              exit={{ opacity: 0, scale: 0.78 }}
+              transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
             >
               <Copy size={18} aria-hidden="true" />
             </motion.span>
@@ -80,9 +83,10 @@ export function CopyButton({ value, label = "Copy command", className = "copy-bu
             className="toast copy-toast"
             role="status"
             aria-live="polite"
-            initial={{ opacity: 0, y: 12, scale: 0.96 }}
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            exit={{ opacity: 0, y: 6, scale: 0.99 }}
+            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
           >
             <Check size={16} aria-hidden="true" />
             Copied command
