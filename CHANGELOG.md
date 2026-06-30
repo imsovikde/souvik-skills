@@ -2,6 +2,19 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.5.0](https://github.com/imsovikde/souvik-skills/compare/v0.4.0...v0.5.0) (2026-06-30)
+
+
+### Features
+
+* harden score2md media conversion ([324c228](https://github.com/imsovikde/souvik-skills/commit/324c228db7b910c92d27a652657735015af017bd))
+
+
+### Bug Fixes
+
+* require hosted skill marketplace updates ([aa80157](https://github.com/imsovikde/souvik-skills/commit/aa801577ec938a6b4a64b4af3d70179e7e1739f3))
+* require verified skill deployments ([91263ff](https://github.com/imsovikde/souvik-skills/commit/91263ffa1c5668ec5cdc245ef33dc4ba007adb91))
+
 ## [0.4.0](https://github.com/imsovikde/souvik-skills/compare/v0.3.0...v0.4.0) (2026-06-29)
 
 
