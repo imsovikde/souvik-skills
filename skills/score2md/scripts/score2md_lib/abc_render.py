@@ -235,7 +235,16 @@ def render_abc(model: ScoreModel, options: RenderOptions) -> tuple[str, dict[str
     current_key = model.first_key.abc_name
     current_meter = model.first_time.abc_name
     line_measures = max(1, options.line_measures)
-    rendered_counts = {"pitched_notes": 0, "rests": 0, "chord_events": 0}
+    rendered_counts = {
+        "pitched_notes": 0,
+        "rests": 0,
+        "chord_events": 0,
+        "grace_notes": 0,
+        "ties": 0,
+        "key_changes": 0,
+        "time_changes": 0,
+        "repeats_endings": 0,
+    }
 
     start = 0
     while start < max_measure:
@@ -252,9 +261,20 @@ def render_abc(model: ScoreModel, options: RenderOptions) -> tuple[str, dict[str
         if first_measure.key.abc_name != current_key:
             current_key = first_measure.key.abc_name
             lines.append(f"K:{current_key}")
+            rendered_counts["key_changes"] += 1
         if first_measure.time.abc_name != current_meter:
             current_meter = first_measure.time.abc_name
             lines.append(f"M:{current_meter}")
+            rendered_counts["time_changes"] += 1
+
+        for measure_index in group_indices:
+            measure_model = measures_by_index[measure_index][0]
+            if measure_model.repeat_start:
+                rendered_counts["repeats_endings"] += 1
+            if measure_model.repeat_end:
+                rendered_counts["repeats_endings"] += 1
+            if measure_model.ending:
+                rendered_counts["repeats_endings"] += 1
 
         for label in labels:
             rendered_measures: list[str] = []
@@ -273,6 +293,9 @@ def render_abc(model: ScoreModel, options: RenderOptions) -> tuple[str, dict[str
                                     rendered_counts["chord_events"] += 1
                             elif event.kind == "rest":
                                 rendered_counts["rests"] += 1
+                            rendered_counts["grace_notes"] += len(event.grace)
+                            if event.tie_start or event.tie_stop:
+                                rendered_counts["ties"] += 1
                 prefix = ""
                 if measure_model.repeat_start:
                     prefix += "|: "

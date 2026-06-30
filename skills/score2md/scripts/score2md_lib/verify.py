@@ -18,18 +18,9 @@ def source_counts(model: ScoreModel) -> dict[str, int]:
     key_sequence: list[str] = []
     time_sequence: list[str] = []
     repeats_endings = 0
-    measures = 0
+    measures = max((len(part.measures) for part in model.parts), default=0)
     for part in model.parts:
         for measure in part.measures:
-            measures += 1
-            key_sequence.append(measure.key.abc_name)
-            time_sequence.append(measure.time.abc_name)
-            if measure.repeat_start:
-                repeats_endings += 1
-            if measure.repeat_end:
-                repeats_endings += 1
-            if measure.ending:
-                repeats_endings += 1
             for event in measure.events:
                 staves.add(event.staff)
                 if event.kind == "rest":
@@ -41,6 +32,18 @@ def source_counts(model: ScoreModel) -> dict[str, int]:
                 grace_notes += len(event.grace)
                 if event.tie_start or event.tie_stop:
                     ties += 1
+    for measure_index in range(measures):
+        representative = next((part.measures[measure_index] for part in model.parts if measure_index < len(part.measures)), None)
+        if representative is None:
+            continue
+        key_sequence.append(representative.key.abc_name)
+        time_sequence.append(representative.time.abc_name)
+        if representative.repeat_start:
+            repeats_endings += 1
+        if representative.repeat_end:
+            repeats_endings += 1
+        if representative.ending:
+            repeats_endings += 1
     key_changes = max(0, len([k for i, k in enumerate(key_sequence) if i == 0 or k != key_sequence[i - 1]]) - 1)
     time_changes = max(0, len([t for i, t in enumerate(time_sequence) if i == 0 or t != time_sequence[i - 1]]) - 1)
     return {
@@ -66,7 +69,16 @@ def verify_model(model: ScoreModel, rendered_counts: dict[str, int], strict: boo
     symbolic = source_format in {"mxl", "musicxml", "xml"}
     if symbolic:
         mismatches = []
-        for key in ("pitched_notes", "rests", "chord_events"):
+        for key in (
+            "pitched_notes",
+            "rests",
+            "chord_events",
+            "grace_notes",
+            "ties",
+            "key_changes",
+            "time_changes",
+            "repeats_endings",
+        ):
             if counts[key] != rendered_counts.get(key, -1):
                 mismatches.append(f"{key}: source={counts[key]} rendered={rendered_counts.get(key)}")
         if mismatches:

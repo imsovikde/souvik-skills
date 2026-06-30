@@ -47,9 +47,9 @@ Use the built-in converter for:
 
 Use adapters for:
 
-- `.pdf`: render pages to images, run oemer, join MusicXML, then convert.
-- `.png`, `.jpg`, `.jpeg`, `.tiff`, `.webp`: run oemer, then convert.
-- YouTube/audio/video: call a configured oh-sheet service and download its MusicXML artifact.
+- `.pdf`: render pages to images, run an installed OMR backend, join MusicXML, then convert.
+- `.png`, `.jpg`, `.jpeg`, `.tiff`, `.webp`: run an installed OMR backend, then convert.
+- YouTube/audio/video: call a configured oh-sheet service and download its MusicXML artifact; local video is extracted to WAV first.
 
 Read `references/source-routing.md` before working on PDF/image/audio/YouTube paths.
 Read `references/abc-markdown.md` before debugging ABC rendering or manually inspecting output.

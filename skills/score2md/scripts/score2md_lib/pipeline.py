@@ -26,6 +26,11 @@ class ConversionOptions:
     keep_intermediate: bool = False
     musescore_path: str | None = None
     omr_workers: int = 2
+    omr_module: str | None = None
+    ffmpeg_path: str | None = None
+    refresh_cache: bool = False
+    ohsheet_timeout: int = 900
+    ohsheet_prefer_clean_source: bool = True
 
 
 @dataclass
@@ -36,6 +41,8 @@ class ConversionResult:
     musicxml_path: str | None
     markdown_path: str
     abc_path: str | None
+    cache_path: str | None
+    used_cache: bool
     verification: VerificationReport | None
     warnings: list[str] = field(default_factory=list)
 
@@ -47,40 +54,70 @@ class ConversionResult:
             "musicxml_path": self.musicxml_path,
             "markdown_path": self.markdown_path,
             "abc_path": self.abc_path,
+            "cache_path": self.cache_path,
+            "used_cache": self.used_cache,
             "verification": self.verification.to_dict() if self.verification else None,
             "warnings": self.warnings,
         }
 
 
-def cache_key(source: str | Path, options: ConversionOptions) -> str:
-    h = hashlib.sha256()
+def hash_source(h: "hashlib._Hash", source: str | Path) -> None:
     path = Path(str(source))
     if path.exists():
-        h.update(path.read_bytes())
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                h.update(chunk)
     else:
         h.update(str(source).encode("utf-8"))
-    h.update(json.dumps(options.__dict__, sort_keys=True).encode("utf-8"))
-    h.update(b"score2md-v1")
+
+
+def cache_key(source: str | Path, options: ConversionOptions) -> str:
+    h = hashlib.sha256()
+    hash_source(h, source)
+    cache_options = {key: value for key, value in options.__dict__.items() if key != "refresh_cache"}
+    h.update(json.dumps(cache_options, sort_keys=True).encode("utf-8"))
+    h.update(b"score2md-v2")
     return h.hexdigest()
 
 
-def normalize_to_musicxml(source: str | Path, kind: str, output_dir: Path, options: ConversionOptions) -> Path | None:
+def normalize_to_musicxml(
+    source: str | Path,
+    kind: str,
+    output_dir: Path,
+    options: ConversionOptions,
+) -> tuple[Path | None, bool]:
     path = Path(str(source))
     output_dir.mkdir(parents=True, exist_ok=True)
     if kind in {"mxl", "musicxml", "xml"}:
-        return path
+        return path, False
     normalized = output_dir / "normalized.musicxml"
+    if normalized.exists() and not options.refresh_cache:
+        return normalized, True
     if kind == "midi":
-        return midi_to_musicxml(path, normalized, options.musescore_path)
+        return midi_to_musicxml(path, normalized, options.musescore_path), False
     if kind == "pdf":
-        return pdf_to_musicxml(path, normalized, omr_workers=options.omr_workers)
+        return pdf_to_musicxml(path, normalized, omr_workers=options.omr_workers, omr_module=options.omr_module), False
     if kind == "image":
-        return image_to_musicxml(path, normalized)
+        return image_to_musicxml(path, normalized, omr_module=options.omr_module), False
     if kind in {"audio", "video"}:
-        return ohsheet_to_musicxml(path, normalized, is_youtube=False)
+        return ohsheet_to_musicxml(
+            path,
+            normalized,
+            is_youtube=False,
+            is_video=kind == "video",
+            ffmpeg_path=options.ffmpeg_path,
+            timeout_sec=options.ohsheet_timeout,
+            prefer_clean_source=options.ohsheet_prefer_clean_source,
+        ), False
     if kind == "youtube":
-        return ohsheet_to_musicxml(str(source), normalized, is_youtube=True)
-    return None
+        return ohsheet_to_musicxml(
+            str(source),
+            normalized,
+            is_youtube=True,
+            timeout_sec=options.ohsheet_timeout,
+            prefer_clean_source=options.ohsheet_prefer_clean_source,
+        ), False
+    return None, False
 
 
 def strip_abc_fence(text: str) -> str:
@@ -155,9 +192,20 @@ def convert_to_md(source: str | Path, output_path: str | Path, **kwargs) -> Conv
             warnings=shape_problems,
         )
         write_report(report, Path(str(output) + ".verify.json"))
-        return ConversionResult(str(source), kind, tier, None, str(output), str(abc_path), report, shape_problems)
+        return ConversionResult(
+            str(source),
+            kind,
+            tier,
+            None,
+            str(output),
+            str(abc_path),
+            str(work_dir),
+            False,
+            report,
+            shape_problems,
+        )
 
-    musicxml_path = normalize_to_musicxml(source, kind, work_dir, options)
+    musicxml_path, used_cache = normalize_to_musicxml(source, kind, work_dir, options)
     if musicxml_path is None:
         raise ValueError(f"Could not normalize {source} to MusicXML")
     model = parse_score(musicxml_path, kind, tier)
@@ -185,6 +233,8 @@ def convert_to_md(source: str | Path, output_path: str | Path, **kwargs) -> Conv
         musicxml_path=str(musicxml_path),
         markdown_path=str(output),
         abc_path=str(abc_path),
+        cache_path=str(work_dir),
+        used_cache=used_cache,
         verification=report,
         warnings=report.warnings,
     )

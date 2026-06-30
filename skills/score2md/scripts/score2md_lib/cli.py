@@ -20,6 +20,12 @@ def add_common_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--keep-intermediate", action="store_true")
     parser.add_argument("--musescore-path")
     parser.add_argument("--omr-workers", type=int, default=2)
+    parser.add_argument("--omr-module")
+    parser.add_argument("--ffmpeg-path")
+    parser.add_argument("--refresh-cache", action="store_true")
+    parser.add_argument("--ohsheet-timeout", type=int, default=900)
+    parser.add_argument("--ohsheet-prefer-clean-source", dest="ohsheet_prefer_clean_source", action="store_true", default=True)
+    parser.add_argument("--no-ohsheet-prefer-clean-source", dest="ohsheet_prefer_clean_source", action="store_false")
 
 
 def options_from_args(args: argparse.Namespace) -> dict:
@@ -32,6 +38,11 @@ def options_from_args(args: argparse.Namespace) -> dict:
         "keep_intermediate": args.keep_intermediate,
         "musescore_path": args.musescore_path,
         "omr_workers": args.omr_workers,
+        "omr_module": args.omr_module,
+        "ffmpeg_path": args.ffmpeg_path,
+        "refresh_cache": args.refresh_cache,
+        "ohsheet_timeout": args.ohsheet_timeout,
+        "ohsheet_prefer_clean_source": args.ohsheet_prefer_clean_source,
     }
 
 
@@ -45,7 +56,7 @@ def cmd_to_musicxml(args: argparse.Namespace) -> int:
     kind = detect_source(args.input)
     options = ConversionOptions(**options_from_args(args))
     out = Path(args.out)
-    normalized = normalize_to_musicxml(args.input, kind, out.parent / ".score2md-cache", options)
+    normalized, _used_cache = normalize_to_musicxml(args.input, kind, out.parent / ".score2md-cache", options)
     if normalized is None:
         raise ValueError(f"Could not normalize {args.input}")
     if Path(normalized).resolve() != out.resolve():

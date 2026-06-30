@@ -21,7 +21,10 @@ def detect_source(source: str | Path) -> SourceKind:
     if YOUTUBE_RE.search(value):
         return "youtube"
     if is_url(value):
-        return "audio"
+        raise ValueError(
+            "HTTP/HTTPS URLs are only supported for YouTube sources. "
+            "Download direct audio or video URLs to a local file before converting."
+        )
 
     suffix = Path(value).suffix.lower()
     if suffix == ".mxl":
