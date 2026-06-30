@@ -17,6 +17,7 @@ if str(SCRIPT_DIR) not in sys.path:
 from score2md_lib.adapters import AdapterError, find_musescore_binary, find_omr_command, ohsheet_to_musicxml, run_oemer_image
 from score2md_lib.detect import detect_source
 from score2md_lib.pipeline import convert_to_md
+from score2md_lib.preflight import PreflightError
 
 
 FIXTURE = SCRIPT_DIR.parent / "assets" / "examples" / "simple-piano.musicxml"
@@ -206,6 +207,128 @@ class Score2MdTests(unittest.TestCase):
         finally:
             if old_value is not None:
                 os.environ["SCORE2MD_OHSHEET_URL"] = old_value
+
+    @patch("score2md_lib.pipeline.ohsheet_to_musicxml")
+    @patch("score2md_lib.preflight.fetch_youtube_metadata")
+    def test_youtube_podcast_preflight_rejects_before_ohsheet(
+        self,
+        mock_metadata: MagicMock,
+        mock_ohsheet: MagicMock,
+    ) -> None:
+        mock_metadata.return_value = {
+            "title": "Founder Podcast Interview about AI startups",
+            "description": "A long-form interview and discussion with our guest.",
+            "duration_seconds": 1800,
+            "transcript": "Welcome back to the podcast. Today we're joined by our guest for an interview.",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(PreflightError, "preflight rejected"):
+                convert_to_md("https://youtu.be/podcast", Path(tmp) / "podcast.md")
+        mock_ohsheet.assert_not_called()
+
+    @patch("score2md_lib.pipeline.ohsheet_to_musicxml")
+    @patch("score2md_lib.preflight.fetch_youtube_metadata")
+    def test_valid_instrumental_piano_preflight_can_proceed(
+        self,
+        mock_metadata: MagicMock,
+        mock_ohsheet: MagicMock,
+    ) -> None:
+        mock_metadata.return_value = {
+            "title": "Chopin Nocturne Op. 9 No. 2 solo piano sheet music",
+            "description": "Instrumental piano performance with score.",
+            "duration_seconds": 260,
+        }
+
+        def fake_ohsheet(_source, output, **_kwargs):
+            Path(output).write_bytes(FIXTURE.read_bytes())
+            return Path(output)
+
+        mock_ohsheet.side_effect = fake_ohsheet
+        with tempfile.TemporaryDirectory() as tmp:
+            result = convert_to_md("https://youtu.be/piano", Path(tmp) / "piano.md")
+            self.assertEqual(result.source_type, "youtube")
+            self.assertFalse(result.used_cache)
+        self.assertEqual(mock_ohsheet.call_count, 1)
+
+    @patch("score2md_lib.pipeline.ohsheet_to_musicxml")
+    @patch("score2md_lib.preflight.fetch_youtube_metadata")
+    def test_skip_preflight_bypasses_metadata_and_allows_submission(
+        self,
+        mock_metadata: MagicMock,
+        mock_ohsheet: MagicMock,
+    ) -> None:
+        def fake_ohsheet(_source, output, **_kwargs):
+            Path(output).write_bytes(FIXTURE.read_bytes())
+            return Path(output)
+
+        mock_ohsheet.side_effect = fake_ohsheet
+        with tempfile.TemporaryDirectory() as tmp:
+            convert_to_md("https://youtu.be/unknown", Path(tmp) / "unknown.md", skip_preflight=True)
+        mock_metadata.assert_not_called()
+        self.assertEqual(mock_ohsheet.call_count, 1)
+
+    @patch("score2md_lib.pipeline.ohsheet_to_musicxml")
+    @patch("score2md_lib.preflight.fetch_youtube_metadata")
+    def test_allow_uncertain_audio_override(
+        self,
+        mock_metadata: MagicMock,
+        mock_ohsheet: MagicMock,
+    ) -> None:
+        mock_metadata.return_value = {"title": "Untitled clip", "description": "", "duration_seconds": 120}
+
+        def fake_ohsheet(_source, output, **_kwargs):
+            Path(output).write_bytes(FIXTURE.read_bytes())
+            return Path(output)
+
+        mock_ohsheet.side_effect = fake_ohsheet
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(PreflightError, "preflight uncertain"):
+                convert_to_md("https://youtu.be/uncertain", Path(tmp) / "blocked.md")
+            convert_to_md(
+                "https://youtu.be/uncertain",
+                Path(tmp) / "allowed.md",
+                allow_uncertain_audio=True,
+            )
+        self.assertEqual(mock_ohsheet.call_count, 1)
+
+    @patch("score2md_lib.pipeline.ohsheet_to_musicxml")
+    @patch("score2md_lib.preflight.fetch_youtube_metadata")
+    def test_rejected_preflight_decision_is_cached(
+        self,
+        mock_metadata: MagicMock,
+        mock_ohsheet: MagicMock,
+    ) -> None:
+        mock_metadata.return_value = {
+            "title": "University lecture on software engineering",
+            "description": "Lecture and discussion.",
+            "duration_seconds": 700,
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = "https://youtu.be/lecture"
+            for name in ["first.md", "second.md"]:
+                with self.assertRaises(PreflightError):
+                    convert_to_md(source, Path(tmp) / name)
+        self.assertEqual(mock_metadata.call_count, 1)
+        mock_ohsheet.assert_not_called()
+
+    @patch("score2md_lib.adapters._http_json")
+    @patch("score2md_lib.adapters.urllib.request.urlopen")
+    def test_ohsheet_job_cache_avoids_resubmission(self, mock_urlopen: MagicMock, mock_json: MagicMock) -> None:
+        import os
+
+        with tempfile.TemporaryDirectory() as tmp:
+            os.environ["SCORE2MD_OHSHEET_URL"] = "http://localhost:8000"
+            cache = Path(tmp) / "job.json"
+            cache.write_text('{"job_id": "cached"}', encoding="utf-8")
+            mock_json.return_value = {"status": "succeeded"}
+            response = MagicMock()
+            response.__enter__.return_value.read.return_value = b"<score-partwise/>"
+            mock_urlopen.return_value = response
+            out = Path(tmp) / "score.musicxml"
+            ohsheet_to_musicxml("https://youtu.be/example", out, is_youtube=True, job_cache_path=cache)
+            self.assertEqual(mock_json.call_count, 1)
+            self.assertIn("/v1/jobs/cached", mock_json.call_args.args[0])
+            self.assertTrue(out.exists())
 
     @patch("score2md_lib.adapters._http_json")
     def test_ohsheet_failed_job_reports_error(self, mock_json: MagicMock) -> None:

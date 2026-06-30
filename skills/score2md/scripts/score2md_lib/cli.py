@@ -26,6 +26,14 @@ def add_common_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--ohsheet-timeout", type=int, default=900)
     parser.add_argument("--ohsheet-prefer-clean-source", dest="ohsheet_prefer_clean_source", action="store_true", default=True)
     parser.add_argument("--no-ohsheet-prefer-clean-source", dest="ohsheet_prefer_clean_source", action="store_false")
+    parser.add_argument("--skip-preflight", action="store_true", help="Bypass the audio/YouTube/video resource guard.")
+    parser.add_argument(
+        "--allow-uncertain-audio",
+        action="store_true",
+        help="Allow audio/YouTube/video sources that preflight cannot confidently classify as music.",
+    )
+    parser.add_argument("--max-media-duration", dest="max_media_duration_sec", type=int, default=900)
+    parser.add_argument("--youtube-metadata-timeout", type=int, default=8)
 
 
 def options_from_args(args: argparse.Namespace) -> dict:
@@ -43,6 +51,10 @@ def options_from_args(args: argparse.Namespace) -> dict:
         "refresh_cache": args.refresh_cache,
         "ohsheet_timeout": args.ohsheet_timeout,
         "ohsheet_prefer_clean_source": args.ohsheet_prefer_clean_source,
+        "skip_preflight": args.skip_preflight,
+        "allow_uncertain_audio": args.allow_uncertain_audio,
+        "max_media_duration_sec": args.max_media_duration_sec,
+        "youtube_metadata_timeout": args.youtube_metadata_timeout,
     }
 
 

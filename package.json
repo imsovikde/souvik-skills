@@ -64,7 +64,7 @@
     "test:delink-github": "python skills/delink-github/scripts/test_delink.py",
     "test:score2md": "python skills/score2md/scripts/run_tests.py",
     "validate:skills": "node scripts/validate-skills.cjs",
-    "test": "npm run validate:skills && npm run test:delink-github"
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md"
   },
   "engines": {
     "node": ">=20.9.0"

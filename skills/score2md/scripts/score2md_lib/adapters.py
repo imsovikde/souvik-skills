@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import http.client
 import importlib.util
 import shutil
 import subprocess
@@ -275,21 +276,56 @@ def _http_json(url: str, method: str = "GET", body: dict | None = None, timeout:
 
 def _http_upload(url: str, file_path: Path, field: str = "file", timeout: int = 120) -> dict:
     boundary = "----score2mdBoundary"
-    data = file_path.read_bytes()
     header = (
         f"--{boundary}\r\n"
         f'Content-Disposition: form-data; name="{field}"; filename="{file_path.name}"\r\n'
         "Content-Type: application/octet-stream\r\n\r\n"
     ).encode("utf-8")
     footer = f"\r\n--{boundary}--\r\n".encode("utf-8")
-    request = urllib.request.Request(
-        url,
-        data=header + data + footer,
-        method="POST",
-        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+    parsed = urllib.parse.urlsplit(url)
+    connection_cls = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+    path = urllib.parse.urlunsplit(("", "", parsed.path or "/", parsed.query, ""))
+    length = len(header) + file_path.stat().st_size + len(footer)
+    connection = connection_cls(parsed.netloc, timeout=timeout)
+    try:
+        connection.putrequest("POST", path)
+        connection.putheader("Host", parsed.netloc)
+        connection.putheader("Content-Type", f"multipart/form-data; boundary={boundary}")
+        connection.putheader("Content-Length", str(length))
+        connection.endheaders()
+        connection.send(header)
+        with file_path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                connection.send(chunk)
+        connection.send(footer)
+        response = connection.getresponse()
+        payload = response.read()
+        if response.status >= 400:
+            raise urllib.error.HTTPError(url, response.status, response.reason, response.headers, None)
+        return json.loads(payload.decode("utf-8"))
+    finally:
+        connection.close()
+
+
+def _load_cached_job(job_cache_path: Path | None) -> str | None:
+    if not job_cache_path or not job_cache_path.exists():
+        return None
+    try:
+        data = json.loads(job_cache_path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    job_id = data.get("job_id")
+    return str(job_id) if job_id else None
+
+
+def _write_cached_job(job_cache_path: Path | None, job_id: str, body: dict) -> None:
+    if not job_cache_path:
+        return
+    job_cache_path.parent.mkdir(parents=True, exist_ok=True)
+    job_cache_path.write_text(
+        json.dumps({"job_id": job_id, "request": body, "created_at": time.time()}, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        return json.loads(response.read().decode("utf-8"))
 
 
 def ohsheet_to_musicxml(
@@ -301,24 +337,32 @@ def ohsheet_to_musicxml(
     ffmpeg_path: str | Path | None = None,
     timeout_sec: int = 900,
     prefer_clean_source: bool = True,
+    job_cache_path: Path | None = None,
+    refresh_job: bool = False,
 ) -> Path:
     base = os.environ.get("SCORE2MD_OHSHEET_URL", "").rstrip("/")
     if not base:
         raise AdapterError("Set SCORE2MD_OHSHEET_URL to use audio, video, or YouTube conversion.")
-    if is_youtube:
-        job_body = {"title": str(source), "prefer_clean_source": prefer_clean_source}
-    else:
-        source_path = Path(source)
-        with tempfile.TemporaryDirectory(prefix="score2md-video-") if is_video else _null_tempdir() as tmp:
-            upload_path = source_path
-            if is_video:
-                upload_path = video_to_wav(source_path, Path(tmp) / f"{source_path.stem}.wav", ffmpeg_path)
-            audio = _http_upload(f"{base}/v1/uploads/audio", upload_path)
-        job_body = {"audio": audio, "title": source_path.stem, "prefer_clean_source": prefer_clean_source}
-    job = _http_json(f"{base}/v1/jobs", method="POST", body=job_body)
-    job_id = job.get("job_id")
+
+    job_body: dict = {}
+    job_id = None if refresh_job else _load_cached_job(job_cache_path)
     if not job_id:
-        raise AdapterError(f"oh-sheet did not return a job_id: {job}")
+        if is_youtube:
+            job_body = {"title": str(source), "prefer_clean_source": prefer_clean_source}
+        else:
+            source_path = Path(source)
+            with tempfile.TemporaryDirectory(prefix="score2md-video-") if is_video else _null_tempdir() as tmp:
+                upload_path = source_path
+                if is_video:
+                    upload_path = video_to_wav(source_path, Path(tmp) / f"{source_path.stem}.wav", ffmpeg_path)
+                audio = _http_upload(f"{base}/v1/uploads/audio", upload_path)
+            job_body = {"audio": audio, "title": source_path.stem, "prefer_clean_source": prefer_clean_source}
+        job = _http_json(f"{base}/v1/jobs", method="POST", body=job_body)
+        job_id = job.get("job_id")
+        if job_id:
+            _write_cached_job(job_cache_path, str(job_id), job_body)
+    if not job_id:
+        raise AdapterError("oh-sheet did not return a job_id.")
     deadline = time.time() + max(1, timeout_sec)
     while time.time() < deadline:
         status = _http_json(f"{base}/v1/jobs/{urllib.parse.quote(job_id)}")

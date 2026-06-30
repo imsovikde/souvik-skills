@@ -1,6 +1,6 @@
 ---
 name: score2md
-description: Deterministically convert music sources into one playable Markdown ABC file. Use when Codex needs to convert MusicXML, MXL, XML, ABC, MIDI, PDF sheet music, score images, audio, video, or YouTube links into Markdown-safe ABC notation while preserving symbolic notes, rests, chords, RH/LH piano voices, tempo, key, meter, ties, grace notes, repeats, and verification reports.
+description: Deterministically convert music sources into one playable Markdown ABC file with verification and resource-saving media preflight. Use when Codex needs to convert MusicXML, MXL, XML, ABC, MIDI, PDF sheet music, score images, audio, video, or YouTube links into Markdown-safe ABC notation while preserving symbolic notes, rests, chords, RH/LH piano voices, tempo, key, meter, ties, grace notes, repeats, and verification reports.
 ---
 
 # score2md
@@ -20,6 +20,13 @@ Run from the repository root or from any project with the skill installed:
 
 ```bash
 python skills/score2md/scripts/score2md.py convert INPUT --out OUTPUT.md --verify strict
+```
+
+Audio, video, and YouTube inputs are guarded by default. Use an override only when the user explicitly accepts transcription cost:
+
+```bash
+python skills/score2md/scripts/score2md.py convert INPUT --out OUTPUT.md --skip-preflight
+python skills/score2md/scripts/score2md.py convert INPUT --out OUTPUT.md --allow-uncertain-audio
 ```
 
 Useful subcommands:
@@ -49,10 +56,18 @@ Use adapters for:
 
 - `.pdf`: render pages to images, run an installed OMR backend, join MusicXML, then convert.
 - `.png`, `.jpg`, `.jpeg`, `.tiff`, `.webp`: run an installed OMR backend, then convert.
-- YouTube/audio/video: call a configured oh-sheet service and download its MusicXML artifact; local video is extracted to WAV first.
+- YouTube/audio/video: run preflight first, then call a configured oh-sheet service and download its MusicXML artifact; local video is extracted to WAV first.
 
 Read `references/source-routing.md` before working on PDF/image/audio/YouTube paths.
 Read `references/abc-markdown.md` before debugging ABC rendering or manually inspecting output.
+
+## Audio/YouTube Preflight
+
+Before submitting to oh-sheet, reject likely non-score sources such as podcasts, interviews, lectures, news, vlogs, spoken-word content, non-music videos, long media above the duration limit, and non-piano-looking sources when `compact-piano` output is requested.
+
+For YouTube, the preflight tries lightweight title/description/duration/caption checks. If metadata cannot be fetched or the source cannot be confidently approved, the default is to fail safely without submitting `/v1/jobs`. Use `--allow-uncertain-audio` for uncertain but not clearly bad sources, or `--skip-preflight` to bypass the guard entirely.
+
+Preflight decisions, oh-sheet job IDs, and normalized MusicXML are cached under `.score2md-cache`; use `--refresh-cache` to rerun metadata checks or media transcription.
 
 ## Required Markdown Shape
 
@@ -97,6 +112,7 @@ When the skill itself changes, run:
 ```bash
 python skills/score2md/scripts/run_tests.py
 npm run validate:skills
+npm test
 npm run build
 node bin/souvik-skills.cjs install score2md --force
 ```

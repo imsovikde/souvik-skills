@@ -48,7 +48,7 @@ Try `MuseScore4`, `MuseScore3`, `mscore`, `mscore3`, and `musescore` on PATH, pl
 
 ## YouTube And Audio
 
-Use a configured oh-sheet service. Set:
+Use the resource-saving preflight before calling a configured oh-sheet service. Set:
 
 ```text
 SCORE2MD_OHSHEET_URL=http://localhost:8000
@@ -60,7 +60,22 @@ Optional controls:
 --ohsheet-timeout 900
 --ohsheet-prefer-clean-source
 --no-ohsheet-prefer-clean-source
+--max-media-duration 900
+--allow-uncertain-audio
+--skip-preflight
 ```
+
+Default behavior protects transcription resources. It rejects before `/v1/jobs` when metadata, filename, duration, or captions indicate:
+
+- podcast, interview, lecture, webinar, conference, news, vlog, sermon, speech, audiobook, commentary, documentary, reaction, or other spoken-word content
+- non-music or not-confidently-music sources
+- live streams
+- media longer than `--max-media-duration` seconds
+- non-piano-looking sources while `--mode compact-piano` is requested
+
+`--allow-uncertain-audio` permits sources that are merely uncertain, such as missing positive metadata, but still blocks clear spoken/non-music rejects. `--skip-preflight` bypasses the guard entirely and should be used only when the user intentionally accepts the transcription cost.
+
+The preflight writes `<cache>/preflight.json`; successful oh-sheet submissions write `<cache>/ohsheet-job.json`; successful normalization writes `<cache>/normalized.musicxml`. Unless `--refresh-cache` is passed, these files prevent duplicate metadata fetches, duplicate `/v1/jobs` submissions, and duplicate transcription for the same source/options.
 
 For audio files:
 
@@ -79,9 +94,12 @@ Set `SCORE2MD_FFMPEG_PATH` or pass `--ffmpeg-path` when `ffmpeg` is not on PATH.
 
 For YouTube URLs:
 
-1. Submit `/v1/jobs` with `title` set to the URL.
-2. Poll the job.
-3. Download the MusicXML artifact.
+1. Fetch lightweight metadata through oEmbed and the watch page when possible.
+2. Inspect title, description, duration, and available caption text.
+3. Fail safely when metadata cannot be fetched or confidence is too low.
+4. Submit `/v1/jobs` with `title` set to the URL only after preflight approval or explicit override.
+5. Poll the job.
+6. Download the MusicXML artifact.
 
 Non-YouTube HTTP/HTTPS URLs are intentionally rejected in this version. Download direct media URLs to local files before converting.
 

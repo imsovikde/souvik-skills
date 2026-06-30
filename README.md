@@ -46,7 +46,7 @@ npm run build
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
 | `motioncraft` | Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification. |
-| `score2md` | Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports. |
+| `score2md` | Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight. |
 
 ## Cross-Agent Install
 
@@ -126,6 +126,7 @@ Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, an
 Use $magento-team-lead to lead this Adobe Commerce implementation review.
 Use $motioncraft to design a project-specific premium motion system for this interface with a motion intent map, tokens, reduced-motion variants, and browser verification.
 Use $score2md to convert this MusicXML score into a verified playable Markdown ABC file.
+Use $score2md to convert this piano YouTube link only if the media preflight approves it, or explain how to override with --skip-preflight.
 ```
 
 ## Repository Standard

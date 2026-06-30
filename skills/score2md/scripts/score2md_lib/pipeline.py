@@ -10,6 +10,7 @@ from .adapters import image_to_musicxml, midi_to_musicxml, ohsheet_to_musicxml, 
 from .detect import detect_source, reliability_tier, status_for_kind
 from .models import VerificationReport
 from .musicxml_reader import parse_score
+from .preflight import DEFAULT_MAX_MEDIA_DURATION_SECONDS, run_media_preflight
 from .verify import verify_markdown_shape, verify_model, write_report
 
 
@@ -31,6 +32,10 @@ class ConversionOptions:
     refresh_cache: bool = False
     ohsheet_timeout: int = 900
     ohsheet_prefer_clean_source: bool = True
+    skip_preflight: bool = False
+    allow_uncertain_audio: bool = False
+    max_media_duration_sec: int = DEFAULT_MAX_MEDIA_DURATION_SECONDS
+    youtube_metadata_timeout: int = 8
 
 
 @dataclass
@@ -100,6 +105,17 @@ def normalize_to_musicxml(
     if kind == "image":
         return image_to_musicxml(path, normalized, omr_module=options.omr_module), False
     if kind in {"audio", "video"}:
+        run_media_preflight(
+            path,
+            kind,
+            output_dir / "preflight.json",
+            mode=options.mode,
+            skip_preflight=options.skip_preflight,
+            allow_uncertain_audio=options.allow_uncertain_audio,
+            refresh_cache=options.refresh_cache,
+            max_media_duration_sec=options.max_media_duration_sec,
+            ffmpeg_path=options.ffmpeg_path,
+        )
         return ohsheet_to_musicxml(
             path,
             normalized,
@@ -108,14 +124,29 @@ def normalize_to_musicxml(
             ffmpeg_path=options.ffmpeg_path,
             timeout_sec=options.ohsheet_timeout,
             prefer_clean_source=options.ohsheet_prefer_clean_source,
+            job_cache_path=output_dir / "ohsheet-job.json",
+            refresh_job=options.refresh_cache,
         ), False
     if kind == "youtube":
+        run_media_preflight(
+            str(source),
+            kind,
+            output_dir / "preflight.json",
+            mode=options.mode,
+            skip_preflight=options.skip_preflight,
+            allow_uncertain_audio=options.allow_uncertain_audio,
+            refresh_cache=options.refresh_cache,
+            max_media_duration_sec=options.max_media_duration_sec,
+            youtube_metadata_timeout=options.youtube_metadata_timeout,
+        )
         return ohsheet_to_musicxml(
             str(source),
             normalized,
             is_youtube=True,
             timeout_sec=options.ohsheet_timeout,
             prefer_clean_source=options.ohsheet_prefer_clean_source,
+            job_cache_path=output_dir / "ohsheet-job.json",
+            refresh_job=options.refresh_cache,
         ), False
     return None, False
 

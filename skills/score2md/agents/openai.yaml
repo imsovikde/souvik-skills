@@ -1,4 +1,4 @@
 interface:
   display_name: "score2md"
-  short_description: "Convert music sources to playable Markdown ABC"
-  default_prompt: "Use $score2md to convert my music source into a verified Markdown ABC file."
+  short_description: "Convert music sources to playable Markdown ABC with media preflight"
+  default_prompt: "Use $score2md to convert my music source into a verified Markdown ABC file, using the audio/YouTube preflight guard before transcription."
