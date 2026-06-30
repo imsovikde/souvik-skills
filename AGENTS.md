@@ -31,6 +31,7 @@ Before creating or changing a skill, read `guidance.md` and `NAMING.md`. Do not 
 12. Do not add private traces, generated caches, local logs, or secrets.
 13. Do not commit changes unless the user explicitly asks.
 14. When the user explicitly asks to sync GitHub, update NPM/NPX, publish, release, or make the change globally available, follow the GitHub And NPM Sync Protocol end to end instead of stopping after local edits.
+15. Every repository commit must be verified before reporting completion: create a signed commit when signing is configured, confirm `git log -1 --show-signature` locally, confirm the GitHub commit page shows a verified signature after push, and confirm the pushed branch contains the intended tree. Do not substitute unsigned API commits for signed local commits when the user asks for verified commits.
 
 ## Landing Page Maintenance
 
@@ -107,14 +108,15 @@ npm run audit:motioncraft
 node bin/souvik-skills.cjs install <skill-name> --force
 ```
 
-5. Create a signed Conventional Commit when signing is configured, then push to `main`. Example:
+5. Create a signed Conventional Commit when signing is configured, verify the local signature, then push to `main`. Example:
 
 ```bash
 git commit -m "feat: upgrade <skill-name> ..."
+git log -1 --show-signature
 git push origin main
 ```
 
-6. After pushing, verify GitHub Actions for `CI`, `CodeQL`, and `Release Please`.
+6. After pushing, open or inspect the GitHub commit and confirm GitHub marks it as verified. Then verify GitHub Actions for `CI`, `CodeQL`, and `Release Please`.
 7. Release Please opens or updates a release PR. Inspect it before merging. It should only contain release metadata such as `package.json`, `package-lock.json`, `.release-please-manifest.json`, and `CHANGELOG.md`.
 8. When the user has asked for NPM/NPX/package sync, merge the clean Release Please PR after checks pass. Resolve generated changelog conflicts carefully and keep one clean release entry.
 9. Confirm the release automation publishes successfully to NPM and GitHub Packages. Verify with:
@@ -131,8 +133,8 @@ npx -y @imsovikde/skills@latest install <skill-name> --dest <temp-dir> --force
 ```
 
 11. If the package changed but Release Please does not open a release PR, check the commit type. Use a release-triggering Conventional Commit such as `feat:` or `fix:` when the package contents must reach NPM/NPX.
-12. Deploy the current `main` build to Vercel and Cloudflare Pages when public frontend or skill catalog output changed. Verify both hosted domains include the changed skill on `/`, `/skills`, `/skills/<skill-name>`, `/install`, and `/docs`.
-13. Finish only after reporting the GitHub commit, release PR or release URL, NPM version, package publish status, Vercel deployment status, Cloudflare Pages deployment status, local Codex reinstall status, and any check that could not be run.
+12. Deploy the current `main` build to Vercel and Cloudflare Pages when public frontend or skill catalog output changed. Manually verify both hosted domains include the changed skill on `/`, `/skills`, `/skills/<skill-name>`, `/install`, and `/docs`; use a browser or HTTP fetch against the live domains, not only local build output.
+13. Finish only after reporting the signed GitHub commit and verification status, release PR or release URL, NPM version, package publish status, Vercel deployment status, Cloudflare Pages deployment status, local Codex reinstall status, and any check that could not be run.
 
 Do not commit NPM, GitHub, Vercel, Cloudflare, or other secrets. Use the existing GitHub Actions release automation; manual `npm publish` is only a fallback when the user explicitly asks and automation cannot complete.
 
