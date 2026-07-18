@@ -1,0 +1,46 @@
+{
+  "name": "souvik-skills",
+  "version": "0.6.0",
+  "description": "Souvik Dey's marketplace-ready AI agent skills for OpenAI Codex: GitHub readiness, repository safety, premium interface motion, Magento/Adobe Commerce leadership, and music score conversion.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "entrypoint": "AGENTS.md",
+  "install": "npx @imsovikde/skills install <skill-name>",
+  "skills": [
+    {
+      "name": "delink-github",
+      "path": "skills/delink-github",
+      "manifest": "skills/delink-github/SKILL.md",
+      "agent": "skills/delink-github/agents/openai.yaml"
+    },
+    {
+      "name": "gh-ready",
+      "path": "skills/gh-ready",
+      "manifest": "skills/gh-ready/SKILL.md",
+      "agent": "skills/gh-ready/agents/openai.yaml"
+    },
+    {
+      "name": "magento-team-lead",
+      "path": "skills/magento-team-lead",
+      "manifest": "skills/magento-team-lead/SKILL.md",
+      "agent": "skills/magento-team-lead/agents/openai.yaml"
+    },
+    {
+      "name": "motioncraft",
+      "path": "skills/motioncraft",
+      "manifest": "skills/motioncraft/SKILL.md",
+      "agent": "skills/motioncraft/agents/openai.yaml"
+    },
+    {
+      "name": "score2md",
+      "path": "skills/score2md",
+      "manifest": "skills/score2md/SKILL.md",
+      "agent": "skills/score2md/agents/openai.yaml"
+    }
+  ]
+}

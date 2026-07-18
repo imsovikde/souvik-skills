@@ -1,0 +1,14 @@
+{
+  "name": "souvik-skills",
+  "version": "0.6.0",
+  "description": "Souvik Dey's marketplace-ready AI agent skills: GitHub readiness, repository safety, premium interface motion, Magento/Adobe Commerce leadership, and music score conversion.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "keywords": ["skills", "ai-agents", "claude-code", "claude-plugin", "agent-skills"],
+  "skills": ["./skills/"]
+}

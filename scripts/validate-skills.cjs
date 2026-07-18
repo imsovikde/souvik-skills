@@ -6,6 +6,10 @@ const path = require("path");
 const rootDir = path.resolve(__dirname, "..");
 const skillsDir = path.join(rootDir, "skills");
 const readmePath = path.join(rootDir, "README.md");
+const packageJsonPath = path.join(rootDir, "package.json");
+const marketplacePath = path.join(rootDir, ".claude-plugin", "marketplace.json");
+const pluginManifestPath = path.join(rootDir, ".claude-plugin", "plugin.json");
+const codexManifestPath = path.join(rootDir, "codex-plugin.json");
 const repositorySource = "imsovikde/souvik-skills";
 const namePattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -134,6 +138,87 @@ function validateReadmeInstallMatrix(skills) {
   }
 }
 
+function readJson(filePath, label) {
+  if (!fs.existsSync(filePath)) {
+    fail(`Missing ${label} (${path.relative(rootDir, filePath)}).`);
+    return null;
+  }
+  try {
+    return JSON.parse(readFile(filePath));
+  } catch (error) {
+    fail(`${label} is not valid JSON: ${error.message}`);
+    return null;
+  }
+}
+
+function validateMarketplaceManifests(skills) {
+  const pkg = readJson(packageJsonPath, "package.json");
+  const marketplace = readJson(marketplacePath, "Claude Code marketplace manifest");
+  const pluginManifest = readJson(pluginManifestPath, "Claude Code plugin manifest");
+  const codexManifest = readJson(codexManifestPath, "Codex plugin manifest");
+  const version = pkg ? pkg.version : null;
+
+  if (marketplace) {
+    const pluginEntries = Array.isArray(marketplace.plugins) ? marketplace.plugins : [];
+    const bundleName = "souvik-skills-all";
+    const bundle = pluginEntries.find((plugin) => plugin.name === bundleName);
+    if (!bundle) {
+      fail(`marketplace.json must include the "${bundleName}" bundle entry.`);
+    }
+
+    for (const skillName of skills) {
+      const entry = pluginEntries.find((plugin) => plugin.name === skillName);
+      if (!entry) {
+        fail(`marketplace.json missing a plugin entry for skill "${skillName}".`);
+        continue;
+      }
+      const skillPaths = Array.isArray(entry.skills) ? entry.skills : [entry.skills];
+      if (!skillPaths.includes(`./skills/${skillName}`)) {
+        fail(`marketplace.json entry "${skillName}" must map skills to ["./skills/${skillName}"].`);
+      }
+    }
+
+    for (const entry of pluginEntries) {
+      if (entry.name === bundleName) {
+        continue;
+      }
+      if (!skills.includes(entry.name)) {
+        fail(`marketplace.json entry "${entry.name}" does not correspond to a skill folder.`);
+      }
+      if (version && entry.version && entry.version !== version) {
+        fail(`marketplace.json entry "${entry.name}" version ${entry.version} must match package version ${version}.`);
+      }
+    }
+
+    if (version && marketplace.metadata && marketplace.metadata.version && marketplace.metadata.version !== version) {
+      fail(`marketplace.json metadata.version ${marketplace.metadata.version} must match package version ${version}.`);
+    }
+  }
+
+  if (pluginManifest && version && pluginManifest.version !== version) {
+    fail(`.claude-plugin/plugin.json version ${pluginManifest.version} must match package version ${version}.`);
+  }
+
+  if (codexManifest) {
+    if (version && codexManifest.version !== version) {
+      fail(`codex-plugin.json version ${codexManifest.version} must match package version ${version}.`);
+    }
+    const codexSkills = Array.isArray(codexManifest.skills)
+      ? codexManifest.skills.map((skill) => (typeof skill === "string" ? skill : skill.name))
+      : [];
+    for (const skillName of skills) {
+      if (!codexSkills.includes(skillName)) {
+        fail(`codex-plugin.json missing skill "${skillName}".`);
+      }
+    }
+    for (const skillName of codexSkills) {
+      if (!skills.includes(skillName)) {
+        fail(`codex-plugin.json lists "${skillName}", which is not a skill folder.`);
+      }
+    }
+  }
+}
+
 if (!fs.existsSync(skillsDir)) {
   fail("Missing skills directory.");
 } else {
@@ -152,6 +237,7 @@ if (!fs.existsSync(skillsDir)) {
   }
 
   validateReadmeInstallMatrix(skills);
+  validateMarketplaceManifests(skills);
 }
 
 const contextFiles = findContextFiles(rootDir);

@@ -82,6 +82,35 @@ npx -y skills use imsovikde/souvik-skills@motioncraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@score2md | <agent-cli>
 ```
 
+## Claude Code Marketplace
+
+Install these skills directly inside Claude Code as a plugin marketplace. Add the marketplace once,
+then install any skill or the full bundle:
+
+```text
+/plugin marketplace add imsovikde/souvik-skills
+/plugin install souvik-skills-all@souvik-skills
+```
+
+Install individual skills instead of the bundle:
+
+```text
+/plugin install delink-github@souvik-skills
+/plugin install gh-ready@souvik-skills
+/plugin install magento-team-lead@souvik-skills
+/plugin install motioncraft@souvik-skills
+/plugin install score2md@souvik-skills
+```
+
+Refresh to the latest catalog after new skills ship:
+
+```text
+/plugin marketplace update souvik-skills
+```
+
+The marketplace catalog is defined in `.claude-plugin/marketplace.json`; the OpenAI Codex discovery
+manifest is `codex-plugin.json`.
+
 ## Codex Package Install
 
 Install one skill into Codex from the NPM package:
