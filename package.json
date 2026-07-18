@@ -48,7 +48,6 @@
     "LICENSE",
     "guidance.md",
     ".claude-plugin/marketplace.json",
-    ".claude-plugin/plugin.json",
     "codex-plugin.json",
     "bin/souvik-skills.cjs",
     "scripts/validate-skills.cjs",

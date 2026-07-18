@@ -63,17 +63,19 @@ Every commit that lands on `main` must show GitHub's green **Verified** badge.
 ## Marketplace Surfaces (keep in sync when skills change)
 
 - **Claude Code:** `.claude-plugin/marketplace.json` (per-skill entries + a `souvik-skills-all`
-  bundle) and `.claude-plugin/plugin.json`. Install:
+  bundle, each sourced from the repo root). Install:
   `/plugin marketplace add imsovikde/souvik-skills` then `/plugin install <skill>@souvik-skills`.
+  Do not add a root `.claude-plugin/plugin.json` — with every entry sourced from `"./"`, a root
+  plugin manifest becomes the strict-mode authority for all of them and overrides each entry's own
+  name/description (`npm run validate:skills` fails if one is reintroduced).
 - **OpenAI Codex:** per-skill `agents/openai.yaml` + root `codex-plugin.json`. Package install:
   `npx @imsovikde/skills install <skill-name>`.
 - **npm / npx:** `@imsovikde/skills` (published with provenance via GitHub Actions).
 - **Web:** the Vercel/Cloudflare site, auto-derived from `skills/`.
 
 When a skill is added, removed, or renamed, update `.claude-plugin/marketplace.json`,
-`.claude-plugin/plugin.json`, `codex-plugin.json`, `README.md`, and `package.json` together —
-`npm run validate:skills` enforces that the manifests match the `skills/` directory and the package
-version.
+`codex-plugin.json`, `README.md`, and `package.json` together — `npm run validate:skills` enforces
+that the manifests match the `skills/` directory and the package version.
 
 ## Before Finishing
 
