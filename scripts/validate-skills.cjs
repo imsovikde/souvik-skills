@@ -8,7 +8,7 @@ const skillsDir = path.join(rootDir, "skills");
 const readmePath = path.join(rootDir, "README.md");
 const packageJsonPath = path.join(rootDir, "package.json");
 const marketplacePath = path.join(rootDir, ".claude-plugin", "marketplace.json");
-const pluginManifestPath = path.join(rootDir, ".claude-plugin", "plugin.json");
+const rootPluginManifestPath = path.join(rootDir, ".claude-plugin", "plugin.json");
 const codexManifestPath = path.join(rootDir, "codex-plugin.json");
 const repositorySource = "imsovikde/souvik-skills";
 const namePattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -154,9 +154,16 @@ function readJson(filePath, label) {
 function validateMarketplaceManifests(skills) {
   const pkg = readJson(packageJsonPath, "package.json");
   const marketplace = readJson(marketplacePath, "Claude Code marketplace manifest");
-  const pluginManifest = readJson(pluginManifestPath, "Claude Code plugin manifest");
   const codexManifest = readJson(codexManifestPath, "Codex plugin manifest");
   const version = pkg ? pkg.version : null;
+
+  if (fs.existsSync(rootPluginManifestPath)) {
+    fail(
+      "Remove .claude-plugin/plugin.json: with every marketplace entry sourced from the repo root " +
+        "(\"source\": \"./\"), a root plugin.json becomes the strict-mode component authority for all " +
+        "of them and overrides each entry's own name/description. Marketplace entries must stay self-describing."
+    );
+  }
 
   if (marketplace) {
     const pluginEntries = Array.isArray(marketplace.plugins) ? marketplace.plugins : [];
@@ -193,10 +200,6 @@ function validateMarketplaceManifests(skills) {
     if (version && marketplace.metadata && marketplace.metadata.version && marketplace.metadata.version !== version) {
       fail(`marketplace.json metadata.version ${marketplace.metadata.version} must match package version ${version}.`);
     }
-  }
-
-  if (pluginManifest && version && pluginManifest.version !== version) {
-    fail(`.claude-plugin/plugin.json version ${pluginManifest.version} must match package version ${version}.`);
   }
 
   if (codexManifest) {
