@@ -42,6 +42,7 @@ npm run build
 
 | Skill | Purpose |
 | --- | --- |
+| `claude-md-init` | Scaffold or update a project's `CLAUDE.md` with a repo snapshot and hard rules for owner-only commit attribution and verified commits. |
 | `delink-github` | Safely isolate copied repositories by removing Git history, GitHub workflow metadata, inherited license metadata, stale names, outside links, and author contacts before starting clean local history. |
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
@@ -55,6 +56,7 @@ Use the `skills` CLI when installing directly from this GitHub repository into a
 ### Project Only
 
 ```bash
+npx -y skills add imsovikde/souvik-skills --skill claude-md-init --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent>
@@ -65,6 +67,7 @@ npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent>
 ### Global
 
 ```bash
+npx -y skills add imsovikde/souvik-skills --skill claude-md-init --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent> -g
@@ -75,6 +78,7 @@ npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent> -g
 ### Try Once
 
 ```bash
+npx -y skills use imsovikde/souvik-skills@claude-md-init | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@delink-github | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@gh-ready | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@magento-team-lead | <agent-cli>
@@ -82,11 +86,42 @@ npx -y skills use imsovikde/souvik-skills@motioncraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@score2md | <agent-cli>
 ```
 
+## Claude Code Marketplace
+
+Install these skills directly inside Claude Code as a plugin marketplace. Add the marketplace once,
+then install any skill or the full bundle:
+
+```text
+/plugin marketplace add imsovikde/souvik-skills
+/plugin install souvik-skills-all@souvik-skills
+```
+
+Install individual skills instead of the bundle:
+
+```text
+/plugin install claude-md-init@souvik-skills
+/plugin install delink-github@souvik-skills
+/plugin install gh-ready@souvik-skills
+/plugin install magento-team-lead@souvik-skills
+/plugin install motioncraft@souvik-skills
+/plugin install score2md@souvik-skills
+```
+
+Refresh to the latest catalog after new skills ship:
+
+```text
+/plugin marketplace update souvik-skills
+```
+
+The marketplace catalog is defined in `.claude-plugin/marketplace.json`; the OpenAI Codex discovery
+manifest is `codex-plugin.json`.
+
 ## Codex Package Install
 
 Install one skill into Codex from the NPM package:
 
 ```bash
+npx @imsovikde/skills install claude-md-init
 npx @imsovikde/skills install delink-github
 npx @imsovikde/skills install gh-ready
 npx @imsovikde/skills install magento-team-lead
@@ -121,6 +156,7 @@ After installation, restart Codex so the new skill metadata is loaded.
 Example prompts:
 
 ```text
+Use $claude-md-init to create or update this project's CLAUDE.md with a repo snapshot and owner-only, verified-commit rules.
 Use $delink-github to safely detach, rename, clean inherited metadata, purge GitHub linkage, and start clean local Git history for this repository.
 Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, and release-ready.
 Use $magento-team-lead to lead this Adobe Commerce implementation review.

@@ -14,6 +14,10 @@
   },
   "keywords": [
     "codex",
+    "claude-code",
+    "claude-plugin",
+    "plugin-marketplace",
+    "agent-skills",
     "skills",
     "ai-agents",
     "github-readiness",
@@ -38,10 +42,14 @@
   },
   "files": [
     "AGENTS.md",
+    "CLAUDE.md",
     "NAMING.md",
     "README.md",
     "LICENSE",
     "guidance.md",
+    ".claude-plugin/marketplace.json",
+    ".claude-plugin/plugin.json",
+    "codex-plugin.json",
     "bin/souvik-skills.cjs",
     "scripts/validate-skills.cjs",
     "skills/*/SKILL.md",
@@ -63,8 +71,9 @@
     "audit:motioncraft": "node skills/motioncraft/scripts/audit-motioncraft.cjs .",
     "test:delink-github": "python skills/delink-github/scripts/test_delink.py",
     "test:score2md": "python skills/score2md/scripts/run_tests.py",
+    "test:claude-md-init": "node skills/claude-md-init/scripts/test_init_claude_md.cjs",
     "validate:skills": "node scripts/validate-skills.cjs",
-    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md"
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init"
   },
   "engines": {
     "node": ">=20.9.0"
