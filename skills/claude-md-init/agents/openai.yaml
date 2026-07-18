@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude MD Init"
+  short_description: "Scaffold or update CLAUDE.md with owner-locked, verified commit rules"
+  default_prompt: "Use $claude-md-init to create or update this project's CLAUDE.md with a repo snapshot and owner-only, verified-commit rules."

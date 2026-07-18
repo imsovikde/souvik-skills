@@ -26,6 +26,22 @@
       "tags": ["skills", "ai-agents", "bundle", "catalog"]
     },
     {
+      "name": "claude-md-init",
+      "source": "./",
+      "skills": ["./skills/claude-md-init"],
+      "description": "Scaffold or update a project's CLAUDE.md with a repo snapshot and hard rules for owner-only commit attribution and verified commits.",
+      "version": "0.6.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/claude-md-init",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Release Readiness",
+      "tags": ["claude-md", "commit-signing", "verified-commits", "governance"]
+    },
+    {
       "name": "delink-github",
       "source": "./",
       "skills": ["./skills/delink-github"],

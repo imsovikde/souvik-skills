@@ -13,6 +13,12 @@
   "install": "npx @imsovikde/skills install <skill-name>",
   "skills": [
     {
+      "name": "claude-md-init",
+      "path": "skills/claude-md-init",
+      "manifest": "skills/claude-md-init/SKILL.md",
+      "agent": "skills/claude-md-init/agents/openai.yaml"
+    },
+    {
       "name": "delink-github",
       "path": "skills/delink-github",
       "manifest": "skills/delink-github/SKILL.md",

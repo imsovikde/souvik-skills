@@ -9,7 +9,8 @@ files named below instead of duplicating them here.
 - Repo `imsovikde/souvik-skills`; npm `@imsovikde/skills`; MIT.
 - Site: `https://souvik-skills.vercel.app` (mirror: `https://souvik-skills.pages.dev`).
 - Skills (each `skills/<name>/` = `SKILL.md` + `agents/openai.yaml` + optional `references/`,
-  `scripts/`, `assets/`): `delink-github`, `gh-ready`, `magento-team-lead`, `motioncraft`, `score2md`.
+  `scripts/`, `assets/`): `claude-md-init`, `delink-github`, `gh-ready`, `magento-team-lead`,
+  `motioncraft`, `score2md`.
 - Static Next.js (`output: export`) marketplace built from `skills/` at build time via `lib/skills.js`
   — never hard-code the skill list; it is derived from the `skills/` directory.
 - Automation: release-please (versioning/changelog) → `npm-publish.yml` (npm + GitHub Packages with
@@ -54,7 +55,10 @@ Every commit that lands on `main` must show GitHub's green **Verified** badge.
   Souvik. This is the required path for cloud work.
 - **From local:** sign with Souvik's own GPG or SSH signing key (`git config commit.gpgsign true`),
   confirm `git log -1 --show-signature`, and confirm the GitHub commit page shows Verified after push.
+  See `docs/local-commit-setup.md` for the exact one-time setup commands.
 - Do not substitute an unsigned API/direct commit on `main` when a verified commit was requested.
+- To apply this same CLAUDE.md pattern (repo snapshot + these two hard rules) to another project, use
+  the `claude-md-init` skill — it scaffolds or updates that project's `CLAUDE.md` idempotently.
 
 ## Marketplace Surfaces (keep in sync when skills change)
 
