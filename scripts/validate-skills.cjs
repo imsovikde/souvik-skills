@@ -159,20 +159,22 @@ function validateMarketplaceManifests(skills) {
 
   if (fs.existsSync(rootPluginManifestPath)) {
     fail(
-      "Remove .claude-plugin/plugin.json: the \"souvik-skills-all\" bundle entry sources from the " +
-        "repo root (\"source\": \"./\"), so a root plugin.json would become the strict-mode component " +
-        "authority for it and override its name/description. Marketplace entries must stay self-describing."
+      "Remove .claude-plugin/plugin.json: the repository root is not a plugin directory (it holds the " +
+        "Next.js site, docs, and tooling). Every marketplace entry must source a real plugin folder " +
+        "under skills/, each carrying its own .claude-plugin/plugin.json."
     );
   }
 
   if (marketplace) {
     const pluginEntries = Array.isArray(marketplace.plugins) ? marketplace.plugins : [];
-    const bundleName = "souvik-skills-all";
-    const bundle = pluginEntries.find((plugin) => plugin.name === bundleName);
-    if (!bundle) {
-      fail(`marketplace.json must include the "${bundleName}" bundle entry.`);
-    } else if (bundle.source !== "./") {
-      fail(`marketplace.json "${bundleName}" entry must keep "source": "./".`);
+
+    for (const entry of pluginEntries) {
+      if (entry.source === "./") {
+        fail(
+          `marketplace.json entry "${entry.name}" sources the repository root ("./"). The root is not a ` +
+            "plugin directory; point every entry at its own skills/<skill-name> folder."
+        );
+      }
     }
 
     for (const skillName of skills) {
@@ -184,12 +186,23 @@ function validateMarketplaceManifests(skills) {
       if (entry.source !== `./skills/${skillName}`) {
         fail(`marketplace.json entry "${skillName}" must set "source": "./skills/${skillName}" (its own folder, not a shared root) so it never shares a source with another entry.`);
       }
+
+      const skillPluginPath = path.join(skillsDir, skillName, ".claude-plugin", "plugin.json");
+      const skillPlugin = readJson(skillPluginPath, `${skillName} plugin manifest`);
+      if (skillPlugin) {
+        if (skillPlugin.name !== skillName) {
+          fail(`skills/${skillName}/.claude-plugin/plugin.json name "${skillPlugin.name}" must equal "${skillName}".`);
+        }
+        if (version && skillPlugin.version !== version) {
+          fail(`skills/${skillName}/.claude-plugin/plugin.json version ${skillPlugin.version} must match package version ${version}.`);
+        }
+        if (entry.description && skillPlugin.description !== entry.description) {
+          fail(`skills/${skillName}/.claude-plugin/plugin.json description must match the marketplace.json entry description.`);
+        }
+      }
     }
 
     for (const entry of pluginEntries) {
-      if (entry.name === bundleName) {
-        continue;
-      }
       if (!skills.includes(entry.name)) {
         fail(`marketplace.json entry "${entry.name}" does not correspond to a skill folder.`);
       }

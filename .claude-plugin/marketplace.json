@@ -10,22 +10,6 @@
   },
   "plugins": [
     {
-      "name": "souvik-skills-all",
-      "source": "./",
-      "skills": ["./skills/"],
-      "description": "Install the complete Souvik Skills catalog (all skills) in one command.",
-      "version": "0.6.0",
-      "author": {
-        "name": "Souvik Dey",
-        "email": "imsovikde@gmail.com"
-      },
-      "homepage": "https://souvik-skills.vercel.app",
-      "repository": "https://github.com/imsovikde/souvik-skills",
-      "license": "MIT",
-      "category": "Agent Workflow",
-      "tags": ["skills", "ai-agents", "bundle", "catalog"]
-    },
-    {
       "name": "claude-md-init",
       "source": "./skills/claude-md-init",
       "description": "Scaffold or update a project's CLAUDE.md with a repo snapshot and hard rules for owner-only commit attribution and verified commits.",
@@ -38,7 +22,12 @@
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
       "category": "Release Readiness",
-      "tags": ["claude-md", "commit-signing", "verified-commits", "governance"]
+      "tags": [
+        "claude-md",
+        "commit-signing",
+        "verified-commits",
+        "governance"
+      ]
     },
     {
       "name": "delink-github",
@@ -53,7 +42,12 @@
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
       "category": "Repository Safety",
-      "tags": ["github", "git", "repository-cleanup", "delink"]
+      "tags": [
+        "github",
+        "git",
+        "repository-cleanup",
+        "delink"
+      ]
     },
     {
       "name": "gh-ready",
@@ -68,7 +62,12 @@
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
       "category": "Release Readiness",
-      "tags": ["github", "release-automation", "seo", "packaging"]
+      "tags": [
+        "github",
+        "release-automation",
+        "seo",
+        "packaging"
+      ]
     },
     {
       "name": "magento-team-lead",
@@ -83,7 +82,12 @@
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
       "category": "Commerce Leadership",
-      "tags": ["magento", "adobe-commerce", "ecommerce", "team-lead"]
+      "tags": [
+        "magento",
+        "adobe-commerce",
+        "ecommerce",
+        "team-lead"
+      ]
     },
     {
       "name": "motioncraft",
@@ -98,7 +102,12 @@
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
       "category": "Interface Motion",
-      "tags": ["motion", "animation", "ui", "design-system"]
+      "tags": [
+        "motion",
+        "animation",
+        "ui",
+        "design-system"
+      ]
     },
     {
       "name": "score2md",
@@ -113,7 +122,12 @@
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
       "category": "Music Conversion",
-      "tags": ["music", "musicxml", "abc-notation", "sheet-music"]
+      "tags": [
+        "music",
+        "musicxml",
+        "abc-notation",
+        "sheet-music"
+      ]
     }
   ]
 }

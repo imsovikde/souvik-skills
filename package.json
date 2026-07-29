@@ -52,6 +52,7 @@
     "bin/souvik-skills.cjs",
     "scripts/validate-skills.cjs",
     "skills/*/SKILL.md",
+    "skills/*/.claude-plugin/plugin.json",
     "skills/*/agents/openai.yaml",
     "skills/*/assets/**",
     "skills/*/scripts/**",

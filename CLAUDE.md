@@ -62,14 +62,17 @@ Every commit that lands on `main` must show GitHub's green **Verified** badge.
 
 ## Marketplace Surfaces (keep in sync when skills change)
 
-- **Claude Code:** `.claude-plugin/marketplace.json` — each skill is its own plugin entry sourced
-  directly at `./skills/<skill-name>` (never shared with another entry), plus a `souvik-skills-all`
-  bundle sourced at the repo root (`"./"`) for installing everything at once. Install:
-  `/plugin marketplace add imsovikde/souvik-skills` then `/plugin install <skill>@souvik-skills`.
-  Do not add a root `.claude-plugin/plugin.json` — the bundle entry sources from `"./"`, so a root
-  plugin manifest would become the strict-mode authority for it and override its name/description
-  (`npm run validate:skills` fails if one is reintroduced, or if any per-skill entry's `source`
-  isn't its own `./skills/<skill-name>`).
+- **Claude Code / Cowork:** `.claude-plugin/marketplace.json` — one entry per skill, each sourced at
+  its own `./skills/<skill-name>`, and each of those folders carries its own
+  `skills/<skill-name>/.claude-plugin/plugin.json`. This mirrors Anthropic's own Cowork marketplace
+  (`anthropics/knowledge-work-plugins`), where every plugin source directory is self-describing.
+  Install: `/plugin marketplace add imsovikde/souvik-skills` then
+  `/plugin install <skill>@souvik-skills`.
+  Never point a marketplace entry at the repo root (`"./"`) and never add a root
+  `.claude-plugin/plugin.json` — the root holds the Next.js site, docs, and tooling, so it is not a
+  plugin directory. `npm run validate:skills` fails if either is reintroduced, if a per-skill entry's
+  `source` isn't its own `./skills/<skill-name>`, or if a skill's `plugin.json` name/version/
+  description drifts from its marketplace entry.
 - **OpenAI Codex:** per-skill `agents/openai.yaml` + root `codex-plugin.json`. Package install:
   `npx @imsovikde/skills install <skill-name>`.
 - **npm / npx:** `@imsovikde/skills` (published with provenance via GitHub Actions).
