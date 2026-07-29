@@ -45,6 +45,9 @@ All of these change together, in the same commit:
 | `codex-plugin.json` | new entry: `name`, `path`, `manifest`, `agent` |
 | `README.md` | catalog table row, the three cross-agent install commands, the Codex package install line, the Claude Code marketplace install line, and an example `$<name>` prompt |
 | `package.json` | only when the skill adds a test script; add it to `scripts` and to the `test` chain |
+| `release-please-config.json` | **two** new `extra-files` entries: `$.plugins[<next-index>].version` in `.claude-plugin/marketplace.json`, and `$.version` in `skills/<name>/.claude-plugin/plugin.json` |
+
+Missing the `release-please-config.json` step is silent until release time: release-please bumps `package.json` but leaves that skill's manifests on the old version, and `npm run validate:skills` then fails on `main` and blocks the npm publish. Add both entries in the same commit as the skill.
 
 Marketplace `source` must be `./skills/<name>` — its own folder, never shared with another entry. Set the entry `version` to the current `package.json` version; release-please owns bumps.
 
