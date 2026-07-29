@@ -72,8 +72,9 @@
     "test:delink-github": "python skills/delink-github/scripts/test_delink.py",
     "test:score2md": "python skills/score2md/scripts/run_tests.py",
     "test:claude-md-init": "node skills/claude-md-init/scripts/test_init_claude_md.cjs",
+    "test:skill-ship": "node skills/skill-ship/scripts/test_preflight.cjs",
     "validate:skills": "node scripts/validate-skills.cjs",
-    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init"
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship"
   },
   "engines": {
     "node": ">=20.9.0"
