@@ -1,0 +1,18 @@
+{
+  "name": "gh-ready",
+  "version": "0.6.0",
+  "description": "Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app/skills/gh-ready",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "release-automation",
+    "seo",
+    "packaging"
+  ]
+}

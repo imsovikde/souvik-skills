@@ -1,0 +1,18 @@
+{
+  "name": "score2md",
+  "version": "0.6.0",
+  "description": "Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app/skills/score2md",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "keywords": [
+    "music",
+    "musicxml",
+    "abc-notation",
+    "sheet-music"
+  ]
+}
