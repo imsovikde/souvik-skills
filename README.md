@@ -48,6 +48,7 @@ npm run build
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
 | `motioncraft` | Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification. |
 | `score2md` | Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight. |
+| `skill-ship` | Audit, scaffold, adopt, and publish agent skills to this marketplace with verified owner-only commits, telemetry stripping for third-party skills, and the full npm release chain. |
 
 ## Cross-Agent Install
 
@@ -62,6 +63,7 @@ npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent>
 ```
 
 ### Global
@@ -73,6 +75,7 @@ npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent> -g
 ```
 
 ### Try Once
@@ -84,6 +87,7 @@ npx -y skills use imsovikde/souvik-skills@gh-ready | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@magento-team-lead | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@motioncraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@score2md | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@skill-ship | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -104,6 +108,7 @@ Then install any skill you want:
 /plugin install magento-team-lead@souvik-skills
 /plugin install motioncraft@souvik-skills
 /plugin install score2md@souvik-skills
+/plugin install skill-ship@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -117,6 +122,20 @@ The marketplace catalog is defined in `.claude-plugin/marketplace.json`. Each en
 `.claude-plugin/plugin.json` so it is a self-describing plugin. The OpenAI Codex discovery manifest
 is `codex-plugin.json`.
 
+## Antigravity
+
+Antigravity uses the same `SKILL.md` standard as Claude Code, Codex, and Cursor, so every skill here
+works in Antigravity with no rewrite. Install one into the current workspace:
+
+```bash
+npx -y skills add imsovikde/souvik-skills --skill <skill-name> --agent antigravity
+```
+
+Antigravity discovers workspace skills in `.agents/skills/<skill-name>/` and global skills in
+`~/.gemini/antigravity/skills/<skill-name>/`, so copying a skill folder to either location also
+works. Because each skill folder ships its own `.claude-plugin/plugin.json` next to a `SKILL.md`,
+the same folder satisfies Antigravity's plugin layout as well.
+
 ## Codex Package Install
 
 Install one skill into Codex from the NPM package:
@@ -128,6 +147,7 @@ npx @imsovikde/skills install gh-ready
 npx @imsovikde/skills install magento-team-lead
 npx @imsovikde/skills install motioncraft
 npx @imsovikde/skills install score2md
+npx @imsovikde/skills install skill-ship
 ```
 
 Install every skill:
@@ -164,6 +184,7 @@ Use $magento-team-lead to lead this Adobe Commerce implementation review.
 Use $motioncraft to design a project-specific premium motion system for this interface with a motion intent map, tokens, reduced-motion variants, and browser verification.
 Use $score2md to convert this MusicXML score into a verified playable Markdown ABC file.
 Use $score2md to convert this piano YouTube link only if the media preflight approves it, or explain how to override with --skip-preflight.
+Use $skill-ship to audit this skill, make it marketplace-compliant, and publish it to imsovikde/souvik-skills with a verified commit.
 ```
 
 ## Repository Standard

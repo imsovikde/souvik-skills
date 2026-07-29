@@ -1,0 +1,18 @@
+{
+  "name": "skill-ship",
+  "version": "0.6.0",
+  "description": "Audit, scaffold, adopt, and publish agent skills to the Souvik Skills marketplace with verified owner-only commits, telemetry stripping for third-party skills, and the full npm release chain.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app/skills/skill-ship",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "keywords": [
+    "marketplace",
+    "publishing",
+    "skill-authoring",
+    "release-automation"
+  ]
+}

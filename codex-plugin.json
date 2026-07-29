@@ -47,6 +47,12 @@
       "path": "skills/score2md",
       "manifest": "skills/score2md/SKILL.md",
       "agent": "skills/score2md/agents/openai.yaml"
+    },
+    {
+      "name": "skill-ship",
+      "path": "skills/skill-ship",
+      "manifest": "skills/skill-ship/SKILL.md",
+      "agent": "skills/skill-ship/agents/openai.yaml"
     }
   ]
 }

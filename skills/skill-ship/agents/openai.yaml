@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Ship"
+  short_description: "Audit, adopt, and publish skills to the Souvik Skills marketplace"
+  default_prompt: "Use $skill-ship to audit this skill, make it marketplace-compliant, and publish it to imsovikde/souvik-skills with a verified commit."
