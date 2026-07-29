@@ -27,8 +27,7 @@
     },
     {
       "name": "claude-md-init",
-      "source": "./",
-      "skills": ["./skills/claude-md-init"],
+      "source": "./skills/claude-md-init",
       "description": "Scaffold or update a project's CLAUDE.md with a repo snapshot and hard rules for owner-only commit attribution and verified commits.",
       "version": "0.6.0",
       "author": {
@@ -43,8 +42,7 @@
     },
     {
       "name": "delink-github",
-      "source": "./",
-      "skills": ["./skills/delink-github"],
+      "source": "./skills/delink-github",
       "description": "Safely isolate copied repositories by removing Git history, GitHub workflow metadata, inherited license metadata, stale names, outside links, and author contacts before starting clean local history.",
       "version": "0.6.0",
       "author": {
@@ -59,8 +57,7 @@
     },
     {
       "name": "gh-ready",
-      "source": "./",
-      "skills": ["./skills/gh-ready"],
+      "source": "./skills/gh-ready",
       "description": "Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication.",
       "version": "0.6.0",
       "author": {
@@ -75,8 +72,7 @@
     },
     {
       "name": "magento-team-lead",
-      "source": "./",
-      "skills": ["./skills/magento-team-lead"],
+      "source": "./skills/magento-team-lead",
       "description": "Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases.",
       "version": "0.6.0",
       "author": {
@@ -91,8 +87,7 @@
     },
     {
       "name": "motioncraft",
-      "source": "./",
-      "skills": ["./skills/motioncraft"],
+      "source": "./skills/motioncraft",
       "description": "Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification.",
       "version": "0.6.0",
       "author": {
@@ -107,8 +102,7 @@
     },
     {
       "name": "score2md",
-      "source": "./",
-      "skills": ["./skills/score2md"],
+      "source": "./skills/score2md",
       "description": "Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight.",
       "version": "0.6.0",
       "author": {

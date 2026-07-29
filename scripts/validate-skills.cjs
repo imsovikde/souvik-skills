@@ -159,9 +159,9 @@ function validateMarketplaceManifests(skills) {
 
   if (fs.existsSync(rootPluginManifestPath)) {
     fail(
-      "Remove .claude-plugin/plugin.json: with every marketplace entry sourced from the repo root " +
-        "(\"source\": \"./\"), a root plugin.json becomes the strict-mode component authority for all " +
-        "of them and overrides each entry's own name/description. Marketplace entries must stay self-describing."
+      "Remove .claude-plugin/plugin.json: the \"souvik-skills-all\" bundle entry sources from the " +
+        "repo root (\"source\": \"./\"), so a root plugin.json would become the strict-mode component " +
+        "authority for it and override its name/description. Marketplace entries must stay self-describing."
     );
   }
 
@@ -171,6 +171,8 @@ function validateMarketplaceManifests(skills) {
     const bundle = pluginEntries.find((plugin) => plugin.name === bundleName);
     if (!bundle) {
       fail(`marketplace.json must include the "${bundleName}" bundle entry.`);
+    } else if (bundle.source !== "./") {
+      fail(`marketplace.json "${bundleName}" entry must keep "source": "./".`);
     }
 
     for (const skillName of skills) {
@@ -179,9 +181,8 @@ function validateMarketplaceManifests(skills) {
         fail(`marketplace.json missing a plugin entry for skill "${skillName}".`);
         continue;
       }
-      const skillPaths = Array.isArray(entry.skills) ? entry.skills : [entry.skills];
-      if (!skillPaths.includes(`./skills/${skillName}`)) {
-        fail(`marketplace.json entry "${skillName}" must map skills to ["./skills/${skillName}"].`);
+      if (entry.source !== `./skills/${skillName}`) {
+        fail(`marketplace.json entry "${skillName}" must set "source": "./skills/${skillName}" (its own folder, not a shared root) so it never shares a source with another entry.`);
       }
     }
 
