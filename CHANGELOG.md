@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.7.1](https://github.com/imsovikde/souvik-skills/compare/v0.7.0...v0.7.1) (2026-07-29)
+
+
+### Bug Fixes
+
+* upgrade npm CLI before OIDC trusted-publish attempts ([b2b065e](https://github.com/imsovikde/souvik-skills/commit/b2b065e47ac09a0a597a7ec7423c13794eb45952))
+
 ## [0.7.0](https://github.com/imsovikde/souvik-skills/compare/v0.6.0...v0.7.0) (2026-07-29)
 
 
