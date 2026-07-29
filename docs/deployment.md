@@ -88,10 +88,21 @@ This repository uses Release Please for versioning and changelog management:
 1. Conventional commits land on `main`.
 2. `.github/workflows/release-please.yml` opens or updates a release PR.
 3. The release PR updates `package.json`, `package-lock.json`, `.release-please-manifest.json`, and `CHANGELOG.md`.
-4. Merging the release PR creates a GitHub Release and tag.
-5. `.github/workflows/npm-publish.yml` checks out that tag, runs validation/build/package dry-run, publishes to npm, and publishes the same package version to GitHub Packages.
+4. Merging the release PR creates a GitHub Release and tag, and the same workflow's `publish-npm` and
+   `publish-github-packages` jobs run immediately after (gated on `releases_created`), checking out
+   the release commit, validating, testing, building, and publishing.
 
-The publish workflow intentionally uses npm trusted publishing and provenance instead of an npm token in repository secrets.
+The publish jobs intentionally use npm trusted publishing and provenance instead of an npm token in
+repository secrets. Trusted publishing (OIDC) requires npm CLI 11.5.1 or later; both publish
+workflows explicitly run `npm install -g npm@latest` before publishing because the npm CLI bundled
+with `actions/setup-node`'s Node 22 can be older than that, in which case OIDC auth is silently
+skipped and the publish fails with a generic `404 Not Found` rather than an auth error.
+
+`.github/workflows/npm-publish.yml` duplicates the same publish steps and triggers on
+`release: published`, but GitHub does not dispatch further workflow-triggering events for a release
+created using the default `GITHUB_TOKEN` (release-please's release is created this way), so this
+workflow does not currently fire as part of the release flow above. It only runs if a release is
+published through some other path, such as the GitHub web UI with a personal account.
 
 ## NPM trusted publishing setup
 
