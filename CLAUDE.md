@@ -79,8 +79,11 @@ Every commit that lands on `main` must show GitHub's green **Verified** badge.
 - **Web:** the Vercel/Cloudflare site, auto-derived from `skills/`.
 
 When a skill is added, removed, or renamed, update `.claude-plugin/marketplace.json`,
-`codex-plugin.json`, `README.md`, and `package.json` together — `npm run validate:skills` enforces
-that the manifests match the `skills/` directory and the package version.
+`codex-plugin.json`, `README.md`, `package.json`, and `release-please-config.json` together —
+`npm run validate:skills` enforces that the manifests match the `skills/` directory and the package
+version. Every manifest version is bumped at release time by release-please via `extra-files`, so a
+new skill needs its two `extra-files` entries (its `marketplace.json` plugin index and its own
+`plugin.json`) or the release will fail validation on `main`.
 
 ## Before Finishing
 
