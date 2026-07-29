@@ -62,12 +62,14 @@ Every commit that lands on `main` must show GitHub's green **Verified** badge.
 
 ## Marketplace Surfaces (keep in sync when skills change)
 
-- **Claude Code:** `.claude-plugin/marketplace.json` (per-skill entries + a `souvik-skills-all`
-  bundle, each sourced from the repo root). Install:
+- **Claude Code:** `.claude-plugin/marketplace.json` — each skill is its own plugin entry sourced
+  directly at `./skills/<skill-name>` (never shared with another entry), plus a `souvik-skills-all`
+  bundle sourced at the repo root (`"./"`) for installing everything at once. Install:
   `/plugin marketplace add imsovikde/souvik-skills` then `/plugin install <skill>@souvik-skills`.
-  Do not add a root `.claude-plugin/plugin.json` — with every entry sourced from `"./"`, a root
-  plugin manifest becomes the strict-mode authority for all of them and overrides each entry's own
-  name/description (`npm run validate:skills` fails if one is reintroduced).
+  Do not add a root `.claude-plugin/plugin.json` — the bundle entry sources from `"./"`, so a root
+  plugin manifest would become the strict-mode authority for it and override its name/description
+  (`npm run validate:skills` fails if one is reintroduced, or if any per-skill entry's `source`
+  isn't its own `./skills/<skill-name>`).
 - **OpenAI Codex:** per-skill `agents/openai.yaml` + root `codex-plugin.json`. Package install:
   `npx @imsovikde/skills install <skill-name>`.
 - **npm / npx:** `@imsovikde/skills` (published with provenance via GitHub Actions).
