@@ -2,6 +2,21 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.7.0](https://github.com/imsovikde/souvik-skills/compare/v0.6.0...v0.7.0) (2026-07-29)
+
+
+### Features
+
+* add skill-ship skill and Antigravity install surface ([96bea78](https://github.com/imsovikde/souvik-skills/commit/96bea78544a45587282179a859f82f97a23dcf2a))
+* Claude Code + Codex marketplace manifests, CLAUDE.md, claude-md-init skill ([13d86d2](https://github.com/imsovikde/souvik-skills/commit/13d86d2736384d366fb9eb89cb957d92c712602b))
+
+
+### Bug Fixes
+
+* give every marketplace entry its own distinct source ([1f49282](https://github.com/imsovikde/souvik-skills/commit/1f492826796f951423441b5254021261e689ebca))
+* make every plugin source a self-describing plugin directory ([2a6d0f6](https://github.com/imsovikde/souvik-skills/commit/2a6d0f662e2ed22b783acd29744261220fc4f3fc))
+* remove conflicting root plugin.json from Claude Code marketplace ([c2c7ea2](https://github.com/imsovikde/souvik-skills/commit/c2c7ea297b8519d9e9c1d73ca8ede2103a8cc179))
+
 ## [0.6.0](https://github.com/imsovikde/souvik-skills/compare/v0.5.0...v0.6.0) (2026-06-30)
 
 
