@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ars"
+  short_description: "Universal Renaissance artist cognitive system"
+  default_prompt: "Use $ars to apply Da Vinci-level visual thinking, harmonic geometry, chiaroscuro lighting, and dynamic equilibrium to this design."
