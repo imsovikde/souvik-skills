@@ -6,6 +6,7 @@ const path = require("path");
 
 const targetDir = process.argv[2] || ".";
 let violations = 0;
+let warnings = 0;
 
 function scanCodeFile(filePath) {
   const content = fs.readFileSync(filePath, "utf8");
@@ -15,18 +16,29 @@ function scanCodeFile(filePath) {
     return;
   }
 
+  // 1. Check for AI Purple Gradients in active styles
   if (/gradient.*(#8b5cf6|#6366f1|#3b82f6|rgb\(139,\s*92,\s*246\)|purple.*blue)/i.test(content)) {
     console.error(`[${filePath}] AI SLOP: Generic purple/blue gradient detected. Use intentional OKLCH lighting instead.`);
     violations++;
   }
 
+  // 2. Check for arbitrary padding in styles
   const arbitraryPadding = content.match(/padding:\s*(13|17|19|23|27|29|31|37)px/g);
   if (arbitraryPadding) {
     console.warn(`[${filePath}] HARMONIC VIOLATION: Non-harmonic arbitrary padding detected (${arbitraryPadding.join(", ")}). Use diatonic/golden space tokens.`);
+    warnings++;
   }
 
+  // 3. Check for transition: all
   if (/transition:\s*all/i.test(content)) {
     console.warn(`[${filePath}] PERFORMANCE: 'transition: all' detected. Explicitly declare animated properties.`);
+    warnings++;
+  }
+
+  // 4. Check for nested card wrappers
+  if (/class="[^"]*card[^"]*"[\s\S]*class="[^"]*card[^"]*"/i.test(content)) {
+    console.warn(`[${filePath}] SUBTRACTION: Nested card containers detected. Apply /ars:cut to flatten hierarchy.`);
+    warnings++;
   }
 }
 
@@ -51,5 +63,5 @@ if (violations > 0) {
   console.error(`Ars Audit: ${violations} critical violations found.`);
   process.exitCode = 1;
 } else {
-  console.log("Ars Audit: Passed with Renaissance excellence.");
+  console.log(`Ars Audit: Passed with Renaissance excellence (${warnings} advisory warnings).`);
 }
