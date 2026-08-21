@@ -30,6 +30,29 @@
       ]
     },
     {
+      "name": "ars",
+      "source": "./skills/ars",
+      "description": "Universal Renaissance and master artist cognitive operating system that equips AI with Da Vinci-level visual thinking, sacred geometry, chiaroscuro value staging, dynamic equilibrium, and subtractive elegance across all creative and interactive disciplines.",
+      "version": "0.8.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/ars",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Artistic Direction",
+      "tags": [
+        "art",
+        "design",
+        "renaissance",
+        "da-vinci",
+        "geometry",
+        "chiaroscuro",
+        "anti-slop"
+      ]
+    },
+    {
       "name": "claude-md-init",
       "source": "./skills/claude-md-init",
       "description": "Scaffold or update a project's CLAUDE.md with a repo snapshot and hard rules for owner-only commit attribution and verified commits.",

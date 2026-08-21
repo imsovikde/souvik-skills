@@ -43,6 +43,7 @@ npm run build
 | Skill | Purpose |
 | --- | --- |
 | `agy-skill-installer` | Install any agent skill into Anti-Gravity IDE with 100% fidelity, automated YAML frontmatter validation, dual-root provisioning, security scanning, and slash command integration. |
+| `ars` | Universal Renaissance and master artist cognitive operating system that equips AI with Da Vinci-level visual thinking, sacred geometry, chiaroscuro value staging, dynamic equilibrium, and subtractive elegance across all creative and interactive disciplines. |
 | `claude-md-init` | Scaffold or update a project's `CLAUDE.md` with a repo snapshot and hard rules for owner-only commit attribution and verified commits. |
 | `delink-github` | Safely isolate copied repositories by removing Git history, GitHub workflow metadata, inherited license metadata, stale names, outside links, and author contacts before starting clean local history. |
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
@@ -59,6 +60,7 @@ Use the `skills` CLI when installing directly from this GitHub repository into a
 
 ```bash
 npx -y skills add imsovikde/souvik-skills --skill agy-skill-installer --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill ars --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill claude-md-init --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent>
@@ -72,6 +74,7 @@ npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent>
 
 ```bash
 npx -y skills add imsovikde/souvik-skills --skill agy-skill-installer --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill ars --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill claude-md-init --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent> -g
@@ -85,6 +88,7 @@ npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent> -g
 
 ```bash
 npx -y skills use imsovikde/souvik-skills@agy-skill-installer | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@ars | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@claude-md-init | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@delink-github | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@gh-ready | <agent-cli>
@@ -107,6 +111,7 @@ Then install any skill you want:
 
 ```text
 /plugin install agy-skill-installer@souvik-skills
+/plugin install ars@souvik-skills
 /plugin install claude-md-init@souvik-skills
 /plugin install delink-github@souvik-skills
 /plugin install gh-ready@souvik-skills
@@ -147,6 +152,7 @@ Install one skill into Codex from the NPM package:
 
 ```bash
 npx @imsovikde/skills install agy-skill-installer
+npx @imsovikde/skills install ars
 npx @imsovikde/skills install claude-md-init
 npx @imsovikde/skills install delink-github
 npx @imsovikde/skills install gh-ready
@@ -183,6 +189,7 @@ After installation, restart Codex so the new skill metadata is loaded.
 Example prompts:
 
 ```text
+Use $ars to elevate this interface with Renaissance-level visual thinking, sacred harmonic geometry, chiaroscuro value staging, and dynamic equilibrium.
 Use $agy-skill-installer to install any skill into Anti-Gravity IDE with 100% fidelity, automated YAML frontmatter validation, and dual-root provisioning.
 Use $claude-md-init to create or update this project's CLAUDE.md with a repo snapshot and owner-only, verified-commit rules.
 Use $delink-github to safely detach, rename, clean inherited metadata, purge GitHub linkage, and start clean local Git history for this repository.

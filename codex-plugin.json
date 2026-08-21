@@ -19,6 +19,12 @@
       "agent": "skills/agy-skill-installer/agents/openai.yaml"
     },
     {
+      "name": "ars",
+      "path": "skills/ars",
+      "manifest": "skills/ars/SKILL.md",
+      "agent": "skills/ars/agents/openai.yaml"
+    },
+    {
       "name": "claude-md-init",
       "path": "skills/claude-md-init",
       "manifest": "skills/claude-md-init/SKILL.md",

@@ -1,0 +1,22 @@
+{
+  "name": "ars",
+  "version": "0.8.0",
+  "description": "Universal Renaissance and master artist cognitive operating system that equips AI with Da Vinci-level visual thinking, sacred geometry, chiaroscuro value staging, dynamic equilibrium, and subtractive elegance across all creative and interactive disciplines.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app/skills/ars",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "keywords": [
+    "art",
+    "design",
+    "renaissance",
+    "da-vinci",
+    "geometry",
+    "chiaroscuro",
+    "anti-slop",
+    "creative-direction"
+  ]
+}
