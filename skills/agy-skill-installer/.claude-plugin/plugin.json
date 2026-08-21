@@ -1,5 +1,5 @@
 {
   "name": "agy-skill-installer",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Install any agent skill into Anti-Gravity IDE with 100% fidelity, automated YAML frontmatter validation, dual-root provisioning, security scanning, and slash command integration."
 }

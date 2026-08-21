@@ -2,6 +2,14 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.9.0](https://github.com/imsovikde/souvik-skills/compare/v0.8.0...v0.9.0) (2026-08-21)
+
+
+### Features
+
+* add ars universal artistic cognitive skill ([#31](https://github.com/imsovikde/souvik-skills/issues/31)) ([b24d322](https://github.com/imsovikde/souvik-skills/commit/b24d32293dc15036c0abe7991a47f7245ba54d87))
+* harden ars skill with tactical execution toolkit and movement canon ([#33](https://github.com/imsovikde/souvik-skills/issues/33)) ([3ee25d4](https://github.com/imsovikde/souvik-skills/commit/3ee25d42d700e6d856e35169763098850861ff54))
+
 ## [0.8.0](https://github.com/imsovikde/souvik-skills/compare/v0.7.1...v0.8.0) (2026-08-21)
 
 
