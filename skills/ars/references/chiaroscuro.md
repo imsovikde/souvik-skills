@@ -22,22 +22,74 @@ An interface is not a set of colored boxes; it is a three-dimensional volume ill
 
 ---
 
-## 2. Sfumato (Edge Acuity & Atmospheric Gradation)
+## 2. Four Calibrated Master OKLCH Palettes
 
-In physical reality, there are no hard 1px borders cutting through space:
-- **Focal Zone:** Crisp, high-frequency micro-contrast on interactive targets and primary typography.
-- **Peripheral / Receding Zones:** Atmospheric soft-focus (*sfumato*) created via:
-  - Subtle opacity roll-off (`opacity: 0.7`).
-  - Low-contrast, diffused boundaries (`border-color: oklch(0.5 0.01 240 / 0.12)`).
-  - Soft, multi-layered ambient shadow spreads rather than harsh single-drop shadows.
+### Palette A: Obsidian Noir (Cinematic Dark Register)
+```css
+:root {
+  --color-ground:      oklch(0.12 0.01 260); /* Atmospheric deep black-blue */
+  --color-shadow:      oklch(0.20 0.01 260); /* Receding structural plane */
+  --color-midtone:     oklch(0.45 0.01 260); /* Subtle metadata & chrome */
+  --color-core:        oklch(0.92 0.01 260); /* Crisp core typography */
+  --color-highlight:   oklch(0.98 0.02 260); /* Specular focal target */
+  --color-strike:      oklch(0.75 0.19 55);  /* 2% Pure amber flame strike */
+}
+```
+
+### Palette B: Architectural Limestone (Warm Editorial Light Register)
+```css
+:root {
+  --color-ground:      oklch(0.96 0.01 85);  /* Warm honed limestone */
+  --color-shadow:      oklch(0.90 0.01 85);  /* Soft mineral plane */
+  --color-midtone:     oklch(0.55 0.02 60);  /* Editorial muted caption */
+  --color-core:        oklch(0.18 0.02 50);  /* Dense carbon ink */
+  --color-highlight:   oklch(0.10 0.01 50);  /* Deepest focal ink */
+  --color-strike:      oklch(0.58 0.22 28);  /* 2% Vermilion lacquer strike */
+}
+```
+
+### Palette C: Titanium Monolith (Industrial High-Tech Register)
+```css
+:root {
+  --color-ground:      oklch(0.15 0.005 240); /* Cold brushed titanium */
+  --color-shadow:      oklch(0.25 0.005 240); /* Structural bezel */
+  --color-midtone:     oklch(0.60 0.005 240); /* Machined technical text */
+  --color-core:        oklch(0.94 0.005 240); /* Luminous phosphor readout */
+  --color-highlight:   oklch(0.99 0.005 240); /* Peak laser highlight */
+  --color-strike:      oklch(0.82 0.16 142);  /* 2% Laser emerald strike */
+}
+```
+
+### Palette D: Mineral Earth (Organic Tactile Register)
+```css
+:root {
+  --color-ground:      oklch(0.94 0.015 75); /* Raw unbleached clay */
+  --color-shadow:      oklch(0.86 0.020 75); /* Terracotta shadow */
+  --color-midtone:     oklch(0.48 0.030 65); /* Weathered loam */
+  --color-core:        oklch(0.22 0.025 55); /* Dark umber */
+  --color-highlight:   oklch(0.12 0.015 50); /* Burnt sienna core */
+  --color-strike:      oklch(0.65 0.18 160); /* 2% Malachite mineral strike */
+}
+```
 
 ---
 
-## 3. Relational Color Physics (Itten & Goethe)
+## 3. Sfumato & Multi-Layered Shadow Elevation
 
-1. **The 90 / 8 / 2 Law:**
-   - **90% Ground:** Neutral/tinted atmospheric environment.
-   - **8% Structure:** Harmonized tints for containment and division.
-   - **2% Chroma Strike:** Unadulterated, saturated pure accent at the climax.
-2. **Temperature Oscillation:**
-   - If key illumination is warm (`oklch(0.95 0.03 65)`), shadows and receding voids must tilt cool (`oklch(0.15 0.02 245)`).
+Never use harsh 1-step drop shadows. In physical light, ambient diffusion creates layered penumbras:
+
+```css
+/* Sfumato Atmospheric Elevation Stack */
+.elevation-sfumato-low {
+  box-shadow: 
+    0 1px 2px oklch(0 0 0 / 0.06),
+    0 2px 6px oklch(0 0 0 / 0.04);
+}
+
+.elevation-sfumato-high {
+  box-shadow: 
+    0 2px 4px oklch(0 0 0 / 0.04),
+    0 8px 24px oklch(0 0 0 / 0.08),
+    0 24px 64px oklch(0 0 0 / 0.12);
+}
+```

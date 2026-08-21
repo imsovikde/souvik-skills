@@ -4,9 +4,9 @@
 
 ---
 
-## 1. The Death of Dead Symmetry
+## 1. The Principle of Dynamic Asymmetry
 
-Centering everything down the middle of a screen produces lifeless, robotic layouts. True classical elegance stems from **Contrapposto** (poised asymmetrical equilibrium):
+Static center-alignment is the default failure mode of automated AI layouts. Classical beauty is achieved through **Contrapposto** (active counter-tension between heavy structural mass and expansive negative void):
 
 ```
    ┌────────────────────────────────────────────────────────┐
@@ -23,17 +23,27 @@ Centering everything down the middle of a screen produces lifeless, robotic layo
 
 ---
 
-## 2. Visual Mass Calculation
+## 2. Calculating Visual Weight & Gravitational Vectors
 
-Visual mass is determined by 4 vectors:
-1. **Luminance Contrast:** A bright white badge on a dark background carries $3\times$ the visual mass of a gray button.
-2. **Typographic Scale:** Large display text acts as an immovable gravitational center.
-3. **Density / Complexity:** A 4-line data metric cluster carries dense focal weight.
-4. **Edge Hardness:** Sharp geometric contours pull the eye harder than soft, rounded organic shapes.
+Visual mass is determined by 4 calculated forces:
+
+$$\text{Visual Mass} = \text{Area} \times \Delta\text{Luminance} \times \text{Semantic Density} \times \text{Edge Acuity}$$
+
+1. **Luminance Delta:** High contrast (e.g. pure white text against black ground) exerts $3\times$ the gravitational pull of muted text.
+2. **Typographic Scale:** Monumental display typography anchors the entire viewport.
+3. **Semantic Density:** A tight cluster of 3 data metrics carries dense focal gravity.
+4. **Edge Acuity:** Sharp rectilinear geometries pull harder than soft rounded pills.
 
 ---
 
-## 3. Counterbalancing Mechanics
+## 3. Micro-Component Contrapposto Blueprints
 
-- When placing a heavy, dense visual block on the left flank, counterbalance it with a **large, intentional negative void** on the right flank—never clutter both sides equally.
-- Always provide a grounded, horizontal **Anchor Baseline** to catch the gravitational pull of the asymmetrical weight.
+### A. Navigation Bar (Asymmetric Tension)
+- **Left Flank:** Understated brand wordmark (low-contrast midtone).
+- **Center Void:** Generous breathing space (no cluttered links in dead center).
+- **Right Flank:** Compact action cluster + high-chroma primary action (the counterweight).
+
+### B. Hero Section (Diagonal Force Line)
+- **Top-Left (0,0 to 38%):** Monumental heading + lead thesis statement.
+- **Top-Right (38% to 100%):** Atmospheric negative void or subtle textured medium.
+- **Bottom-Right (61.8% to 100%):** Single high-potency action anchor grounding the diagonal.
