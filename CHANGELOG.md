@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.8.0](https://github.com/imsovikde/souvik-skills/compare/v0.7.1...v0.8.0) (2026-08-21)
+
+
+### Features
+
+* add agy-skill-installer skill for Anti-Gravity IDE ([#29](https://github.com/imsovikde/souvik-skills/issues/29)) ([cd957eb](https://github.com/imsovikde/souvik-skills/commit/cd957eb778bb4adbe4afa6bba4871d74bd5374fe))
+
 ## [0.7.1](https://github.com/imsovikde/souvik-skills/compare/v0.7.0...v0.7.1) (2026-07-29)
 
 
