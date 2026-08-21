@@ -10,6 +10,26 @@
   },
   "plugins": [
     {
+      "name": "agy-skill-installer",
+      "source": "./skills/agy-skill-installer",
+      "description": "Install any agent skill into Anti-Gravity IDE with 100% fidelity, automated YAML frontmatter validation, dual-root provisioning, security scanning, and slash command integration.",
+      "version": "0.7.1",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/agy-skill-installer",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Anti-Gravity Tools",
+      "tags": [
+        "antigravity",
+        "skill-installer",
+        "slash-commands",
+        "agent-skills"
+      ]
+    },
+    {
       "name": "claude-md-init",
       "source": "./skills/claude-md-init",
       "description": "Scaffold or update a project's CLAUDE.md with a repo snapshot and hard rules for owner-only commit attribution and verified commits.",

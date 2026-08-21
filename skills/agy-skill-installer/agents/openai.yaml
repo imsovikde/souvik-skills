@@ -1,0 +1,4 @@
+interface:
+  display_name: "Anti-Gravity Skill Installer"
+  short_description: "Install, validate, and provision agent skills for Anti-Gravity IDE with zero truncation."
+  default_prompt: "Use $agy-skill-installer to install, validate, and provision an agent skill for Anti-Gravity IDE."

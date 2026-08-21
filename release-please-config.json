@@ -48,7 +48,17 @@
         },
         {
           "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[7].version"
+        },
+        {
+          "type": "json",
           "path": "codex-plugin.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "skills/agy-skill-installer/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
         },
         {
