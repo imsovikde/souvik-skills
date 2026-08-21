@@ -1,6 +1,6 @@
 {
   "name": "delink-github",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Safely isolate copied repositories by removing Git history, GitHub workflow metadata, inherited license metadata, stale names, outside links, and author contacts before starting clean local history.",
   "author": {
     "name": "Souvik Dey",
