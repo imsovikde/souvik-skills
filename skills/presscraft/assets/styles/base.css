@@ -383,6 +383,92 @@ code:not(.hljs) {
   --callout-bg: #fff1f2;
 }
 
+.callout-key, .callout-definition {
+  --callout-border: #d97706;
+  --callout-bg: #fefce8;
+}
+
+.callout-summary, .callout-takeaway {
+  --callout-border: #0f766e;
+  --callout-bg: #f0fdfa;
+}
+
+.callout-insight {
+  --callout-border: #0284c7;
+  --callout-bg: #f0f9ff;
+}
+
+.callout-example {
+  --callout-border: #4f46e5;
+  --callout-bg: #eef2ff;
+}
+
+/* Cognitive Text Highlighting System */
+mark,
+.highlight {
+  background-color: var(--highlight-default-bg, rgba(254, 240, 138, 0.6));
+  color: inherit;
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+mark.highlight-key,
+.highlight.highlight-key,
+.highlight-key {
+  background-color: var(--highlight-key-bg, rgba(245, 158, 11, 0.16));
+  border-bottom: 1.5px solid var(--highlight-key-border, #d97706);
+  color: var(--highlight-key-text, #78350f);
+  font-weight: 600;
+  padding: 0.1em 0.35em;
+  border-radius: 2px 2px 0 0;
+}
+
+mark.highlight-warn,
+.highlight.highlight-warn,
+.highlight-warn {
+  background-color: var(--highlight-warn-bg, rgba(239, 68, 68, 0.13));
+  border-bottom: 1.5px solid var(--highlight-warn-border, #dc2626);
+  color: var(--highlight-warn-text, #991b1b);
+  font-weight: 600;
+  padding: 0.1em 0.35em;
+  border-radius: 2px 2px 0 0;
+}
+
+mark.highlight-tip,
+.highlight.highlight-tip,
+.highlight-tip {
+  background-color: var(--highlight-tip-bg, rgba(16, 185, 129, 0.14));
+  border-bottom: 1.5px solid var(--highlight-tip-border, #059669);
+  color: var(--highlight-tip-text, #065f46);
+  font-weight: 600;
+  padding: 0.1em 0.35em;
+  border-radius: 2px 2px 0 0;
+}
+
+mark.highlight-note,
+.highlight.highlight-note,
+.highlight-note {
+  background-color: var(--highlight-note-bg, rgba(14, 165, 233, 0.14));
+  border-bottom: 1.5px solid var(--highlight-note-border, #0284c7);
+  color: var(--highlight-note-text, #075985);
+  font-weight: 600;
+  padding: 0.1em 0.35em;
+  border-radius: 2px 2px 0 0;
+}
+
+mark.highlight-important,
+.highlight.highlight-important,
+.highlight-important {
+  background-color: var(--highlight-important-bg, rgba(139, 92, 246, 0.14));
+  border-bottom: 1.5px solid var(--highlight-important-border, #7c3aed);
+  color: var(--highlight-important-text, #5b21b6);
+  font-weight: 600;
+  padding: 0.1em 0.35em;
+  border-radius: 2px 2px 0 0;
+}
+
 /* Standard Blockquote */
 blockquote:not(.callout) {
   margin: 1.3em 0;

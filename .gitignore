@@ -33,3 +33,5 @@ context.md
 *.zip
 
 .vercel
+.agents/
+.nomedia

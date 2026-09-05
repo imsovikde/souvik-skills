@@ -4,7 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 
-function runAudit() {
+async function runAudit() {
   console.log("Presscraft: Starting comprehensive audit...\n");
 
   const skillRoot = path.resolve(__dirname, "..");
@@ -14,6 +14,8 @@ function runAudit() {
     "agents/openai.yaml",
     "package.json",
     "styles/base.css",
+    "styles/theme-reader.css",
+    "styles/theme-readability.css",
     "styles/theme-storybook.css",
     "styles/theme-minimalist.css",
     "styles/theme-executive.css",
@@ -35,11 +37,11 @@ function runAudit() {
       throw new Error(`Audit failure: Missing expected file: ${rel}`);
     }
   }
-  console.log("   ✓ All 16 structural files verified.");
+  console.log(`   ✓ All ${requiredFiles.length} structural files verified.`);
 
   // 2. Design Token & Theme CSS Verification
   console.log("\n2. Checking theme stylesheets & design tokens...");
-  const themes = ["base", "storybook", "minimalist", "executive", "academic", "cyberpunk"];
+  const themes = ["base", "reader", "readability", "storybook", "minimalist", "executive", "academic", "cyberpunk"];
   for (const t of themes) {
     const cssPath = path.join(skillRoot, "styles", t === "base" ? "base.css" : `theme-${t}.css`);
     const cssContent = fs.readFileSync(cssPath, "utf8");
@@ -47,7 +49,7 @@ function runAudit() {
       throw new Error(`Audit failure: Theme stylesheet '${t}' lacks --theme- variables.`);
     }
   }
-  console.log("   ✓ All 6 CSS stylesheets implement design tokens cleanly.");
+  console.log(`   ✓ All ${themes.length} CSS stylesheets implement design tokens cleanly.`);
 
   // 3. Optional Runtime Compilation Verification
   console.log("\n3. Testing runtime AST & PDF compilation engine...");
@@ -57,10 +59,16 @@ function runAudit() {
   try {
     const { createAstPipeline } = require("./lib/ast-pipeline.cjs");
     const sampleMarkdown = `# Quantum Architecture
-A study into quantum decoherence and entanglement.
+A study into quantum decoherence and entanglement with ==ergonomic text highlighting== and ==key:quantum decoherence==.
 
 > [!NOTE]
 > Decoherence occurs when a quantum system interacts with its environment.
+
+> [!KEY]
+> Superposition enables qubits to exist in a linear combination of states.
+
+> [!SUMMARY]
+> Quantum entanglement produces non-local correlation across physical space.
 
 \`\`\`python
 import numpy as np
@@ -87,10 +95,24 @@ def calculate_fidelity(state_a, state_b):
     if (!renderedHtml.includes('class="callout callout-note"')) {
       throw new Error("Audit failure: Rendered HTML does not contain .callout-note");
     }
+    if (!renderedHtml.includes('class="callout callout-key"')) {
+      throw new Error("Audit failure: Rendered HTML does not contain .callout-key");
+    }
+    if (!renderedHtml.includes('class="callout callout-summary"')) {
+      throw new Error("Audit failure: Rendered HTML does not contain .callout-summary");
+    }
+    if (!renderedHtml.includes('class="highlight"')) {
+      throw new Error("Audit failure: Rendered HTML does not contain .highlight");
+    }
+    if (!renderedHtml.includes('class="highlight highlight-key"')) {
+      throw new Error("Audit failure: Rendered HTML does not contain .highlight-key");
+    }
 
     hasMarkdownIt = true;
     console.log("   ✓ AST pipeline intercepted code fence into macOS window frame.");
     console.log("   ✓ GitHub alert blockquote successfully converted into .callout.");
+    console.log("   ✓ Extended cognitive callouts (KEY, SUMMARY) verified.");
+    console.log("   ✓ Semantic text highlighting verified.");
 
     // PDF compilation check
     const { compilePdf } = require("./presscraft.cjs");
@@ -100,27 +122,23 @@ def calculate_fidelity(state_a, state_b):
     fs.writeFileSync(tempMdPath, sampleMarkdown, "utf8");
 
     try {
-      compilePdf({
+      const result = await compilePdf({
         input: tempMdPath,
         output: tempPdfPath,
-        theme: "storybook",
+        theme: "reader",
         format: "A4"
-      }).then((result) => {
-        if (fs.existsSync(tempPdfPath)) {
-          const stats = fs.statSync(tempPdfPath);
-          console.log(`   ✓ PDF compiled successfully: ${tempPdfPath}`);
-          console.log(`   ✓ File size: ${(stats.size / 1024).toFixed(1)} KB`);
-          console.log(`   ✓ Render time: ${result.elapsedSec}s`);
-          fs.unlinkSync(tempPdfPath);
-        }
-        if (fs.existsSync(tempMdPath)) fs.unlinkSync(tempMdPath);
-      }).catch((e) => {
-        if (fs.existsSync(tempMdPath)) fs.unlinkSync(tempMdPath);
-        console.log(`   ! Headless Chrome not active in current container: ${e.message} (advisory only)`);
       });
+      if (fs.existsSync(tempPdfPath)) {
+        const stats = fs.statSync(tempPdfPath);
+        console.log(`   ✓ PDF compiled successfully: ${tempPdfPath}`);
+        console.log(`   ✓ File size: ${(stats.size / 1024).toFixed(1)} KB`);
+        console.log(`   ✓ Render time: ${result.elapsedSec}s`);
+        fs.unlinkSync(tempPdfPath);
+      }
+      if (fs.existsSync(tempMdPath)) fs.unlinkSync(tempMdPath);
     } catch (pdfErr) {
       if (fs.existsSync(tempMdPath)) fs.unlinkSync(tempMdPath);
-      console.log(`   ! PDF rendering skipped in current container: ${pdfErr.message}`);
+      console.log(`   ! PDF rendering advisory: ${pdfErr.message}`);
     }
 
   } catch (modErr) {
@@ -138,12 +156,10 @@ def calculate_fidelity(state_a, state_b):
 }
 
 if (require.main === module) {
-  try {
-    runAudit();
-  } catch (err) {
+  runAudit().catch((err) => {
     console.error(`Audit error: ${err.message}`);
     process.exit(1);
-  }
+  });
 }
 
 module.exports = {

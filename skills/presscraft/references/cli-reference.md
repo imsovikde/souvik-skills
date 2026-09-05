@@ -18,8 +18,9 @@ Path to the input document. Supported extensions:
 ### `--output, -o <path>` (Optional)
 Path for the rendered PDF file. Defaults to `<input-basename>.pdf` in the current working directory.
 
-### `--theme, -t <theme-name|file-path>` (Optional, Default: `minimalist`)
+### `--theme, -t <theme-name|file-path>` (Optional, Default: `reader`)
 Select one of the built-in themes or supply a path to a custom CSS file:
+- `reader`: Cognitive ergonomics, eye-comfort ivory paper, Charter/Source Serif typography, calibrated pine accent, optimal 68 CPL measure.
 - `storybook`: Warm ivory parchment, Garamond serif typography, fleurons, and drop-caps.
 - `minimalist`: Swiss clean typographic styling, Inter sans-serif, crisp borders.
 - `executive`: Modern enterprise whitepaper, royal blue accents, geometric sans.
@@ -56,3 +57,32 @@ Suppresses running headers and footers with dynamic page numbers.
 
 ### `--wait <ms>` (Optional, Default: `600`)
 Additional millisecond wait time before PDF rasterization to allow remote web fonts to settle.
+
+---
+
+## Supported Markdown Extensions
+
+### 1. Semantic Highlighting Syntax
+- `==text==` or `<mark>text</mark>`: Universal butter yellow highlight.
+- `==key:text==`: Pale amber highlight for key definitions and core concepts.
+- `==warn:text==`: Soft coral highlight for warnings and risks.
+- `==tip:text==`: Soft mint highlight for actionable tips.
+- `==note:text==`: Soft sky highlight for observations and insights.
+- `==important:text==`: Soft lavender highlight for invariants.
+
+### 2. GitHub-Style Admonitions & Extended Callouts
+- `> [!NOTE]` — Blue informational note
+- `> [!TIP]` — Emerald green actionable tip
+- `> [!IMPORTANT]` — Violet critical alert
+- `> [!WARNING]` — Amber caution/warning
+- `> [!CAUTION]` — Rose danger box
+- `> [!KEY]` — Amber core definition box
+- `> [!SUMMARY]` / `> [!TAKEAWAY]` — Calming pine executive summary box
+- `> [!INSIGHT]` — Sky blue cognitive insight box
+- `> [!EXAMPLE]` — Indigo walkthrough box
+
+### 3. Page Break Directives
+- `<!-- pagebreak -->` or `<!-- newpage -->`
+- `\newpage`
+- `---pagebreak---`
+- `<div class="page-break"></div>`

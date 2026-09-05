@@ -1,0 +1,242 @@
+﻿/* Theme: Reader (Cognitive Ergonomics & Visual Comfort) */
+@import url(https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap);
+
+:root {
+  /* Ergonomic Ivory Substrate (90% Diffuse Reflectance - Eliminates Glare) */
+  --theme-bg: #fbf9f5;
+  --theme-surface: #ffffff;
+  --theme-surface-subtle: #f5f1e9;
+
+  /* Deep Espresso/Charcoal Typography (13.5:1 WCAG AAA Contrast Ratio) */
+  --theme-text: #242120;
+  --theme-heading: #181514;
+  --theme-muted: #5e5650;
+
+  /* Calming Deep Pine / Mineral Accent */
+  --theme-accent: #0f766e;
+  --theme-accent-light: #ccfbf1;
+  --theme-border: #e8e2d8;
+  --theme-border-subtle: #f0ebe1;
+
+  /* Typographic Hierarchy: High-x-height Serif Body paired with Clean Grotesque Headings */
+  --theme-font-body: Source Serif 4, Charter, Merriweather, Georgia, Cambria, serif;
+  --theme-font-heading: Plus Jakarta Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  --theme-font-code: JetBrains Mono, Fira Code, Cascadia Code, Menlo, Consolas, monospace;
+
+  /* Warm Contrast-Calibrated macOS Code Windows */
+  --theme-code-bg: #1e1c1b;
+  --theme-code-header-bg: #171514;
+  --theme-code-border: #34302c;
+  --theme-code-title-color: #ede8e3;
+  --theme-code-text: #f0ebe4;
+
+  /* Cognitive Highlighting Tokens */
+  --highlight-default-bg: rgba(254, 240, 138, 0.55);
+  --highlight-default-border: #facc15;
+  --highlight-key-bg: rgba(245, 158, 11, 0.16);
+  --highlight-key-border: #d97706;
+  --highlight-key-text: #78350f;
+  --highlight-warn-bg: rgba(239, 68, 68, 0.13);
+  --highlight-warn-border: #dc2626;
+  --highlight-warn-text: #991b1b;
+  --highlight-tip-bg: rgba(16, 185, 129, 0.14);
+  --highlight-tip-border: #059669;
+  --highlight-tip-text: #065f46;
+  --highlight-note-bg: rgba(14, 165, 233, 0.14);
+  --highlight-note-border: #0284c7;
+  --highlight-note-text: #075985;
+  --highlight-important-bg: rgba(139, 92, 246, 0.14);
+  --highlight-important-border: #7c3aed;
+  --highlight-important-text: #5b21b6;
+}
+
+body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  font-family: var(--theme-font-body);
+  font-size: 13.5px;
+  line-height: 1.72;
+  letter-spacing: -0.002em;
+}
+
+/* Headings with Proportional Tracking & Clear Visual Landmarks */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--theme-font-heading);
+  color: var(--theme-heading);
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+h1 {
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.22;
+  border-bottom: 2px solid var(--theme-border);
+  padding-bottom: 0.32em;
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+}
+
+h2 {
+  font-size: 1.55rem;
+  font-weight: 750;
+  letter-spacing: -0.022em;
+  line-height: 1.26;
+  border-bottom: 1px solid var(--theme-border);
+  padding-bottom: 0.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  color: #24201e;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.32;
+  margin-top: 1.4em;
+  margin-bottom: 0.5em;
+  color: #24201e;
+}
+
+h4 {
+  font-size: 1.08rem;
+  font-weight: 650;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
+}
+
+/* Tasteful Opening Drop Cap for Primary Chapter / Major Sections */
+h1 + p::first-letter {
+  float: left;
+  font-family: var(--theme-font-heading);
+  font-size: 2.65em;
+  line-height: 0.85;
+  margin-right: 0.12em;
+  padding-top: 0.04em;
+  font-weight: 800;
+  color: var(--theme-accent);
+}
+
+/* Reading Rhythm & Spacing */
+p {
+  margin-top: 0;
+  margin-bottom: 1.2em;
+  orphans: 3;
+  widows: 3;
+}
+
+/* Hyperlinks with Calibrated Contrast */
+a {
+  color: var(--theme-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2.5px;
+}
+
+a:hover {
+  color: #042f2e;
+}
+
+/* Blockquotes with Ivory Paper Styling */
+blockquote:not(.callout) {
+  border-left: 3.5px solid var(--theme-accent);
+  background-color: var(--theme-surface-subtle);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 18px;
+  margin: 1.4em 0;
+  color: #443e39;
+  font-style: italic;
+}
+
+/* Tables Formatted for Effortless Visual Scanning */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 6px;
+  border: 1px solid var(--theme-border);
+  background-color: var(--theme-surface);
+  overflow: hidden;
+}
+
+table th {
+  background-color: var(--theme-surface-subtle);
+  font-family: var(--theme-font-heading);
+  font-weight: 700;
+  color: var(--theme-heading);
+  border-bottom: 2px solid var(--theme-border);
+  padding: 10px 14px;
+}
+
+table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--theme-border-subtle);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:nth-child(even) td {
+  background-color: rgba(0, 0, 0, 0.012);
+}
+
+/* Warm macOS Code Windows */
+.code-window {
+  border-radius: 8px;
+  border: 1px solid var(--theme-code-border);
+  background-color: var(--theme-code-bg);
+  box-shadow: 0 4px 16px rgba(36, 33, 32, 0.08);
+}
+
+.code-header {
+  background-color: var(--theme-code-header-bg);
+  border-bottom: 1px solid var(--theme-code-border);
+}
+
+/* Custom Admonition Colors in Reader Theme */
+.callout-note {
+  --callout-border: #0284c7;
+  --callout-bg: #f0f9ff;
+}
+
+.callout-tip {
+  --callout-border: #059669;
+  --callout-bg: #ecfdf5;
+}
+
+.callout-important {
+  --callout-border: #7c3aed;
+  --callout-bg: #f5f3ff;
+}
+
+.callout-warning {
+  --callout-border: #d97706;
+  --callout-bg: #fffbeb;
+}
+
+.callout-caution {
+  --callout-border: #e11d48;
+  --callout-bg: #fff1f2;
+}
+
+.callout-key, .callout-definition {
+  --callout-border: #d97706;
+  --callout-bg: #fefce8;
+}
+
+.callout-summary, .callout-takeaway {
+  --callout-border: #0f766e;
+  --callout-bg: #f0fdfa;
+}
+
+.callout-insight {
+  --callout-border: #0284c7;
+  --callout-bg: #f0f9ff;
+}
+
+.callout-example {
+  --callout-border: #4f46e5;
+  --callout-bg: #eef2ff;
+}

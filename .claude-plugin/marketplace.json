@@ -195,7 +195,7 @@
     {
       "name": "presscraft",
       "source": "./skills/presscraft",
-      "description": "Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity.",
+      "description": "Transform Markdown, HTML, and code into pristine publication-grade PDFs with cognitive readability ergonomics, macOS code windows, zero shrinkage, and verbatim fidelity.",
       "version": "0.10.0",
       "author": {
         "name": "Souvik Dey",
@@ -212,6 +212,8 @@
         "typesetting",
         "print",
         "publication",
+        "readability",
+        "reader",
         "storybook"
       ]
     }

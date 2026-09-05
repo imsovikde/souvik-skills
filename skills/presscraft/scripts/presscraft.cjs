@@ -10,7 +10,7 @@ function parseArgs(argv) {
   const options = {
     input: null,
     output: null,
-    theme: "minimalist",
+    theme: "reader",
     format: "A4",
     landscape: false,
     margin: "15mm",
@@ -98,7 +98,11 @@ function resolveThemeCss(themeName) {
     return fs.readFileSync(path.resolve(themeName), "utf8");
   }
 
-  const cleanTheme = themeName.toLowerCase().replace(/^theme-/, "");
+  let cleanTheme = (themeName || "reader").toLowerCase().replace(/^theme-/, "");
+  if (cleanTheme === "reading" || cleanTheme === "read") {
+    cleanTheme = "reader";
+  }
+
   for (const dir of stylesDirs) {
     const candidate = path.join(dir, `theme-${cleanTheme}.css`);
     if (fs.existsSync(candidate)) {
@@ -106,11 +110,15 @@ function resolveThemeCss(themeName) {
     }
   }
 
-  // Fallback to minimalist
+  // Fallback to reader then minimalist
   for (const dir of stylesDirs) {
-    const fallback = path.join(dir, "theme-minimalist.css");
-    if (fs.existsSync(fallback)) {
-      return fs.readFileSync(fallback, "utf8");
+    const readerFallback = path.join(dir, "theme-reader.css");
+    if (fs.existsSync(readerFallback)) {
+      return fs.readFileSync(readerFallback, "utf8");
+    }
+    const miniFallback = path.join(dir, "theme-minimalist.css");
+    if (fs.existsSync(miniFallback)) {
+      return fs.readFileSync(miniFallback, "utf8");
     }
   }
 
@@ -260,7 +268,7 @@ Usage:
 Options:
   --input, -i <path>       Source file path (.md, .html, source code, .txt)
   --output, -o <path>      Destination PDF file path
-  --theme, -t <theme>      Theme: storybook, minimalist, executive, academic, cyberpunk
+  --theme, -t <theme>      Theme: reader (default), storybook, minimalist, executive, academic, cyberpunk
   --format, -f <format>    Page size: A4, Letter, Legal, A3, A5 (default: A4)
   --margin, -m <margin>    Uniform margin (e.g. 15mm, 20mm, 1in, default: 15mm)
   --landscape              Landscape page orientation
@@ -273,7 +281,8 @@ Options:
   --wait <ms>              Wait time in milliseconds for fonts (default: 600)
 
 Examples:
-  node presscraft.cjs -i guide.md -o guide.pdf --theme storybook
+  node presscraft.cjs -i guide.md -o guide.pdf --theme reader
+  node presscraft.cjs -i book.md -o book.pdf --theme storybook
   node presscraft.cjs -i api.md -o api.pdf --theme minimalist --format Letter
   node presscraft.cjs -i report.md -o report.pdf --theme executive --cover --author "Lead Architect"
 `);
