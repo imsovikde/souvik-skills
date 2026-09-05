@@ -1,0 +1,4 @@
+interface:
+  display_name: "Presscraft"
+  short_description: "Pristine verbatim Markdown-to-PDF publication engine"
+  default_prompt: "Use $presscraft to transform this document into a pristine, publication-grade PDF with macOS code windows, custom typography, zero shrinkage, and 100% verbatim fidelity."

@@ -1,0 +1,65 @@
+/* Theme: Academic (Computer Science & Mathematics Journal) */
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --theme-bg: #ffffff;
+  --theme-text: #111827;
+  --theme-heading: #000000;
+  --theme-muted: #4b5563;
+  --theme-accent: #1d4ed8;
+  --theme-border: #d1d5db;
+
+  --theme-font-body: "EB Garamond", "Times New Roman", Times, serif;
+  --theme-font-heading: "EB Garamond", "Times New Roman", Times, serif;
+  --theme-font-code: "JetBrains Mono", monospace;
+
+  --theme-code-bg: #1f2937;
+  --theme-code-header-bg: #111827;
+  --theme-code-border: #374151;
+  --theme-code-title-color: #f3f4f6;
+  --theme-code-text: #f9fafb;
+}
+
+body {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  font-size: 14px;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 700;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 0.4em;
+  margin-top: 1em;
+}
+
+h2 {
+  font-weight: 700;
+  border-bottom: 0.5px solid #6b7280;
+}
+
+table {
+  border-top: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+}
+
+table th {
+  border-bottom: 1px solid #000000;
+  background: none;
+}
+
+table td {
+  border-bottom: none;
+}
+
+.code-window {
+  border-radius: 4px;
+  border: 1px solid #9ca3af;
+  box-shadow: none;
+}
+
+.code-header {
+  padding: 6px 12px;
+}

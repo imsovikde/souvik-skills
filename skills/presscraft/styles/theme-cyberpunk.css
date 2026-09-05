@@ -1,0 +1,77 @@
+/* Theme: Cyberpunk (Dark Mode Technical Terminal) */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --theme-bg: #090d16;
+  --theme-text: #cbd5e1;
+  --theme-heading: #f8fafc;
+  --theme-muted: #94a3b8;
+  --theme-accent: #00f0ff;
+  --theme-border: #1e293b;
+
+  --theme-font-body: "Space Grotesk", -apple-system, sans-serif;
+  --theme-font-heading: "Space Grotesk", -apple-system, sans-serif;
+  --theme-font-code: "JetBrains Mono", monospace;
+
+  --theme-code-bg: #050811;
+  --theme-code-header-bg: #0d1322;
+  --theme-code-border: #00f0ff44;
+  --theme-code-title-color: #00f0ff;
+  --theme-code-text: #e2e8f0;
+}
+
+body {
+  background-color: var(--theme-bg);
+}
+
+h1 {
+  color: #00f0ff;
+  border-bottom: 2px solid #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+h2 {
+  color: #38bdf8;
+  border-bottom: 1px solid #1e293b;
+}
+
+table th {
+  background-color: #0d1322;
+  color: #00f0ff;
+  border-bottom: 2px solid #00f0ff;
+}
+
+tr:nth-child(even) td {
+  background-color: #0b101d;
+}
+
+.code-window {
+  border-radius: 6px;
+  border: 1px solid #00f0ff55;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
+}
+
+.callout-note {
+  --callout-border: #00f0ff;
+  --callout-bg: #061e2b;
+}
+
+.callout-tip {
+  --callout-border: #10b981;
+  --callout-bg: #06261c;
+}
+
+.callout-important {
+  --callout-border: #a855f7;
+  --callout-bg: #1f0b33;
+}
+
+.callout-warning {
+  --callout-border: #f59e0b;
+  --callout-bg: #291804;
+}
+
+.callout-caution {
+  --callout-border: #ef4444;
+  --callout-bg: #2b0808;
+}

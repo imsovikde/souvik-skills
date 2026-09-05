@@ -58,6 +58,11 @@
         },
         {
           "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[9].version"
+        },
+        {
+          "type": "json",
           "path": "codex-plugin.json",
           "jsonpath": "$.version"
         },
@@ -104,6 +109,11 @@
         {
           "type": "json",
           "path": "skills/skill-ship/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "skills/presscraft/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
         }
       ]

@@ -1,0 +1,17 @@
+{
+  "name": "@imsovikde/skill-presscraft",
+  "version": "0.9.0",
+  "description": "Pristine verbatim Markdown-to-PDF publication engine with AST-level macOS window framing and zero-shrink layout.",
+  "main": "scripts/presscraft.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node scripts/audit-presscraft.cjs"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.1.0",
+    "puppeteer": "^22.0.0"
+  },
+  "author": "Souvik Dey <imsovikde@gmail.com>",
+  "license": "MIT"
+}

@@ -65,6 +65,12 @@
       "path": "skills/skill-ship",
       "manifest": "skills/skill-ship/SKILL.md",
       "agent": "skills/skill-ship/agents/openai.yaml"
+    },
+    {
+      "name": "presscraft",
+      "path": "skills/presscraft",
+      "manifest": "skills/presscraft/SKILL.md",
+      "agent": "skills/presscraft/agents/openai.yaml"
     }
   ]
 }

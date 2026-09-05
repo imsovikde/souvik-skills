@@ -1,0 +1,21 @@
+{
+  "name": "presscraft",
+  "version": "0.9.0",
+  "description": "Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity.",
+  "author": {
+    "name": "Souvik Dey",
+    "email": "imsovikde@gmail.com"
+  },
+  "homepage": "https://souvik-skills.vercel.app/skills/presscraft",
+  "repository": "https://github.com/imsovikde/souvik-skills",
+  "license": "MIT",
+  "keywords": [
+    "pdf",
+    "markdown-to-pdf",
+    "html-to-pdf",
+    "typesetting",
+    "print",
+    "publication",
+    "storybook"
+  ]
+}

@@ -1,0 +1,48 @@
+/* Theme: Minimalist (Swiss Typographic Precision) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --theme-bg: #ffffff;
+  --theme-text: #1e293b;
+  --theme-heading: #09090b;
+  --theme-muted: #64748b;
+  --theme-accent: #0284c7;
+  --theme-border: #e4e4e7;
+
+  --theme-font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-heading: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-code: "JetBrains Mono", Menlo, monospace;
+
+  --theme-code-bg: #18181b;
+  --theme-code-header-bg: #09090b;
+  --theme-code-border: #27272a;
+  --theme-code-title-color: #fafafa;
+  --theme-code-text: #f4f4f5;
+}
+
+body {
+  background-color: var(--theme-bg);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  border-bottom: 2px solid #18181b;
+}
+
+h2 {
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+table th {
+  background-color: #fafafa;
+  border-bottom: 2px solid #18181b;
+}
+
+.code-window {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}

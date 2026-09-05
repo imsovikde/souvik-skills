@@ -1,0 +1,98 @@
+/* Theme: Storybook (Warm Parchment & Literary Typography) */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --theme-bg: #fbf8f2;
+  --theme-text: #2c2520;
+  --theme-heading: #1c1511;
+  --theme-muted: #786c62;
+  --theme-accent: #b45309;
+  --theme-border: #e8ded2;
+
+  --theme-font-body: "Merriweather", Georgia, "Times New Roman", serif;
+  --theme-font-heading: "Playfair Display", Georgia, serif;
+  --theme-font-code: "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --theme-code-bg: #1f1a17;
+  --theme-code-header-bg: #181411;
+  --theme-code-border: #3b312b;
+  --theme-code-title-color: #e6dfd8;
+  --theme-code-text: #e6dfd8;
+}
+
+body {
+  background-color: var(--theme-bg);
+}
+
+h1 {
+  font-family: var(--theme-font-heading);
+  color: var(--theme-heading);
+  letter-spacing: -0.015em;
+  border-bottom: 2px solid #d9ccbe;
+}
+
+h2 {
+  font-family: var(--theme-font-heading);
+  color: #382c23;
+  border-bottom: 1px solid #d9ccbe;
+}
+
+/* Drop-cap on the opening paragraph of each major section */
+h1 + p::first-letter,
+h2 + p::first-letter {
+  float: left;
+  font-family: var(--theme-font-heading);
+  font-size: 3.2em;
+  line-height: 0.82;
+  padding-top: 4px;
+  padding-right: 8px;
+  padding-bottom: 2px;
+  color: var(--theme-accent);
+  font-weight: 700;
+}
+
+hr {
+  position: relative;
+  border: none;
+  height: 1px;
+  background: #d9ccbe;
+  margin: 2.5em 0;
+  overflow: visible;
+  text-align: center;
+}
+
+hr::after {
+  content: "❦";
+  display: inline-block;
+  position: relative;
+  top: -0.7em;
+  font-size: 1.15em;
+  padding: 0 0.5em;
+  background: var(--theme-bg);
+  color: var(--theme-accent);
+}
+
+.callout-note {
+  --callout-border: #92400e;
+  --callout-bg: #fef3c7;
+}
+
+.callout-tip {
+  --callout-border: #047857;
+  --callout-bg: #e6f4ea;
+}
+
+.callout-important {
+  --callout-border: #6d28d9;
+  --callout-bg: #f3e8ff;
+}
+
+.callout-warning {
+  --callout-border: #c2410c;
+  --callout-bg: #ffedd5;
+}
+
+.callout-caution {
+  --callout-border: #b91c1c;
+  --callout-bg: #fee2e2;
+}
