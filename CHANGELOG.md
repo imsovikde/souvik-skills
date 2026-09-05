@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.10.0](https://github.com/imsovikde/souvik-skills/compare/v0.9.0...v0.10.0) (2026-09-05)
+
+
+### Features
+
+* add presscraft publication-grade pdf engine ([#34](https://github.com/imsovikde/souvik-skills/issues/34)) ([6f9e2cc](https://github.com/imsovikde/souvik-skills/commit/6f9e2cc74ea27dc99dcbce9544b5b0931884bd90))
+
 ## [0.9.0](https://github.com/imsovikde/souvik-skills/compare/v0.8.0...v0.9.0) (2026-08-21)
 
 
