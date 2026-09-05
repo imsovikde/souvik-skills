@@ -1,0 +1,47 @@
+/* Theme: Executive (Enterprise Whitepaper & Strategic Report) */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --theme-bg: #ffffff;
+  --theme-text: #334155;
+  --theme-heading: #0f172a;
+  --theme-muted: #64748b;
+  --theme-accent: #2563eb;
+  --theme-border: #cbd5e1;
+
+  --theme-font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-heading: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-code: "JetBrains Mono", monospace;
+
+  --theme-code-bg: #0f172a;
+  --theme-code-header-bg: #0b1120;
+  --theme-code-border: #1e293b;
+  --theme-code-title-color: #e2e8f0;
+  --theme-code-text: #f1f5f9;
+}
+
+h1 {
+  color: #1e3a8a;
+  font-weight: 800;
+  border-bottom: 3px solid #2563eb;
+}
+
+h2 {
+  color: #1e40af;
+  border-bottom: 1.5px solid #93c5fd;
+}
+
+table th {
+  background-color: #eff6ff;
+  color: #1e3a8a;
+  border-bottom: 2px solid #3b82f6;
+}
+
+tr:nth-child(even) td {
+  background-color: #f8fafc;
+}
+
+.code-window {
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
