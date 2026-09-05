@@ -1,6 +1,6 @@
 {
   "name": "presscraft",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity.",
   "author": {
     "name": "Souvik Dey",
