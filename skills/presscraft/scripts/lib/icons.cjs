@@ -24,7 +24,14 @@ const ICONS = {
   css: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l1.5 16.5L12 22l6.5-2.5L20 3H4z"/><path d="M7.5 8h9l-.4 4.5H8.2l.3 3.5 3.5 1 3.5-1 .2-2"/></svg>`,
   yaml: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
   markdown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15V9l3 3 3-3v6"/><path d="M17 12l-2 3h4l-2-3z"/></svg>`,
-  docker: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19a9 9 0 0 0 16 0"/><path d="M2 13h20"/><rect x="4" y="9" width="3" height="3"/><rect x="8" y="9" width="3" height="3"/><rect x="12" y="9" width="3" height="3"/><rect x="8" y="5" width="3" height="3"/></svg>`
+  docker: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19a9 9 0 0 0 16 0"/><path d="M2 13h20"/><rect x="4" y="9" width="3" height="3"/><rect x="8" y="9" width="3" height="3"/><rect x="12" y="9" width="3" height="3"/><rect x="8" y="5" width="3" height="3"/></svg>`,
+  rust: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  go: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 11.5c0-2.8 2.2-5 5-5 1.8 0 3.4.9 4.3 2.3l-1.8 1.2c-.6-.9-1.5-1.5-2.5-1.5-1.7 0-3 1.3-3 3s1.3 3 3 3c1.2 0 2.2-.7 2.7-1.7H6.5v-2h5.5v3.2c-1.1 2.1-3.2 3.5-5.5 3.5-2.8 0-5-2.2-5-5zm11.5-5h2v10h-2zm4 0h2v10h-2z"/></svg>`,
+  java: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+  cpp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 16.5A5.5 5.5 0 1 1 14.5 11"/><line x1="15" y1="12" x2="19" y2="12"/><line x1="17" y1="10" x2="17" y2="14"/><line x1="20" y1="12" x2="24" y2="12"/><line x1="22" y1="10" x2="22" y2="14"/></svg>`,
+  csharp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 16.5A5.5 5.5 0 1 1 14.5 11"/><line x1="16" y1="9" x2="16" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/><line x1="14.5" y1="11" x2="20.5" y2="11"/><line x1="14.5" y1="13" x2="20.5" y2="13"/></svg>`,
+  ruby: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9"/><polyline points="2 9 12 13 22 9"/><line x1="12" y1="22" x2="12" y2="13"/></svg>`,
+  php: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="6"/><path d="M7 14V9.5a1.5 1.5 0 0 1 3 0V12H7"/><path d="M11 14V9.5"/><path d="M14 14V9.5a1.5 1.5 0 0 1 3 0V12h-3"/></svg>`
 };
 
 function getLanguageIcon(lang) {
@@ -40,6 +47,13 @@ function getLanguageIcon(lang) {
   if (l === "yaml" || l === "yml") return ICONS.yaml;
   if (l === "markdown" || l === "md") return ICONS.markdown;
   if (l === "docker" || l === "dockerfile") return ICONS.docker;
+  if (l === "rs" || l === "rust") return ICONS.rust;
+  if (l === "go" || l === "golang") return ICONS.go;
+  if (l === "java") return ICONS.java;
+  if (["cpp", "c++", "c", "h", "hpp"].includes(l)) return ICONS.cpp;
+  if (["cs", "csharp", "c#"].includes(l)) return ICONS.csharp;
+  if (["rb", "ruby"].includes(l)) return ICONS.ruby;
+  if (l === "php") return ICONS.php;
   return ICONS.code;
 }
 

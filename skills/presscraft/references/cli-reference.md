@@ -28,6 +28,12 @@ Select one of the built-in themes or supply a path to a custom CSS file:
 - `cyberpunk`: Dark-mode terminal, neon cyan and emerald accents, luminous borders.
 - `/path/to/theme.css`: Custom theme stylesheet.
 
+### `--template <name>` (Optional, Default: `reader`)
+Alias for `--theme`. Accepts `reader`, `readability`, etc.
+
+### `--init-template <path>` (Optional)
+Scaffold a new Markdown document pre-populated with the golden cognitive readability blueprint (`templates/readability-template.md`).
+
 ### `--format, -f <format>` (Optional, Default: `A4`)
 Specifies the paper dimensions: `A4`, `Letter`, `Legal`, `A3`, `A5`.
 

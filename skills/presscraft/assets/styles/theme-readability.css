@@ -1,4 +1,4 @@
-﻿/* Theme: Reader (Cognitive Ergonomics & Visual Comfort) */
+/* Theme: Reader (Cognitive Ergonomics & Visual Comfort) */
 @import url(https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap);
 
 :root {
@@ -65,6 +65,8 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--theme-heading);
   break-after: avoid;
   page-break-after: avoid;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 h1 {
@@ -107,16 +109,20 @@ h4 {
   margin-bottom: 0.4em;
 }
 
-/* Tasteful Opening Drop Cap for Primary Chapter / Major Sections */
-h1 + p::first-letter {
-  float: left;
-  font-family: var(--theme-font-heading);
-  font-size: 2.65em;
-  line-height: 0.85;
-  margin-right: 0.12em;
-  padding-top: 0.04em;
-  font-weight: 800;
-  color: var(--theme-accent);
+/* Editorial Lead Paragraph - Clean Saccadic Eye Landing without Floating Obstructions */
+.lead,
+.presscraft-document > p:first-of-type {
+  font-size: 1.05rem;
+  line-height: 1.78;
+  color: #1f1b1a;
+}
+
+/* Optimal Saccadic Rhythm Measure (64-72 Characters Per Line) */
+.presscraft-document p,
+.presscraft-document ul,
+.presscraft-document ol,
+.presscraft-document blockquote:not(.callout) {
+  max-width: 44rem;
 }
 
 /* Reading Rhythm & Spacing */
@@ -167,11 +173,15 @@ table th {
   color: var(--theme-heading);
   border-bottom: 2px solid var(--theme-border);
   padding: 10px 14px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 table td {
   padding: 9px 14px;
   border-bottom: 1px solid var(--theme-border-subtle);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 tr:last-child td {

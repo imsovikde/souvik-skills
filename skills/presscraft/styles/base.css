@@ -54,6 +54,8 @@ html, body {
 h1, h2, h3, h4, h5, h6 {
   page-break-after: avoid;
   break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
   font-family: var(--theme-font-heading);
   color: var(--theme-heading);
   line-height: 1.28;
@@ -128,6 +130,11 @@ hr {
 .page-break {
   page-break-before: always;
   break-before: page;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: block;
 }
 
 /* Document Container */
@@ -174,6 +181,8 @@ th, td {
   padding: 8px 12px;
   text-align: left;
   border-bottom: 1px solid var(--theme-border);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 th {
@@ -299,6 +308,8 @@ code:not(.hljs) {
 /* Line Numbering */
 .line {
   display: flex;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .line-num {
@@ -325,6 +336,11 @@ code:not(.hljs) {
   background-color: var(--callout-bg);
   break-inside: avoid;
   page-break-inside: avoid;
+}
+
+.callout .callout {
+  margin: 0.9em 0;
+  box-shadow: none;
 }
 
 .callout-header {

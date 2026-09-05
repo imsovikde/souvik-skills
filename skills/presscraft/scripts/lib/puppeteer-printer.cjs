@@ -53,12 +53,19 @@ async function printToPdf(htmlContent, outputPath, options = {}) {
 
     // Set document content
     await page.setContent(htmlContent, {
-      waitUntil: ["networkidle0", "domcontentloaded"],
-      timeout: 90000
+      waitUntil: ["domcontentloaded"],
+      timeout: 60000
     });
 
-    // Ensure all web fonts are loaded
-    await page.evaluateHandle("document.fonts.ready");
+    // Ensure all web fonts are loaded with bounded race to prevent hanging when offline
+    try {
+      await Promise.race([
+        page.evaluateHandle("document.fonts.ready"),
+        new Promise((resolve) => setTimeout(resolve, 3000))
+      ]);
+    } catch {
+      // Graceful fallback to system fonts
+    }
 
     const waitTime = typeof options.wait === "number" ? options.wait : 600;
     if (waitTime > 0) {
@@ -118,10 +125,22 @@ async function printToPdf(htmlContent, outputPath, options = {}) {
     await page.pdf(pdfOptions);
 
     const stats = fs.statSync(outputPath);
+    let pageCount = 1;
+    try {
+      const pdfBuffer = fs.readFileSync(outputPath, "latin1");
+      const pageMatches = pdfBuffer.match(/\/Type\s*\/Page\b/g);
+      if (pageMatches) {
+        pageCount = pageMatches.length;
+      }
+    } catch {
+      // Fallback
+    }
+
     return {
       success: true,
       outputPath: path.resolve(outputPath),
-      bytes: stats.size
+      bytes: stats.size,
+      pages: pageCount
     };
   } finally {
     await browser.close();

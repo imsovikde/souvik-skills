@@ -59,6 +59,8 @@ node skills/presscraft/scripts/presscraft.cjs --input <path> --output <path.pdf>
 | `--input, -i` | Path to source file (`.md`, `.html`, `.txt`, code files) | Required |
 | `--output, -o` | Path to destination `.pdf` file | Required |
 | `--theme, -t` | Preset theme: `reader`, `storybook`, `minimalist`, `executive`, `academic`, `cyberpunk` | `reader` |
+| `--template` | Alias for `--theme` (e.g. `reader`, `readability`) | `reader` |
+| `--init-template`| Scaffold a new document pre-populated with the golden readability template | - |
 | `--format, -f` | Page format: `A4`, `Letter`, `Legal`, `A3`, `A5` | `A4` |
 | `--landscape` | Print in landscape orientation | `false` |
 | `--margin` | Set uniform page margins (e.g. `15mm`, `20mm`, `1in`) | `15mm` |
@@ -77,10 +79,10 @@ node skills/presscraft/scripts/presscraft.cjs --input <path> --output <path.pdf>
 Presscraft comes pre-loaded with six artisanal design themes:
 
 ### 1. `reader` (`styles/theme-reader.css` & `styles/theme-readability.css`) — Default
-- **Aesthetic**: Research-backed cognitive visual ergonomics & eye-comfort reading.
+- **Aesthetic**: Research-backed cognitive visual ergonomics & eye-comfort reading (see `references/cognitive-ergonomics.md`).
 - **Palette**: Warm ivory paper substrate (`#fbf9f5`, 90% diffuse reflectance), deep espresso slate typography (`#242120`, WCAG AAA 13.5:1 contrast), calming mineral pine accent (`#0f766e`).
 - **Typography**: Source Serif 4 / Charter humanist serif body paired with Plus Jakarta Sans headers; calibrated 64–72 CPL measure and 1.72 line-height.
-- **Accents**: Subtle opening drop-cap on major sections, contrast-calibrated warm charcoal code windows (`#1e1c1b`), standardized color-coded highlighting.
+- **Accents**: Editorial lead paragraph styling, contrast-calibrated warm charcoal code windows (`#1e1c1b`), standardized color-coded highlighting.
 
 ### 2. `storybook` (`styles/theme-storybook.css`)
 - **Aesthetic**: Classic literary book / warm editorial parchment.
@@ -125,8 +127,10 @@ Highlight text directly in Markdown using the `==` delimiter with optional seman
 - `==note:deep insight==` — Soft sky highlight (`#e0f2fe`) with oceanic border for key observations.
 - `==important:invariant==` — Soft violet highlight (`#ede9fe`) with plum border for architectural rules.
 
+*Note: Semantic highlights support full inline sub-formatting (e.g. `==key:**bold concept** and `code`==`).*
+
 ### Extended GitHub-Style Callouts
-Presscraft transforms blockquotes into responsive admonition cards with integrated SVG icons:
+Presscraft transforms blockquotes into responsive admonition cards with integrated SVG icons and optional custom titles (`> [!TYPE] Custom Title`):
 - `> [!KEY]` — Core definition & mental model box (Amber)
 - `> [!SUMMARY]` or `> [!TAKEAWAY]` — Executive summary & chapter takeaway box (Calming Pine)
 - `> [!INSIGHT]` — Cognitive insight & architectural rationale box (Sky Blue)
@@ -139,7 +143,19 @@ Presscraft transforms blockquotes into responsive admonition cards with integrat
 
 ---
 
-## 5. Prompt-Driven Bespoke Styling Workflow
+## 5. Golden Readability Blueprint & Templates
+
+To scaffold a new document that implements all cognitive reading ergonomics, execute:
+
+```bash
+node skills/presscraft/scripts/presscraft.cjs --init-template my-document.md
+```
+
+This generates a pre-configured Markdown document from `templates/readability-template.md` featuring standardized callouts, highlight hierarchy, macOS code windows, and deterministic page breaks. Review `references/cognitive-ergonomics.md` for full research documentation on ocular saccades, foveal vision, and reflectance dynamics.
+
+---
+
+## 6. Prompt-Driven Bespoke Styling Workflow
 
 When a user requests a custom look and feel (e.g. *"make this look like a dark leather medieval grimoire"* or *"give this document a Stripe-style mint and purple developer feel"*), follow this protocol:
 
@@ -160,7 +176,7 @@ When a user requests a custom look and feel (e.g. *"make this look like a dark l
 
 ---
 
-## 6. Verification Checklist Before Delivery
+## 7. Verification Checklist Before Delivery
 
 After compiling any PDF, perform this mandatory verification:
 1. Confirm the `.pdf` file exists and has non-zero size.

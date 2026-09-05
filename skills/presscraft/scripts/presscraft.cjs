@@ -20,7 +20,8 @@ function parseArgs(argv) {
     css: null,
     wait: 600,
     lineNumbers: true,
-    headerFooter: true
+    headerFooter: true,
+    initTemplate: null
   };
 
   const positional = [];
@@ -40,6 +41,14 @@ function parseArgs(argv) {
       options.theme = argv[++i];
     } else if (arg.startsWith("--theme=")) {
       options.theme = arg.slice(8);
+    } else if (arg === "--template") {
+      options.theme = argv[++i];
+    } else if (arg.startsWith("--template=")) {
+      options.theme = arg.slice(11);
+    } else if (arg === "--init-template") {
+      options.initTemplate = argv[++i];
+    } else if (arg.startsWith("--init-template=")) {
+      options.initTemplate = arg.slice(16);
     } else if (arg === "--format" || arg === "-f") {
       options.format = argv[++i];
     } else if (arg.startsWith("--format=")) {
@@ -269,6 +278,8 @@ Options:
   --input, -i <path>       Source file path (.md, .html, source code, .txt)
   --output, -o <path>      Destination PDF file path
   --theme, -t <theme>      Theme: reader (default), storybook, minimalist, executive, academic, cyberpunk
+  --template <name>        Alias for --theme (e.g. reader, readability)
+  --init-template <path>   Scaffold a new document with the golden readability template
   --format, -f <format>    Page size: A4, Letter, Legal, A3, A5 (default: A4)
   --margin, -m <margin>    Uniform margin (e.g. 15mm, 20mm, 1in, default: 15mm)
   --landscape              Landscape page orientation
@@ -285,16 +296,41 @@ Examples:
   node presscraft.cjs -i book.md -o book.pdf --theme storybook
   node presscraft.cjs -i api.md -o api.pdf --theme minimalist --format Letter
   node presscraft.cjs -i report.md -o report.pdf --theme executive --cover --author "Lead Architect"
+  node presscraft.cjs --init-template new-doc.md
 `);
     process.exit(args.includes("--help") || args.includes("-h") ? 0 : 1);
   }
 
   const options = parseArgs(args);
 
+  if (options.initTemplate) {
+    const templateDirs = [
+      path.resolve(__dirname, "../templates"),
+      path.resolve(__dirname, "../assets/templates")
+    ];
+    let templateContent = "";
+    for (const d of templateDirs) {
+      const cand = path.join(d, "readability-template.md");
+      if (fs.existsSync(cand)) {
+        templateContent = fs.readFileSync(cand, "utf8");
+        break;
+      }
+    }
+    if (!templateContent) {
+      console.error("Presscraft error: Readability template source not found.");
+      process.exit(1);
+    }
+    const targetPath = path.resolve(options.initTemplate);
+    fs.writeFileSync(targetPath, templateContent, "utf8");
+    console.log(`✓ Readability template successfully scaffolded: ${targetPath}`);
+    process.exit(0);
+  }
+
   try {
     console.log(`Presscraft: Compiling ${options.input}...`);
     const res = await compilePdf(options);
     console.log(`✓ PDF successfully generated: ${res.outputPath}`);
+    console.log(`  Pages: ${res.pages || 1}`);
     console.log(`  File size: ${(res.bytes / 1024).toFixed(1)} KB`);
     console.log(`  Render time: ${res.elapsedSec}s`);
   } catch (err) {

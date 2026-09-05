@@ -26,7 +26,9 @@ async function runAudit() {
     "scripts/lib/icons.cjs",
     "scripts/lib/puppeteer-printer.cjs",
     "references/design-tokens.md",
-    "references/cli-reference.md"
+    "references/cli-reference.md",
+    "references/cognitive-ergonomics.md",
+    "templates/readability-template.md"
   ];
 
   // 1. Structural File Verification
@@ -59,15 +61,17 @@ async function runAudit() {
   try {
     const { createAstPipeline } = require("./lib/ast-pipeline.cjs");
     const sampleMarkdown = `# Quantum Architecture
-A study into quantum decoherence and entanglement with ==ergonomic text highlighting== and ==key:quantum decoherence==.
+A study into quantum decoherence and entanglement with ==ergonomic text highlighting== and ==key:**quantum decoherence** and \`qubits\`==.
 
-> [!NOTE]
+> [!NOTE] Architectural Philosophy
 > Decoherence occurs when a quantum system interacts with its environment.
+> > [!TIP] Nested Practice
+> > Isolate quantum registers from thermal fluctuations.
 
-> [!KEY]
+> [!KEY] Superposition Principle
 > Superposition enables qubits to exist in a linear combination of states.
 
-> [!SUMMARY]
+> [!SUMMARY] Core Takeaway
 > Quantum entanglement produces non-local correlation across physical space.
 
 \`\`\`python
@@ -98,6 +102,9 @@ def calculate_fidelity(state_a, state_b):
     if (!renderedHtml.includes('class="callout callout-key"')) {
       throw new Error("Audit failure: Rendered HTML does not contain .callout-key");
     }
+    if (!renderedHtml.includes('class="callout callout-tip"')) {
+      throw new Error("Audit failure: Rendered HTML does not contain nested .callout-tip");
+    }
     if (!renderedHtml.includes('class="callout callout-summary"')) {
       throw new Error("Audit failure: Rendered HTML does not contain .callout-summary");
     }
@@ -107,12 +114,19 @@ def calculate_fidelity(state_a, state_b):
     if (!renderedHtml.includes('class="highlight highlight-key"')) {
       throw new Error("Audit failure: Rendered HTML does not contain .highlight-key");
     }
+    if (!renderedHtml.includes('<strong>quantum decoherence</strong>')) {
+      throw new Error("Audit failure: Semantic highlight failed to parse nested bold formatting");
+    }
+    if (!renderedHtml.includes('<code>qubits</code>')) {
+      throw new Error("Audit failure: Semantic highlight failed to parse nested code formatting");
+    }
 
     hasMarkdownIt = true;
     console.log("   ✓ AST pipeline intercepted code fence into macOS window frame.");
     console.log("   ✓ GitHub alert blockquote successfully converted into .callout.");
+    console.log("   ✓ Nested callouts rendered with 100% DOM integrity.");
     console.log("   ✓ Extended cognitive callouts (KEY, SUMMARY) verified.");
-    console.log("   ✓ Semantic text highlighting verified.");
+    console.log("   ✓ Semantic text highlighting with nested formatting verified.");
 
     // PDF compilation check
     const { compilePdf } = require("./presscraft.cjs");

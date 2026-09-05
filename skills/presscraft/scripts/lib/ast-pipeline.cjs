@@ -35,46 +35,155 @@ function escapeHtml(str) {
 function markPlugin(md) {
   function markRule(state, silent) {
     const start = state.pos;
+    const max = state.posMax;
+
     if (state.src.charCodeAt(start) !== 0x3D || state.src.charCodeAt(start + 1) !== 0x3D) {
       return false;
     }
-    if (silent) return false;
 
+    // Left flanking: next char cannot be whitespace
+    const nextChar = state.src.charCodeAt(start + 2);
+    if (nextChar === 0x20 || nextChar === 0x09 || nextChar === 0x0A || nextChar === 0x0D) {
+      return false;
+    }
+
+    // Scan for closing '==' within the same paragraph/line
     let match = -1;
     let pos = start + 2;
-    const max = state.posMax;
     while (pos < max - 1) {
-      if (state.src.charCodeAt(pos) === 0x3D && state.src.charCodeAt(pos + 1) === 0x3D) {
-        match = pos;
+      const ch = state.src.charCodeAt(pos);
+      // Stop if hitting a paragraph break
+      if (ch === 0x0A && pos + 1 < max && state.src.charCodeAt(pos + 1) === 0x0A) {
         break;
+      }
+      if (ch === 0x3D && state.src.charCodeAt(pos + 1) === 0x3D) {
+        // Right flanking: preceding char cannot be whitespace
+        const prevChar = state.src.charCodeAt(pos - 1);
+        if (prevChar !== 0x20 && prevChar !== 0x09 && prevChar !== 0x0A && prevChar !== 0x0D) {
+          match = pos;
+          break;
+        }
       }
       pos++;
     }
+
     if (match === -1) return false;
 
     const raw = state.src.slice(start + 2, match);
     if (!raw.trim()) return false;
 
+    if (silent) {
+      state.pos = match + 2;
+      return true;
+    }
+
     let cls = "highlight";
-    let innerText = raw;
-    const prefixMatch = raw.match(/^(key|definition|warn|tip|note|alert|important|summary|takeaway|insight|example):\s*(.*)$/i);
+    let prefixLen = 0;
+    const prefixMatch = raw.match(/^(key|definition|warn|tip|note|alert|important|summary|takeaway|insight|example):\s*/i);
     if (prefixMatch) {
       const kind = prefixMatch[1].toLowerCase();
       cls = `highlight highlight-${kind}`;
-      innerText = prefixMatch[2];
+      prefixLen = prefixMatch[0].length;
     }
 
-    state.pos = match + 2;
     const tokenOpen = state.push("mark_open", "mark", 1);
     tokenOpen.attrs = [["class", cls]];
 
-    const tokenText = state.push("text", "", 0);
-    tokenText.content = innerText;
+    const oldMax = state.posMax;
+    state.pos = start + 2 + prefixLen;
+    state.posMax = match;
+
+    state.md.inline.tokenize(state);
 
     state.push("mark_close", "mark", -1);
+
+    state.pos = match + 2;
+    state.posMax = oldMax;
     return true;
   }
   md.inline.ruler.after("emphasis", "mark", markRule);
+}
+
+function calloutPlugin(md) {
+  md.core.ruler.after("inline", "callouts", function (state) {
+    const tokens = state.tokens;
+
+    // Scan backwards to ensure nested structures are handled cleanly
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      if (tokens[i].type !== "blockquote_open") continue;
+
+      let depth = 1;
+      let closeIdx = -1;
+      for (let j = i + 1; j < tokens.length; j++) {
+        if (tokens[j].type === "blockquote_open") depth++;
+        else if (tokens[j].type === "blockquote_close") {
+          depth--;
+          if (depth === 0) {
+            closeIdx = j;
+            break;
+          }
+        }
+      }
+
+      if (closeIdx === -1) continue;
+
+      // Check if first inner token is a paragraph with [!TYPE]
+      if (i + 2 < closeIdx && tokens[i + 1].type === "paragraph_open" && tokens[i + 2].type === "inline") {
+        const inlineToken = tokens[i + 2];
+        const children = inlineToken.children || [];
+
+        if (children.length > 0 && children[0].type === "text") {
+          const rawText = children[0].content;
+          const match = rawText.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|KEY|DEFINITION|SUMMARY|TAKEAWAY|INSIGHT|EXAMPLE)\](?:\s+([^\n\r]*))?(?:\n|$)/i);
+
+          if (match) {
+            const calloutType = match[1].toUpperCase();
+            const customTitle = (match[2] || "").trim();
+            const displayTitle = customTitle || calloutType;
+            const iconSvg = getCalloutIcon(calloutType.toLowerCase());
+
+            const remaining = rawText.slice(match[0].length);
+            if (remaining.trim()) {
+              children[0].content = remaining;
+              inlineToken.content = inlineToken.content.slice(match[0].length);
+            } else {
+              children.shift();
+              if (children.length > 0 && children[0].type === "softbreak") {
+                children.shift();
+              }
+              inlineToken.content = children.map((c) => c.content || "").join("");
+            }
+
+            // If the paragraph has no visible content left, remove the paragraph wrapper
+            if (children.length === 0 || children.every((c) => !c.content || !c.content.trim())) {
+              tokens.splice(i + 1, 3);
+              closeIdx -= 3;
+            }
+
+            // Replace blockquote_open with callout container
+            const openToken = new state.Token("html_block", "", 0);
+            openToken.content = `
+<div class="callout callout-${calloutType.toLowerCase()}">
+  <div class="callout-header">
+    <span class="callout-icon">${iconSvg}</span>
+    <span class="callout-title">${escapeHtml(displayTitle)}</span>
+  </div>
+  <div class="callout-content">
+`;
+            tokens[i] = openToken;
+
+            // Replace matching blockquote_close with callout closing tag
+            const closeToken = new state.Token("html_block", "", 0);
+            closeToken.content = `
+  </div>
+</div>
+`;
+            tokens[closeIdx] = closeToken;
+          }
+        }
+      }
+    }
+  });
 }
 
 function createAstPipeline(options = {}) {
@@ -90,6 +199,7 @@ function createAstPipeline(options = {}) {
   });
 
   md.use(markPlugin);
+  md.use(calloutPlugin);
 
   // Intercept fenced code blocks
   md.renderer.rules.fence = function (tokens, idx) {
@@ -153,44 +263,15 @@ function createAstPipeline(options = {}) {
 `;
   };
 
-  // Process Callouts / GitHub Alerts & Page Breaks
+  // Process Page Breaks and AST Render
   function renderDocument(markdownText) {
     // Standardize page break notations before parsing
-    let text = markdownText
+    const text = markdownText
       .replace(/<!--\s*(?:pagebreak|newpage)\s*-->/gi, '\n\n<div class="page-break"></div>\n\n')
       .replace(/^\\newpage\b/gm, '\n\n<div class="page-break"></div>\n\n')
       .replace(/^---(?:pagebreak|newpage)---\s*$/gm, '\n\n<div class="page-break"></div>\n\n');
 
-    let html = md.render(text);
-
-    // Transform blockquotes with [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION], [!KEY], [!DEFINITION], etc.
-    const calloutRegex = /<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|KEY|DEFINITION|SUMMARY|TAKEAWAY|INSIGHT|EXAMPLE)\](?:\s*<br\s*\/?>)?([\s\S]*?)<\/blockquote>/gi;
-
-    html = html.replace(calloutRegex, (match, type, content) => {
-      const calloutType = type.toUpperCase();
-      const iconSvg = getCalloutIcon(calloutType.toLowerCase());
-      let cleanedContent = content.trim();
-
-      if (cleanedContent && !cleanedContent.startsWith("<p>") && !cleanedContent.startsWith("<div>") && !cleanedContent.startsWith("<ul>") && !cleanedContent.startsWith("<ol>")) {
-        cleanedContent = `<p>${cleanedContent}`;
-      }
-      if (cleanedContent && !cleanedContent.endsWith("</p>") && !cleanedContent.endsWith("</div>") && !cleanedContent.endsWith("</ul>") && !cleanedContent.endsWith("</ol>")) {
-        cleanedContent = `${cleanedContent}</p>`;
-      }
-
-      return `
-<div class="callout callout-${calloutType.toLowerCase()}">
-  <div class="callout-header">
-    <span class="callout-icon">${iconSvg}</span>
-    <span class="callout-title">${calloutType}</span>
-  </div>
-  <div class="callout-content">
-    ${cleanedContent}
-  </div>
-</div>`;
-    });
-
-    return html;
+    return md.render(text);
   }
 
   return {
