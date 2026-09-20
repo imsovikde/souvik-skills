@@ -45,7 +45,7 @@ jobs:
           ref: ${{ github.sha }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -88,7 +88,7 @@ jobs:
           ref: ${{ github.sha }}
 
       - name: Set up Node.js for GitHub Packages
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
