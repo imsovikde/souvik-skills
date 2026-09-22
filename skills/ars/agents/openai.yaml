@@ -1,4 +1,4 @@
 interface:
   display_name: "Ars"
-  short_description: "Universal Renaissance artist cognitive system"
-  default_prompt: "Use $ars to apply Da Vinci-level visual thinking, harmonic geometry, chiaroscuro lighting, and dynamic equilibrium to this design."
+  short_description: "Master-artist creative direction across all media — screen, writing, motion, sound, spatial"
+  default_prompt: "Use $ars to apply master-artist creative direction to this work. Read the room first (medium, register, constraints), generate three Concetto candidates, cut two with mechanical reasons, then execute through the 7 pillars. Fill the Pre-Flight Manifest before outputting."

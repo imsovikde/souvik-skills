@@ -32,7 +32,7 @@
     {
       "name": "ars",
       "source": "./skills/ars",
-      "description": "Universal Renaissance and master artist cognitive operating system that equips AI with Da Vinci-level visual thinking, sacred geometry, chiaroscuro value staging, dynamic equilibrium, and subtractive elegance across all creative and interactive disciplines.",
+      "description": "Apply master-artist creative direction to any brief: landing pages, brand systems, editorial layouts, campaign copy, motion, film, sound, or spatial work that looks generic, AI-generated, or flat. Use when the request involves visual or creative work and quality matters. Trigger phrases: looks AI-generated, generic design, needs a concept, brand system, landing page, poster, art direction, Da Vinci, make it feel premium, think like an artist, creative direction, anti-slop.",
       "version": "0.10.0",
       "author": {
         "name": "Souvik Dey",
