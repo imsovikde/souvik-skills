@@ -1,5 +1,5 @@
 {
   "name": "pdf-vector-engine",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Ultimate zero-distortion PDF engine for vector-preserving stream compression into exact target byte windows (e.g. 1.8-2.0 MB for RBI/statutory portals), lossless PDF merging, page transformations, and high-fidelity rendering without text degradation under 1000% zoom. Use whenever compressing, resizing, merging, or converting PDFs where legal readability, vector sharpness, or strict size budgets are required."
 }
