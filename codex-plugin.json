@@ -71,6 +71,12 @@
       "path": "skills/presscraft",
       "manifest": "skills/presscraft/SKILL.md",
       "agent": "skills/presscraft/agents/openai.yaml"
+    },
+    {
+      "name": "pdf-vector-engine",
+      "path": "skills/pdf-vector-engine",
+      "manifest": "skills/pdf-vector-engine/SKILL.md",
+      "agent": "skills/pdf-vector-engine/agents/openai.yaml"
     }
   ]
 }

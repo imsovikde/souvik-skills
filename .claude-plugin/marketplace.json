@@ -164,7 +164,6 @@
       "homepage": "https://souvik-skills.vercel.app/skills/score2md",
       "repository": "https://github.com/imsovikde/souvik-skills",
       "license": "MIT",
-      "category": "Music Conversion",
       "tags": [
         "music",
         "musicxml",
@@ -215,6 +214,27 @@
         "readability",
         "reader",
         "storybook"
+      ]
+    },
+    {
+      "name": "pdf-vector-engine",
+      "source": "./skills/pdf-vector-engine",
+      "description": "Ultimate zero-distortion PDF engine for vector-preserving stream compression into exact target byte windows (e.g. 1.8-2.0 MB for RBI/statutory portals), lossless PDF merging, page transformations, and high-fidelity rendering without text degradation under 1000% zoom. Use whenever compressing, resizing, merging, or converting PDFs where legal readability, vector sharpness, or strict size budgets are required.",
+      "version": "0.10.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/pdf-vector-engine",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Document Engineering",
+      "tags": [
+        "pdf",
+        "vector",
+        "compression",
+        "rbi-compliance",
+        "lossless-merge"
       ]
     }
   ]

@@ -73,10 +73,11 @@
     "test:score2md": "python skills/score2md/scripts/run_tests.py",
     "test:claude-md-init": "node skills/claude-md-init/scripts/test_init_claude_md.cjs",
     "test:skill-ship": "node skills/skill-ship/scripts/test_preflight.cjs",
+    "test:pdf-vector-engine": "python skills/pdf-vector-engine/scripts/test_engine.py",
     "validate:skills": "node scripts/validate-skills.cjs",
     "audit:presscraft": "node skills/presscraft/scripts/audit-presscraft.cjs",
-    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run audit:ars && npm run audit:presscraft",
-    "audit:ars": "node skills/ars/scripts/audit-ars.cjs ."
+    "audit:ars": "node skills/ars/scripts/audit-ars.cjs .",
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run audit:ars && npm run audit:presscraft"
   },
   "engines": {
     "node": ">=20.9.0"

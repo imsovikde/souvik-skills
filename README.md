@@ -49,6 +49,7 @@ npm run build
 | `gh-ready` | Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication. |
 | `magento-team-lead` | Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases. |
 | `motioncraft` | Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification. |
+| `pdf-vector-engine` | Ultimate zero-distortion PDF engine for vector-preserving stream compression into exact target byte windows, lossless merging, page transformations, and high-fidelity rendering. |
 | `score2md` | Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight. |
 | `skill-ship` | Audit, scaffold, adopt, and publish agent skills to this marketplace with verified owner-only commits, telemetry stripping for third-party skills, and the full npm release chain. |
 | `presscraft` | Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity. |
@@ -67,6 +68,7 @@ npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill pdf-vector-engine --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent>
@@ -82,6 +84,7 @@ npx -y skills add imsovikde/souvik-skills --skill delink-github --agent <agent> 
 npx -y skills add imsovikde/souvik-skills --skill gh-ready --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill magento-team-lead --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill pdf-vector-engine --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent> -g
@@ -97,6 +100,7 @@ npx -y skills use imsovikde/souvik-skills@delink-github | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@gh-ready | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@magento-team-lead | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@motioncraft | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@pdf-vector-engine | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@score2md | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@skill-ship | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@presscraft | <agent-cli>
@@ -121,6 +125,7 @@ Then install any skill you want:
 /plugin install gh-ready@souvik-skills
 /plugin install magento-team-lead@souvik-skills
 /plugin install motioncraft@souvik-skills
+/plugin install pdf-vector-engine@souvik-skills
 /plugin install score2md@souvik-skills
 /plugin install skill-ship@souvik-skills
 /plugin install presscraft@souvik-skills
@@ -163,6 +168,7 @@ npx @imsovikde/skills install delink-github
 npx @imsovikde/skills install gh-ready
 npx @imsovikde/skills install magento-team-lead
 npx @imsovikde/skills install motioncraft
+npx @imsovikde/skills install pdf-vector-engine
 npx @imsovikde/skills install score2md
 npx @imsovikde/skills install skill-ship
 npx @imsovikde/skills install presscraft
@@ -202,6 +208,7 @@ Use $delink-github to safely detach, rename, clean inherited metadata, purge Git
 Use $gh-ready to make this project SEO-friendly, GitHub-ready, package-ready, and release-ready.
 Use $magento-team-lead to lead this Adobe Commerce implementation review.
 Use $motioncraft to design a project-specific premium motion system for this interface with a motion intent map, tokens, reduced-motion variants, and browser verification.
+Use $pdf-vector-engine to compress, merge, or transform this PDF document into the required target size window without degrading vector text quality or glyph sharpness under extreme zoom.
 Use $score2md to convert this MusicXML score into a verified playable Markdown ABC file.
 Use $score2md to convert this piano YouTube link only if the media preflight approves it, or explain how to override with --skip-preflight.
 Use $skill-ship to audit this skill, make it marketplace-compliant, and publish it to imsovikde/souvik-skills with a verified commit.

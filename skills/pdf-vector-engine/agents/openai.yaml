@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDF Vector Engine"
+  short_description: "Zero-distortion vector PDF stream compression, merging, and target-window calibration"
+  default_prompt: "Use $pdf-vector-engine to compress, merge, or transform this PDF document into the required target size window without degrading vector text quality or glyph sharpness under extreme zoom."
