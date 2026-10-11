@@ -236,6 +236,30 @@
         "rbi-compliance",
         "lossless-merge"
       ]
+    },
+    {
+      "name": "browser-triage",
+      "source": "./skills/browser-triage",
+      "description": "Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. Scans extensions for capture-phase listeners, repairs LevelDB and GPU shader caches, and verifies fixes with physical OS pointer events. Use when browser dropdowns fail, web actions freeze, or suspect extensions hijack pointer events.",
+      "version": "0.11.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/browser-triage",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Browser Diagnostics",
+      "tags": [
+        "chromium",
+        "brave",
+        "browser-troubleshooting",
+        "extension-audit",
+        "leveldb",
+        "gpu-cache",
+        "event-hijacking",
+        "diagnostics"
+      ]
     }
   ]
 }
