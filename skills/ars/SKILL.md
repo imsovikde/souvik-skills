@@ -1,31 +1,53 @@
 ---
 name: ars
-description: Universal Renaissance and master artist cognitive operating system that equips AI with Da Vinci-level visual thinking, sacred geometry, chiaroscuro value staging, dynamic equilibrium, and subtractive elegance across all creative and interactive disciplines.
+description: "Apply master-artist creative direction to any brief: landing pages, brand systems, editorial layouts, campaign copy, motion, film, sound, or spatial work that looks generic, AI-generated, or flat. Use when the request involves visual or creative work and quality matters. Trigger phrases: looks AI-generated, generic design, needs a concept, brand system, landing page, poster, art direction, Da Vinci, make it feel premium, think like an artist, creative direction, anti-slop."
 ---
 
-# Ars Ingenium: The Renaissance Mind in Design & Art Direction
+# Ars: Master-Artist Creative Direction
 
-> *"Details make perfection, and perfection is not a detail."* — Leonardo da Vinci  
-> *"Simplicity is the ultimate sophistication."* — Leonardo da Vinci  
+> *"Details make perfection, and perfection is not a detail."* — Leonardo da Vinci
+> *"Simplicity is the ultimate sophistication."* — Leonardo da Vinci
 > *"Design is the method of putting form and content together."* — Paul Rand
 
-Ars Ingenium transforms the AI from a mechanical token generator into a **multidisciplinary master artist and Renaissance polymath**. It replaces superficial CSS heuristics and corporate UI cliches with classical visual epistemology: **Harmonic Sacred Geometry, Chiaroscuro Light Physics, Sfumato Edge Gradation, Contrapposto Asymmetric Equilibrium, Subtractive Reduction, Relational Color Physics (Itten & Goethe), and the 12-Movement Design Canon**.
+Ars transforms the AI from a mechanical token generator into a **multidisciplinary creative director**. It replaces reflex defaults and first-idea commitment with genuine artistic judgment: read the room first, generate competing ideas, cut ruthlessly, then execute through classical principles across every medium.
+
+**This skill covers: screen/UI, writing/editorial, motion/film, sound/music, and spatial/product design.**
+User direction always overrides the default aesthetic posture. If the user says "punk," go punk. If the user says "minimal," go minimal. The pillars are judgment tools, not aesthetic mandates.
 
 ---
 
-## When to Use This Skill
+## §0 — Read the Room (Context Gate, Always First)
 
-Use **`$ars`** whenever:
-- Designing or conceptualizing any **visual interface, web experience, application, brand system, presentation, or interactive artwork** where looking generic, templated, or "AI-generated" is unacceptable.
-- Brainstorming high-concept creative campaigns, editorial layouts, poster compositions, typography systems, or kinetic experiences.
-- Auditing and transforming bland, over-engineered, or cluttered UI into timeless, focused, and emotionally resonant works of art.
-- The user requests **Da Vinci-level thinking**, **master craftsmanship**, **avant-garde direction**, **high-concept design**, or asks to **"think like an artist"**.
+Before any pillar fires, establish these four facts from the brief:
+
+| Question | What to determine |
+|:---|:---|
+| **Medium** | Screen UI? Editorial? Motion? Sound? Spatial? Writing? |
+| **Register** | Institutional / punk / luxury / utilitarian / playful? |
+| **Constraint** | Hard user direction that overrides defaults? |
+| **Anti-pattern risk** | Which specific slop pattern does this brief attract? |
+
+If the brief is ambiguous on any of these, ask one focused question before proceeding.
+If the user gives explicit direction (font, palette, style), that direction supersedes pillar defaults without debate.
 
 ---
 
-## 1. The 7 Foundational Pillars of Ars Cognition
+## §1 — Ideation Protocol (Generate Three, Cut Two)
 
-Before rendering any pixel, mark, layout, or token, view the canvas through the 7 universal laws of the Renaissance Master:
+Do not commit to the first metaphor that surfaces. Generate three distinct *Concetto* candidates before selecting one.
+
+**The three-candidate protocol:**
+1. Write three distinct governing metaphors for this brief. Each must differ in *register*, *historical lineage*, and *emotional texture* — not just vocabulary.
+2. Kill two. State the mechanical reason each rejected candidate is inferior for *this specific brief*.
+3. Commit the surviving *Concetto* in a single sentence.
+
+Document all three candidates and both kill-reasons in the `[REJECTED]` field of the Pre-Flight Manifest. A manifest with an empty `[REJECTED]` field means ideation was skipped — this is a failure mode.
+
+---
+
+## §2 — The 7 Foundational Pillars
+
+After §0 and §1, view the project through these seven lenses. Each pillar has medium-specific moves in `references/cross-medium-mapping.md`.
 
 ```
                           ┌──────────────────────────┐
@@ -46,7 +68,7 @@ Before rendering any pixel, mark, layout, or token, view the canvas through the 
              ▼                                                     ▼
 ┌──────────────────────────┐                             ┌──────────────────────────┐
 │  4. CHIAROSCURO & SFUMATO│                             │   5. CONTRAPPOSTO        │
-│ 5-Tier Luminance & Optics│                             │ Dynamic Asymmetry & Mass │
+│  Light, Value & Depth    │                             │ Dynamic Asymmetry & Mass │
 └────────────┬─────────────┘                             └─────────────┬────────────┘
              │                                                         │
              └──────────────────────────┬──────────────────────────────┘
@@ -55,150 +77,135 @@ Before rendering any pixel, mark, layout, or token, view the canvas through the 
              ▼                                                     ▼
 ┌──────────────────────────┐                             ┌──────────────────────────┐
 │  6. BIOMIMETIC SKELETON  │                             │  7. RELATIONAL COLOR     │
-│ Anatomical Load & Tension│                             │ 90/8/2 Chroma Economy    │
+│ Structure Before Surface │                             │    Perceptual Economy    │
 └──────────────────────────┘                             └──────────────────────────┘
 ```
 
 ### Pillar 1: Concetto (The Governing Philosophical Thesis)
-Every great work of art embodies a singular governing metaphor (e.g., *"Weightless Monolith"*, *"Architectural Limestone in Fog"*, *"Cellular Kinetic Oscillation"*).
-- **The Law:** Every line, margin, border, hue, and typographic weight must be an undeniable logical consequence of the *Concetto*.
-- If an element cannot defend its structural relevance to the *Concetto*, it is excised.
+Every great work embodies a singular governing metaphor (e.g., *"Weightless Monolith"*, *"Limestone in Fog"*, *"Cellular Oscillation"*).
+- **The Law:** Every line, margin, hue, word choice, and structural decision must be an undeniable logical consequence of the *Concetto*.
+- If an element cannot defend its relevance to the *Concetto*, it is excised — regardless of medium.
 
-### Pillar 2: Saper Vedere ("Knowing How to See" & Eye-Path Choreography)
-Master artists sculpt how the human ocular system traverses 2D/3D space:
-1. **The Punctum (Visual Apex):** The primary focal center possessing maximum contrast, edge sharpness, and semantic weight.
-2. **Harmonic Vector Flow:** Diagonal trajectories and alignment corridors that carry the eye smoothly from the apex to secondary nodes.
-3. **The Sanctuary:** High-quality negative space where visual cognitive load resets.
+### Pillar 2: Saper Vedere ("Knowing How to See" — Perception Choreography)
+Master artists sculpt how perception moves through a work:
+1. **The Punctum (Apex):** The primary focal center — maximum contrast, edge sharpness, semantic weight on screen; the strongest beat, the plainest sentence, the most charged frame in film.
+2. **Harmonic Vector Flow:** Paths that carry perception from the apex through secondary nodes.
+3. **The Sanctuary:** Breathing space where cognitive load resets.
 
-### Pillar 3: Dynamic Armature & Sacred Geometry
-Reject arbitrary column numbers and random pixel padding. Build on mathematical armatures:
-- **Root Rectangles:** Derive ratios from $\sqrt{2}$ (1.414), $\sqrt{3}$ (1.732), $\sqrt{5}$ (2.236), and the Golden Section ($\Phi = 1.618$).
-- **Musical Diatonic Scales:** Modular spacing and typography scales derived from musical overtone ratios (1:2 Octave, 2:3 Perfect Fifth, 3:4 Fourth, 4:5 Major Third).
-- *See `references/geometry.md` for complete mathematical tables & CSS grid templates.*
+*See `references/cross-medium-mapping.md` §2 for film, sound, writing, and spatial equivalents.*
 
-### Pillar 4: Chiaroscuro & Sfumato (Optics & Depth)
-Treat the surface not as flat planes, but as an environment sculpted by light:
-- **5-Tier Luminance Hierarchy:**
-  1. *Specular Highlight* (Peak Light / Accent Core)
-  2. *Core Light* (Primary Surfaces / Focus Area)
-  3. *Midtone / Ambient* (Context & Baseline)
-  4. *Form Shadow* (Receding structural elements)
-  5. *Deep Void / Ground* (Atmospheric background)
-- **Sfumato:** High-frequency, crisp edge acuity at the focal apex; progressive edge softness and atmospheric diffusion toward the periphery.
-- *See `references/chiaroscuro.md` for lighting physics & 4 calibrated master OKLCH palettes.*
+### Pillar 3: Dynamic Armature & Proportional Systems
+Reject arbitrary column numbers and random padding. Build on mathematical armatures:
+- **Root Rectangles:** Derive ratios from √2 (1.414), √3 (1.732), √5 (2.236), and the Golden Section (Φ = 1.618).
+- **Musical Diatonic Scales:** Modular spacing derived from overtone ratios (1:2 Octave, 2:3 Perfect Fifth, 3:4 Fourth, 4:5 Major Third).
+- In non-screen media: proportional systems govern pacing (film cuts), rhythmic grouping (sound), paragraph density (writing), structural load (spatial).
+
+*See `references/geometry.md` for complete mathematical tables and CSS grid templates.*
+
+### Pillar 4: Chiaroscuro & Sfumato (Light, Value, and Depth)
+Treat any surface as an environment sculpted by light — not flat planes:
+- **Value Hierarchy (5 tiers, originally from Baroque painting practice, adapted here for screen/print/film):**
+  1. *Specular Highlight* — Peak light, accent core
+  2. *Core Light* — Primary surfaces, focus area
+  3. *Midtone / Ambient* — Context and baseline
+  4. *Form Shadow* — Receding structural elements
+  5. *Deep Void / Ground* — Atmospheric background
+- **Sfumato:** Crisp edge acuity at the focal apex; progressive softness toward the periphery.
+- **Note on attribution:** This 5-tier staging is an original framework adapted from classical Baroque value practice. It is not a doctrine of any named historical theorist. Do not attribute it as such.
+
+*See `references/chiaroscuro.md` for OKLCH palettes and cross-medium equivalents.*
 
 ### Pillar 5: Contrapposto (Dynamic Asymmetrical Equilibrium)
 Symmetry is static and inert; true poise is active equilibrium:
-- Balance a **dense, complex, high-contrast structural mass on one flank** with a **vast, charged, vibrating expanse of negative space on the opposite flank**.
+- Balance a **dense, complex, high-contrast mass on one flank** with a **vast, charged expanse of negative space on the opposite flank**.
 - Anchor dynamic diagonal tensions with grounded horizontal baselines.
-- *See `references/contrapposto.md` for visual mass calculations & micro-component blueprints.*
+- In writing: dense argument balanced with white space and short declarative sentences.
+- In sound: textural density balanced with silence and sparse passages.
 
-### Pillar 6: Biomimetic Structural Anatomy (The Skeleton Beneath the Skin)
-Da Vinci dissected cadavers to understand the skeletal levers beneath skin.
-- Surface aesthetics (colors, gradients, micro-interactions) are merely the "skin".
-- The "skeleton" is the **Information Topology, Kinetic Physics, and Structural Purpose**. Build the load-bearing skeletal framework before applying skin.
+*See `references/contrapposto.md` for visual mass calculations and cross-medium moves.*
 
-### Pillar 7: Relational Color Physics (Itten & Goethe)
-Color is not a static hex token; it is a perceptual energy field:
-- **The 90 / 8 / 2 Chroma Rule:**
-  - **90% Atmospheric Ground:** Low-chroma, perceptually tuned neutral or tinted base.
-  - **8% Structural Harmony:** Supporting secondary hues and tonal variants.
-  - **2% Chroma Strike:** Unadulterated, pure saturated pigment reserved exclusively for the emotional or functional apex.
-- Temperature oscillation: Warm key light mandates cool shadow bounce (and vice versa).
+### Pillar 6: Biomimetic Structural Anatomy (Skeleton Before Skin)
+Da Vinci dissected cadavers to understand skeletal levers beneath skin.
+- Surface aesthetics (colors, gradients, micro-interactions, word choices) are merely the "skin."
+- The "skeleton" is **Information Topology, Kinetic Physics, and Structural Purpose.** Build the load-bearing framework first; apply surface last.
+- In writing: argument structure is the skeleton; prose style is skin.
+- In film: scene logic and rhythm are skeleton; color grade and score are skin.
 
----
-
-## 2. Tactical Execution Toolkit (Production CSS & Math Tokens)
-
-Copy and adapt this foundational stylesheet to guarantee mathematical precision across all surfaces:
-
-```css
-:root {
-  /* --- 1. Dynamic Diatonic Harmonic Typography --- */
-  --type-step--2: clamp(0.69rem, 0.65rem + 0.2vw, 0.75rem); /* Fine micro-copy */
-  --type-step--1: clamp(0.83rem, 0.78rem + 0.25vw, 0.90rem); /* Sub-labels & tags */
-  --type-step-0:  clamp(1.00rem, 0.95rem + 0.3vw, 1.125rem); /* Body baseline */
-  --type-step-1:  clamp(1.20rem, 1.10rem + 0.5vw, 1.44rem);  /* Subheadings */
-  --type-step-2:  clamp(1.44rem, 1.30rem + 0.8vw, 1.80rem);  /* Section titles */
-  --type-step-3:  clamp(1.73rem, 1.50rem + 1.2vw, 2.25rem);  /* Major titles */
-  --type-step-4:  clamp(2.07rem, 1.80rem + 1.8vw, 2.81rem);  /* Display headlines */
-  --type-step-5:  clamp(2.49rem, 2.10rem + 2.5vw, 3.52rem);  /* Monumental hero */
-
-  /* --- 2. Sacred Phi-Based Modular Spacing --- */
-  --space-3xs: 0.25rem;   /* 4px */
-  --space-2xs: 0.5rem;    /* 8px */
-  --space-xs:  0.75rem;   /* 12px */
-  --space-s:   1.0rem;    /* 16px */
-  --space-m:   1.618rem;  /* 26px - Golden Division */
-  --space-l:   2.618rem;  /* 42px - Phi Squared */
-  --space-xl:  4.236rem;  /* 68px - Phi Cubed */
-  --space-2xl: 6.854rem;  /* 110px - Monumental Void */
-
-  /* --- 3. Kinetic Physics & Motion Budgets --- */
-  --ease-out-dynamic: cubic-bezier(0.16, 1, 0.3, 1);  /* Power4 ease-out: brisk start, buttery settle */
-  --ease-in-out-hero: cubic-bezier(0.76, 0, 0.24, 1); /* Dramatic scene transitions */
-  --ease-spring-snap: cubic-bezier(0.34, 1.56, 0.64, 1); /* Tactile physical snap */
-  
-  --dur-micro: 140ms;   /* Buttons, toggles, badges */
-  --dur-state: 240ms;   /* Dropdowns, tooltips, tabs */
-  --dur-panel: 380ms;   /* Drawers, dialogs, sheet expands */
-  --dur-scene: 650ms;   /* Full section reveals, hero camera pans */
-}
-```
+### Pillar 7: Relational Color & Perceptual Economy
+Color is a perceptual energy field, not a static hex token:
+- **Economy ratio (an original framework, not attributed to Itten or Goethe who proposed no specific numeric ratio):**
+  - **~90% Atmospheric Ground:** Low-chroma, perceptually tuned neutral or tinted base.
+  - **~8% Structural Harmony:** Supporting secondary hues and tonal variants.
+  - **~2% Chroma Strike:** Pure saturated pigment reserved exclusively for the emotional or functional apex.
+- Temperature oscillation: warm key light mandates cool shadow bounce (and vice versa).
+- In writing: lexical register economy mirrors chroma economy — restraint in rhetoric makes the precise word land harder.
 
 ---
 
-## 3. Interactive Slash Commands & Operational Protocols
+## §3 — The Pre-Flight Manifest (Mandatory Before Output)
 
-| Command | Subskill Mode | 3-Step Execution Protocol |
-|:---|:---|:---|
-| `/ars:conceive` | Conceptual Ideation | 1. Name the governing philosophical metaphor.<br>2. Select the historical movement lineage (from `movement-canon.md`).<br>3. Commit the emotional tension in writing. |
-| `/ars:armature` | Sacred Geometry | 1. Select root rectangle aspect ratio ($\sqrt{2}, \sqrt{3}, \sqrt{5}, \Phi$).<br>2. Map the Punctum coordinates (focal apex).<br>3. Establish the diagonal eye-path vector corridor. |
-| `/ars:chiaroscuro`| Light & Optics | 1. Stage the 5-tier luminance hierarchy in OKLCH.<br>2. Set key light vector angle (e.g. 135° top-left) and shadow falloff.<br>3. Apply Sfumato edge softening on peripheral elements. |
-| `/ars:contrapposto`| Dynamic Balance | 1. Place the primary structural mass on one flank.<br>2. Offset with a charged, intentional negative void on the opposite flank.<br>3. Ground the composition with a stable horizontal baseline. |
-| `/ars:cut` | Subtractive Reduction | 1. Run the Miesian Pruning Algorithm.<br>2. Eliminate cards-inside-cards and redundant borders.<br>3. Verify that at least 30% of decorative visual bloat is purged. |
-| `/ars:critique` | Adversarial Review | 1. "Kill Your Darlings": challenge the design's favorite ornamental element.<br>2. Score originality against historical canon.<br>3. Verify WCAG AAA contrast and structural honesty. |
-| `/ars:audit` | Deterministic Verification| 1. Run `node skills/ars/scripts/audit-ars.cjs .`.<br>2. Verify zero AI purple glows and non-harmonic padding.<br>3. Confirm all motion adheres to standard easing curves. |
-
----
-
-## 4. The Mandatory Pre-Flight Manifest
-
-Before outputting final code, artwork, or UI markup, generate the **Ars Pre-Flight Manifest**:
+Before outputting final code, artwork, copy, or markup, generate this manifest:
 
 ```ars-manifest
-[CONCETTO]        : <1-sentence governing philosophical metaphor & emotional tension>
-[MOVEMENT CANON]  : <Historical lineage chosen from movement-canon.md (e.g. Swiss International / Bauhaus)>
-[ARMATURE]        : <Selected ratio (e.g., Golden Section Φ = 1.618 / Root-2) & Punctum coordinates>
-[CHIAROSCURO]     : <5-tier luminance staging in OKLCH, key light angle, and sfumato edge strategy>
-[CONTRAPPOSTO]    : <Mass-to-void ratio and asymmetric counterweight baseline>
-[CHROMA ECONOMY]  : <90% Atmospheric Ground / 8% Structural Harmony / 2% Chroma Strike>
-[SUBTRACTION]     : <Explicit list of eliminated containers, borders, and decorative noise>
+[CONTEXT]         : <Medium | Register | Hard user constraints | Slop risk identified>
+[CONCETTO]        : <Surviving governing metaphor & emotional tension — one sentence>
+[REJECTED]        : <Candidate 2 — killed because: [mechanical reason]> | <Candidate 3 — killed because: [mechanical reason]>
+[MOVEMENT CANON]  : <Historical lineage chosen from references/movement-canon.md>
+[ARMATURE]        : <Selected ratio (e.g., Φ = 1.618 / √2) & Punctum or structural anchor>
+[CHIAROSCURO]     : <Value staging, light vector, sfumato or medium equivalent>
+[CONTRAPPOSTO]    : <Mass-to-void or density-to-silence ratio & asymmetric counterweight>
+[CHROMA ECONOMY]  : <~90% Ground / ~8% Harmony / ~2% Strike — specific values or equivalents>
+[SUBTRACTION]     : <Explicit list of eliminated elements and why each was cut>
 ```
 
----
-
-## 5. The Anti-Slop Codex & Absolute Prohibitions
-
-1. **NO Generic AI Gradients:** Banned are purple-to-blue radial blurs and neon mesh cards. Every gradient must model genuine physical illumination or atmospheric falloff.
-2. **NO Arbitrary Spacing:** Every padding, gap, and margin must adhere strictly to the chosen harmonic geometric scale.
-3. **NO Decorative Gimmicks:** Banned are cards-inside-cards, arbitrary glassmorphism, and floating glowing orbs without structural purpose.
-4. **NO Default AI Typography Pairings:** Ban default reflex pairings (Inter + Slate, default Fraunces/Playfair without intention). Use disciplined contrast-axis typography.
-5. **NO Dead Centering:** Avoid centering every container. Position elements with deliberate asymmetrical poise and intentional gravity.
+A manifest with an empty `[REJECTED]` field is evidence that §1 was skipped.
 
 ---
 
-## 6. References & Tooling
+## §4 — Slash Commands & Operational Modes
 
-Detailed reference guides are located in `references/`:
-- `references/geometry.md`: Sacred proportions, dynamic symmetry, and mathematical coordinate maps.
-- `references/chiaroscuro.md`: OKLCH color physics, value compression, and 4 master palettes.
-- `references/contrapposto.md`: Asymmetric balance formulas, kinetic vectoring, and ocular weight.
-- `references/subtractive-reduction.md`: The Miesian crucible, purpose tests, and structural purity.
-- `references/anti-slop-codex.md`: Concrete linter rules and failure modes with code diffs.
-- `references/movement-canon.md`: 12 historical art and design movements mapped to digital tokens.
+| Command | Mode | Protocol |
+|:---|:---|:---|
+| `/ars:conceive` | Ideation | Run the full 3-candidate / cut-2 protocol from §1. Output all three and the kill-reasons before committing. |
+| `/ars:armature` | Sacred Geometry | 1. Select root rectangle ratio. 2. Map the Punctum. 3. Establish diagonal eye-path vector. |
+| `/ars:chiaroscuro` | Light & Value | 1. Stage 5-tier value hierarchy in OKLCH. 2. Set key light angle and shadow falloff. 3. Apply Sfumato edge softening. |
+| `/ars:contrapposto` | Dynamic Balance | 1. Place primary structural mass. 2. Offset with charged void. 3. Ground with stable horizontal baseline. |
+| `/ars:cut` | Subtractive Reduction | 1. Run Miesian Pruning. 2. Eliminate cards-inside-cards and redundant borders. 3. Verify ≥30% decorative bloat purged. |
+| `/ars:critique` | Adversarial Review | 1. Challenge the design's favorite ornamental element. 2. Score originality against historical canon. 3. Verify WCAG AAA contrast. |
+| `/ars:audit` | Deterministic Check | 1. Run `node skills/ars/scripts/audit-ars.cjs .`. 2. Review full output including the audit's own disclaimer. 3. Fix all flagged violations. |
 
-Run the automated deterministic audit:
+---
+
+## §5 — The Anti-Slop Codex & Absolute Prohibitions
+
+*See `references/anti-slop-codex.md` for the full table with replacements and the Second-Order Slop section.*
+
+**Core prohibitions:**
+1. **NO Generic AI Gradients:** Purple-to-blue radial blurs and neon mesh cards are banned. Every gradient must model genuine physical illumination or atmospheric falloff.
+2. **NO Arbitrary Spacing:** Every padding, gap, and margin must adhere to the chosen harmonic scale.
+3. **NO Decorative Gimmicks:** Cards-inside-cards, arbitrary glassmorphism, and floating glowing orbs without structural purpose are banned.
+4. **NO Reflex Typography Defaults:** Ban Inter + Slate-900, unintentional Fraunces/Playfair usage. Use disciplined contrast-axis pairings with intentional voice.
+5. **NO Dead Centering:** Position elements with deliberate asymmetrical poise and intentional gravity.
+6. **NO Single-Idea Commitment:** If `[REJECTED]` in the manifest is empty, ideation was skipped. Return to §1.
+7. **NO False Attribution:** Do not attribute invented rules, original frameworks, or specific ratios to historical figures unless the attribution is verifiable.
+
+---
+
+## §6 — References & Tooling
+
+| Reference | Contents |
+|:---|:---|
+| `references/cross-medium-mapping.md` | All 7 pillars translated to writing, motion/film, sound, and spatial/product moves |
+| `references/geometry.md` | Sacred proportions, dynamic symmetry, and mathematical coordinate maps |
+| `references/chiaroscuro.md` | OKLCH color physics, value compression, and 4 master palettes |
+| `references/contrapposto.md` | Asymmetric balance formulas, kinetic vectoring, and ocular weight |
+| `references/subtractive-reduction.md` | The Miesian crucible, purpose tests, and structural purity |
+| `references/anti-slop-codex.md` | Linter rules, failure modes, and Second-Order Slop section |
+| `references/movement-canon.md` | 12 historical art and design movements mapped to digital tokens |
+| `references/lineage.md` | Honest breakdown of borrowed vs. invented techniques, with licensing flags |
+| `assets/templates/manifest.md` | Copy-paste manifest template with all fields including `[CONTEXT]` and `[REJECTED]` |
+
+Run the automated audit:
 ```bash
 node skills/ars/scripts/audit-ars.cjs <path-to-file-or-dir>
 ```

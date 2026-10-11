@@ -1,6 +1,6 @@
 {
   "name": "skill-ship",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Audit, scaffold, adopt, and publish agent skills to the Souvik Skills marketplace with verified owner-only commits, telemetry stripping for third-party skills, and the full npm release chain.",
   "author": {
     "name": "Souvik Dey",
