@@ -52,6 +52,7 @@ npm run build
 | `score2md` | Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight. |
 | `skill-ship` | Audit, scaffold, adopt, and publish agent skills to this marketplace with verified owner-only commits, telemetry stripping for third-party skills, and the full npm release chain. |
 | `presscraft` | Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity. |
+| `browser-triage` | Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. |
 
 ## Cross-Agent Install
 
@@ -70,6 +71,7 @@ npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill browser-triage --agent <agent>
 ```
 
 ### Global
@@ -85,6 +87,7 @@ npx -y skills add imsovikde/souvik-skills --skill motioncraft --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill score2md --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill browser-triage --agent <agent> -g
 ```
 
 ### Try Once
@@ -100,6 +103,7 @@ npx -y skills use imsovikde/souvik-skills@motioncraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@score2md | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@skill-ship | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@presscraft | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@browser-triage | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -124,6 +128,7 @@ Then install any skill you want:
 /plugin install score2md@souvik-skills
 /plugin install skill-ship@souvik-skills
 /plugin install presscraft@souvik-skills
+/plugin install browser-triage@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -166,6 +171,7 @@ npx @imsovikde/skills install motioncraft
 npx @imsovikde/skills install score2md
 npx @imsovikde/skills install skill-ship
 npx @imsovikde/skills install presscraft
+npx @imsovikde/skills install browser-triage
 ```
 
 Install every skill:
@@ -206,6 +212,7 @@ Use $score2md to convert this MusicXML score into a verified playable Markdown A
 Use $score2md to convert this piano YouTube link only if the media preflight approves it, or explain how to override with --skip-preflight.
 Use $skill-ship to audit this skill, make it marketplace-compliant, and publish it to imsovikde/souvik-skills with a verified commit.
 Use $presscraft to transform this document into a pristine, publication-grade PDF with macOS code windows, custom typography, zero shrinkage, and 100% verbatim fidelity.
+Use $browser-triage to diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss.
 ```
 
 ## Repository Standard

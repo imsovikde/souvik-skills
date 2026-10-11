@@ -1,0 +1,4 @@
+interface:
+  display_name: "Browser Triage"
+  short_description: "Chromium & Brave UI freeze and extension remediation engine"
+  default_prompt: "Use $browser-triage to diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss."

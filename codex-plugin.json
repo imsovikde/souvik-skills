@@ -71,6 +71,12 @@
       "path": "skills/presscraft",
       "manifest": "skills/presscraft/SKILL.md",
       "agent": "skills/presscraft/agents/openai.yaml"
+    },
+    {
+      "name": "browser-triage",
+      "path": "skills/browser-triage",
+      "manifest": "skills/browser-triage/SKILL.md",
+      "agent": "skills/browser-triage/agents/openai.yaml"
     }
   ]
 }
