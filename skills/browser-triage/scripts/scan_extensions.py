@@ -123,7 +123,25 @@ def main():
     parser.add_argument("--json", action="store_true", help="Output JSON format")
     args = parser.parse_args()
 
-    ext_dir = args.path or locate_extension_dirs(args.browser, args.profile)
+    detected_browser = args.browser
+    ext_dir = args.path
+    if not ext_dir:
+        if args.profile and os.path.isabs(args.profile) and os.path.isdir(args.profile):
+            p_lower = args.profile.lower()
+            if "edge" in p_lower:
+                detected_browser = "edge"
+            elif "chrome" in p_lower:
+                detected_browser = "chrome"
+            elif "brave" in p_lower:
+                detected_browser = "brave"
+
+            if os.path.basename(args.profile).lower() == "extensions":
+                ext_dir = args.profile
+            else:
+                ext_dir = os.path.join(args.profile, "Extensions")
+        else:
+            ext_dir = locate_extension_dirs(args.browser, args.profile)
+
     if not ext_dir or not os.path.isdir(ext_dir):
         print(f"Error: Extensions directory not found: {ext_dir}", file=sys.stderr)
         sys.exit(1)
@@ -142,7 +160,7 @@ def main():
         print(json.dumps(results, indent=2))
         return
 
-    print(f"=== BROWSER EXTENSION FORENSIC AUDIT ({args.browser.upper()} - {len(results)} EXTENSIONS) ===\n")
+    print(f"=== BROWSER EXTENSION FORENSIC AUDIT ({detected_browser.upper()} - {len(results)} EXTENSIONS) ===\n")
     for r in results:
         status_tag = "[CRITICAL HIJACK RISK]" if r["risk_score"] >= 70 else ("[SUSPICIOUS]" if r["risk_score"] >= 40 else "[CLEAN]")
         if r["risk_score"] > 0:
