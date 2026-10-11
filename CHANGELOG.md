@@ -2,6 +2,14 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.12.0](https://github.com/imsovikde/souvik-skills/compare/v0.11.0...v0.12.0) (2026-10-11)
+
+
+### Features
+
+* add browser-triage skill ([#39](https://github.com/imsovikde/souvik-skills/issues/39)) ([1e87568](https://github.com/imsovikde/souvik-skills/commit/1e87568865d8c4b7110792d21ae7e973c1085f87))
+* **browser-triage:** enhance storage remediation and pointer verification for edge and chromium ([#41](https://github.com/imsovikde/souvik-skills/issues/41)) ([b4ac0b8](https://github.com/imsovikde/souvik-skills/commit/b4ac0b846ad72e86706fcb22f2d9226455a78252))
+
 ## [0.11.0](https://github.com/imsovikde/souvik-skills/compare/v0.10.0...v0.11.0) (2026-10-08)
 
 
