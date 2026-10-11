@@ -11,6 +11,8 @@ import shutil
 import argparse
 
 def get_profile_dir(browser_name, profile="Default"):
+    if profile and os.path.isabs(profile) and os.path.isdir(profile):
+        return os.path.abspath(profile)
     local_app_data = os.environ.get("LOCALAPPDATA", "")
     bases = {
         "brave": os.path.join(local_app_data, "BraveSoftware", "Brave-Browser", "User Data", profile),

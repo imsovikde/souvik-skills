@@ -91,13 +91,44 @@ class CDPClient {
 
 async function main() {
   const args = process.argv.slice(2);
-  const port = parseInt(args.find(a => a.startsWith('--port='))?.split('=')[1] || '9222', 10);
-  const urlFilter = args.find(a => a.startsWith('--url='))?.split('=')[1] || '';
-  const selector = args.find(a => a.startsWith('--selector='))?.split('=')[1] || '';
+  let port = 9222;
+  let urlFilter = '';
+  let selector = '';
+  let retries = 5;
+
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a.startsWith('--port=')) {
+      port = parseInt(a.slice('--port='.length), 10);
+    } else if (a === '--port' && i + 1 < args.length) {
+      port = parseInt(args[++i], 10);
+    } else if (a.startsWith('--url=')) {
+      urlFilter = a.slice('--url='.length);
+    } else if (a === '--url' && i + 1 < args.length) {
+      urlFilter = args[++i];
+    } else if (a.startsWith('--selector=')) {
+      selector = a.slice('--selector='.length);
+    } else if (a === '--selector' && i + 1 < args.length) {
+      selector = args[++i];
+    } else if (a.startsWith('--retries=')) {
+      retries = parseInt(a.slice('--retries='.length), 10);
+    } else if (a === '--retries' && i + 1 < args.length) {
+      retries = parseInt(args[++i], 10);
+    }
+  }
 
   console.log(`Connecting to CDP port ${port}...`);
-  const targets = await getTargets(port);
-  const pageTarget = targets.find(t => t.type === 'page' && (!urlFilter || t.url.includes(urlFilter)));
+  let pageTarget = null;
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const targets = await getTargets(port);
+      pageTarget = targets.find(t => t.type === 'page' && (!urlFilter || t.url.includes(urlFilter)));
+      if (pageTarget) break;
+    } catch (e) {
+      if (attempt === retries) throw e;
+    }
+    await new Promise(r => setTimeout(r, 1000));
+  }
 
   if (!pageTarget) {
     console.error(`Error: No active page target found matching URL: "${urlFilter}"`);

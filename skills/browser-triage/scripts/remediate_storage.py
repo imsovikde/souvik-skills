@@ -26,7 +26,19 @@ CRITICAL_ASSETS = [
     "Secure Preferences"
 ]
 
-def get_browser_dirs(browser_name, profile="Default"):
+def get_browser_dirs(browser_name, profile="Default", user_data=None):
+    if user_data and os.path.isdir(user_data):
+        base = os.path.abspath(user_data)
+        prof = os.path.join(base, profile) if not os.path.exists(os.path.join(user_data, "Preferences")) else base
+        if prof == base:
+            base = os.path.dirname(prof)
+        return base, prof
+
+    if profile and os.path.isabs(profile) and os.path.isdir(profile):
+        prof = os.path.abspath(profile)
+        base = os.path.dirname(prof)
+        return base, prof
+
     local_app_data = os.environ.get("LOCALAPPDATA", "")
     bases = {
         "brave": os.path.join(local_app_data, "BraveSoftware", "Brave-Browser", "User Data"),
@@ -69,6 +81,57 @@ def create_atomic_backup(base_dir, prof_dir, backup_dir):
 
     print("Atomic safety snapshot verified.")
 
+def purge_orphaned_extensions_storage(prof_dir):
+    """Purges IndexedDB and Settings for extensions no longer present in Extensions/."""
+    ext_dir = os.path.join(prof_dir, "Extensions")
+    installed = set(os.listdir(ext_dir)) if os.path.exists(ext_dir) else set()
+
+    # Check IndexedDB for orphaned chrome-extension databases
+    idb_dir = os.path.join(prof_dir, "IndexedDB")
+    if os.path.exists(idb_dir):
+        for entry in os.listdir(idb_dir):
+            if entry.startswith("chrome-extension_"):
+                parts = entry.split("_")
+                if len(parts) >= 2:
+                    eid = parts[1]
+                    if eid not in installed:
+                        target = os.path.join(idb_dir, entry)
+                        if os.path.isdir(target):
+                            shutil.rmtree(target, ignore_errors=True)
+                        else:
+                            try:
+                                os.remove(target)
+                            except OSError:
+                                pass
+                        print(f"  [PURGED ORPHAN IDB] {entry}")
+
+    # Check Local / Sync / Managed Extension Settings
+    for folder in ["Local Extension Settings", "Sync Extension Settings", "Managed Extension Settings"]:
+        settings_dir = os.path.join(prof_dir, folder)
+        if os.path.exists(settings_dir):
+            for eid in os.listdir(settings_dir):
+                if eid not in installed:
+                    target = os.path.join(settings_dir, eid)
+                    if os.path.isdir(target):
+                        shutil.rmtree(target, ignore_errors=True)
+                        print(f"  [PURGED ORPHAN SETTING] {folder}/{eid}")
+
+def purge_dead_locks(prof_dir):
+    """Purges stale 0-byte LOCK files across LevelDB stores while browser is offline."""
+    purged = 0
+    for root, dirs, files in os.walk(prof_dir):
+        for f in files:
+            if f == "LOCK" or f.endswith(".dbtmp"):
+                lock_file = os.path.join(root, f)
+                try:
+                    if os.path.getsize(lock_file) == 0:
+                        os.remove(lock_file)
+                        purged += 1
+                except Exception:
+                    pass
+    if purged > 0:
+        print(f"  [PURGED] {purged} stale 0-byte LOCK / dbtmp files across LevelDB stores.")
+
 def purge_corrupted_storage(base_dir, prof_dir, origin_filter=None):
     print("\nExecuting surgical storage and cache purge...")
 
@@ -88,7 +151,10 @@ def purge_corrupted_storage(base_dir, prof_dir, origin_filter=None):
                     if os.path.isdir(target):
                         shutil.rmtree(target, ignore_errors=True)
                     else:
-                        os.remove(target)
+                        try:
+                            os.remove(target)
+                        except OSError:
+                            pass
                     print(f"  [PURGED] Default/IndexedDB/{entry}")
             else:
                 if "google" in entry.lower() or "mail" in entry.lower():
@@ -112,11 +178,17 @@ def purge_corrupted_storage(base_dir, prof_dir, origin_filter=None):
             shutil.rmtree(c, ignore_errors=True)
             print(f"  [PURGED] {os.path.basename(os.path.dirname(c))}/{os.path.basename(c)}")
 
+    # 4. Purge orphaned extension storage
+    purge_orphaned_extensions_storage(prof_dir)
+
+    # 5. Purge dead 0-byte LOCK files
+    purge_dead_locks(prof_dir)
+
     print("Storage and shader cache purge complete.")
 
 def reconfigure_hardware_accel(base_dir, prof_dir, enable=False):
     print(f"\nReconfiguring hardware acceleration mode (enabled={enable})...")
-    
+
     # 1. Local State
     ls_path = os.path.join(base_dir, "Local State")
     if os.path.exists(ls_path):
@@ -124,9 +196,11 @@ def reconfigure_hardware_accel(base_dir, prof_dir, enable=False):
             ls_data = json.load(f)
         ls_data["hardware_acceleration_mode"] = {"enabled": enable}
         ls_data["hardware_acceleration_mode_previous"] = enable
+        if not enable and "startup_boost" in ls_data:
+            ls_data["startup_boost"]["enabled"] = False
         with open(ls_path, "w", encoding="utf-8") as f:
             json.dump(ls_data, f, indent=2, ensure_ascii=False)
-        print("  [UPDATED] Local State (hardware_acceleration_mode)")
+        print("  [UPDATED] Local State (hardware_acceleration_mode & startup_boost)")
 
     # 2. Preferences
     pref_path = os.path.join(prof_dir, "Preferences")
@@ -141,18 +215,28 @@ def reconfigure_hardware_accel(base_dir, prof_dir, enable=False):
 def main():
     parser = argparse.ArgumentParser(description="Surgically remediate Chromium storage & GPU caches.")
     parser.add_argument("--browser", default="brave", choices=["brave", "chrome", "edge", "chromium"], help="Target browser")
-    parser.add_argument("--profile", default="Default", help="Profile name")
+    parser.add_argument("--profile", default="Default", help="Profile name or direct path")
+    parser.add_argument("--user-data", help="Direct path to User Data directory")
     parser.add_argument("--backup-dir", help="Backup destination path")
     parser.add_argument("--disable-gpu-accel", action="store_true", help="Set hardware acceleration to software fallback")
     parser.add_argument("--origins", nargs="+", help="Origin keywords for IndexedDB purge (e.g. mail.google.com)")
     args = parser.parse_args()
 
-    base_dir, prof_dir = get_browser_dirs(args.browser, args.profile)
+    base_dir, prof_dir = get_browser_dirs(args.browser, args.profile, args.user_data)
     if not prof_dir or not os.path.isdir(prof_dir):
         print(f"Error: Profile directory not found: {prof_dir}", file=sys.stderr)
         sys.exit(1)
 
-    backup_path = args.backup_dir or os.path.join(os.environ.get("LOCALAPPDATA", ""), f"{args.browser.capitalize()}_Safe_Backup")
+    detected_browser = args.browser
+    p_lower = (prof_dir or "").lower()
+    if "edge" in p_lower:
+        detected_browser = "edge"
+    elif "chrome" in p_lower:
+        detected_browser = "chrome"
+    elif "brave" in p_lower:
+        detected_browser = "brave"
+
+    backup_path = args.backup_dir or os.path.join(os.environ.get("LOCALAPPDATA", ""), f"{detected_browser.capitalize()}_Safe_Backup")
     create_atomic_backup(base_dir, prof_dir, backup_path)
     purge_corrupted_storage(base_dir, prof_dir, args.origins)
 
