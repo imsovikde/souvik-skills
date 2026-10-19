@@ -130,7 +130,65 @@ When local SSH or WP-CLI is available on the host machine:
 
 ---
 
-## 6. Cache Invalidation & Edge CDN Purge
+## 6. Section-by-Section Surgical Mutation Protocol
+
+To transform a specific section (e.g. only the hero, only the footer, or only a bento grid) without overwriting the rest of the template:
+
+1. **Fetch Existing Template Content**:
+   ```bash
+   TEMPLATE_JSON=$(curl -s -H "$AUTH_HEADER" "https://imsovikde.me/wp-json/wp/v2/templates/{theme}//home")
+   CONTENT=$(echo "$TEMPLATE_JSON" | jq -r '.content.raw')
+   ```
+2. **Surgically Replace Target Block**:
+   Locate the specific Gutenberg block comment boundary (e.g., `<!-- wp:group {"metadata":{"name":"Hero"}} -->...<!-- /wp:group -->`) and replace only that section with the new composable pattern.
+3. **Deploy Updated Template**:
+   ```bash
+   curl -s -X POST -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+     -d "{\"content\": $(echo "$NEW_CONTENT" | jq -sR .)}" \
+     "https://imsovikde.me/wp-json/wp/v2/templates/{theme}//home"
+   ```
+
+---
+
+## 7. Instant Factory Reversion & Rollback Protocol
+
+When reverting customized templates or template parts back to the theme's original factory files:
+
+1. **Delete Custom Template Overrides**:
+   Sending a `DELETE` request with `force=true` deletes the user's custom `wp_template` database post, causing WordPress to immediately fall back to the pristine theme file (`source: theme`):
+   ```bash
+   # Revert Home & Index templates
+   curl -s -X DELETE -H "$AUTH_HEADER" \
+     "https://imsovikde.me/wp-json/wp/v2/templates/frost//home?force=true"
+
+   curl -s -X DELETE -H "$AUTH_HEADER" \
+     "https://imsovikde.me/wp-json/wp/v2/templates/frost//index?force=true"
+   ```
+
+2. **Delete Custom Template Part Overrides**:
+   ```bash
+   # Revert Header & Footer template parts
+   curl -s -X DELETE -H "$AUTH_HEADER" \
+     "https://imsovikde.me/wp-json/wp/v2/template-parts/frost//header?force=true"
+
+   curl -s -X DELETE -H "$AUTH_HEADER" \
+     "https://imsovikde.me/wp-json/wp/v2/template-parts/frost//footer?force=true"
+   ```
+
+3. **Reset User Global Styles**:
+   Reset `settings` and `styles` to empty objects `{}` to clear custom token overrides:
+   ```bash
+   curl -s -X POST -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+     -d '{"settings": {}, "styles": {}}' \
+     "https://imsovikde.me/wp-json/wp/v2/global-styles/<id>"
+   ```
+
+4. **Verify Clean Theme Fallback**:
+   Query the REST endpoints and confirm `"source": "theme"` on all items.
+
+---
+
+## 8. Cache Invalidation & Edge CDN Purge
 
 Deployments to production environments with aggressive caching (e.g. LiteSpeed Cache, Cloudflare, Fastly) must invalidate stale HTML immediately.
 
