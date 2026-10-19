@@ -1,0 +1,30 @@
+<!-- wp:html -->
+<!-- Liquid Gooey Morphing Floating Header -->
+<div class="wpcraft-nav-container">
+  <a href="/" class="wpcraft-nav-link is-active" data-sound="toggle">Home</a>
+  <a href="/work" class="wpcraft-nav-link" data-sound="toggle">Work</a>
+  <a href="/experiments" class="wpcraft-nav-link" data-sound="toggle">Experiments</a>
+  <a href="/writing" class="wpcraft-nav-link" data-sound="toggle">Writing</a>
+  <a href="/about" class="wpcraft-nav-link" data-sound="toggle">About</a>
+</div>
+
+<!-- SVG Filter Matrix for Liquid Nav Pill Morphing -->
+<svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
+  <defs>
+    <filter id="nav-goo" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10.6" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 30 -11.5" result="outline" />
+      <feFlood flood-color="#f2f2f2" result="grey" />
+      <feComposite in="grey" in2="outline" operator="in" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+    <filter id="nav-goo-white" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10.6" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 30 -11.5" result="outline" />
+      <feFlood flood-color="#ffffff" result="white" />
+      <feComposite in="white" in2="outline" operator="in" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+  </defs>
+</svg>
+<!-- /wp:html -->

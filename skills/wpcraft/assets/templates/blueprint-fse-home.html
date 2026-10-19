@@ -1,0 +1,96 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","theme":"frost"} /-->
+
+<!-- wp:group {"tagName":"main","className":"wpcraft-home-main","layout":{"type":"constrained","contentSize":"650px","wideSize":"1200px"}} -->
+<main class="wp-block-group wpcraft-home-main">
+
+  <!-- Interactive Canvas Koi Pond Physics -->
+  <!-- wp:html -->
+  <section class="wpcraft-canvas-section" aria-label="Interactive Koi Pond Canvas">
+    <canvas id="wpcraft-pond-canvas" width="1200" height="380"></canvas>
+  </section>
+  <!-- /wp:html -->
+
+  <!-- Hero Section: Retains 100% Visual Editability in WordPress Site Editor -->
+  <!-- wp:group {"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group wpcraft-hero-block">
+    <!-- wp:heading {"level":1,"className":"wpcraft-target-heading","style":{"typography":{"fontSize":"clamp(2.5rem, 5vw, 4rem)","lineHeight":"1.1","letterSpacing":"-0.03em"}}} -->
+    <h1 class="wp-block-heading wpcraft-target-heading" style="font-size:clamp(2.5rem, 5vw, 4rem);line-height:1.1;letter-spacing:-0.03em">Hey, I'm Souvik Dey — building high-craft web experiences.</h1>
+    <!-- /wp:heading -->
+
+    <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.25rem","lineHeight":"1.6"}}} -->
+    <p class="has-medium-font-size" style="font-size:1.25rem;line-height:1.6">A design engineer exploring WebGL physics, organic motion systems, and Full Site Editing block themes. Every element here remains editable directly inside the WordPress Site Editor.</p>
+    <!-- /wp:paragraph -->
+  </div>
+  <!-- /wp:group -->
+
+  <!-- Dynamic Typography & Sound Toolbar -->
+  <!-- wp:html -->
+  <div class="wpcraft-toolbar-wrapper" data-wpcraft-toolbar>
+    <div class="wpcraft-toolbar-group">
+      <label for="wpcraft-font-select">Font Family:</label>
+      <select id="wpcraft-font-select" data-wpcraft-font-select>
+        <option value="inherit">Default (Public Sans)</option>
+        <option value="'Playfair Display', serif">Playfair Display (Editorial)</option>
+        <option value="'Caveat', cursive">Caveat (Organic Handwriting)</option>
+        <option value="'Geist', sans-serif">Geist (Modern Tech)</option>
+        <option value="'Inter', sans-serif">Inter (Clean Neutral)</option>
+      </select>
+    </div>
+    <div class="wpcraft-toolbar-group">
+      <span>Depth:</span>
+      <button type="button" class="wpcraft-sound-btn is-active" data-wpcraft-depth="flat" data-sound="toggle">Flat</button>
+      <button type="button" class="wpcraft-sound-btn" data-wpcraft-depth="blue" data-sound="bloom">Blue Depth</button>
+      <button type="button" class="wpcraft-sound-btn" data-wpcraft-depth="warm" data-sound="sparkle">Warm Depth</button>
+    </div>
+  </div>
+  <!-- /wp:html -->
+
+  <!-- Squircle Bento Prototype Showcase Grid (Wide Align) -->
+  <!-- wp:group {"align":"wide","className":"wpcraft-bento-section","layout":{"type":"default"}} -->
+  <div class="wp-block-group alignwide wpcraft-bento-section">
+    <div class="wpcraft-bento-grid">
+      
+      <!-- Card 1: 8 Columns -->
+      <div class="wpcraft-bento-card wpcraft-col-8" data-sound="sparkle">
+        <div class="wpcraft-card-content">
+          <span class="wpcraft-badge">Interactive System</span>
+          <h3>WebGL2 Caustics &amp; IK Motion</h3>
+          <p>Real-time water diffusion algorithms coupled with multi-segment procedural inverse kinematics.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: 4 Columns -->
+      <div class="wpcraft-bento-card wpcraft-col-4" data-sound="chime">
+        <div class="wpcraft-card-content">
+          <span class="wpcraft-badge">SVG Matrix</span>
+          <h3>Gooey NavPill</h3>
+          <p>Liquid organic morphing using SVG Gaussian blur and ColorMatrix alpha clipping.</p>
+        </div>
+      </div>
+
+      <!-- Card 3: 6 Columns -->
+      <div class="wpcraft-bento-card wpcraft-col-6" data-sound="bloom">
+        <div class="wpcraft-card-content">
+          <span class="wpcraft-badge">Audio Synthesis</span>
+          <h3>Web Audio Sound Bank</h3>
+          <p>Zero-asset mathematical frequency synthesis directly generated in the browser.</p>
+        </div>
+      </div>
+
+      <!-- Card 4: 6 Columns -->
+      <div class="wpcraft-bento-card wpcraft-col-6" data-sound="droplet">
+        <div class="wpcraft-card-content">
+          <span class="wpcraft-badge">CMS Invariant</span>
+          <h3>100% FSE Parity</h3>
+          <p>All template parts, query loops, and typography scales are fully editable in wp-admin.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"frost"} /-->

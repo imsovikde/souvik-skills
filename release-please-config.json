@@ -73,6 +73,11 @@
         },
         {
           "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[12].version"
+        },
+        {
+          "type": "json",
           "path": "codex-plugin.json",
           "jsonpath": "$.version"
         },
@@ -134,6 +139,11 @@
         {
           "type": "json",
           "path": "skills/browser-triage/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "skills/wpcraft/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
         }
       ]

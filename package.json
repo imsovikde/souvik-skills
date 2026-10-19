@@ -77,7 +77,8 @@
     "validate:skills": "node scripts/validate-skills.cjs",
     "audit:presscraft": "node skills/presscraft/scripts/audit-presscraft.cjs",
     "audit:ars": "node skills/ars/scripts/audit-ars.cjs .",
-    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run audit:ars && npm run audit:presscraft"
+    "audit:wpcraft": "node skills/wpcraft/scripts/audit-wpcraft.cjs .",
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run audit:ars && npm run audit:presscraft && npm run audit:wpcraft"
   },
   "engines": {
     "node": ">=20.9.0"
