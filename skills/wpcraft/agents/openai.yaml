@@ -1,0 +1,4 @@
+interface:
+  display_name: "WPCraft"
+  short_description: "Agency-grade WordPress FSE motion engineering & deep customization"
+  default_prompt: "Use $wpcraft to transform this WordPress site into an agency-grade, motion-engineered experience with FSE block themes, canvas physics, and 100% visual CMS preservation."

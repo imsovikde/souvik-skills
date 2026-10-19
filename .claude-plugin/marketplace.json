@@ -236,6 +236,32 @@
         "rbi-compliance",
         "lossless-merge"
       ]
+    },
+    {
+      "name": "wpcraft",
+      "source": "./skills/wpcraft",
+      "description": "Flawlessly transform any WordPress site into an agency-grade, motion-engineered web experience using Full Site Editing (FSE) block themes (like Frost) while preserving 100% visual CMS editability in the WordPress Site Editor. Use when asked to deeply customize WordPress without bloat, build or clone artistic websites (like shwn.design) into WordPress, implement WebGL/Canvas physics, SVG gooey morphing navigations, custom theme.json design tokens, dynamic typography switchers, squircle Bento grids, and Web Audio synthesis via WP-CLI and the WordPress REST API.",
+      "version": "0.11.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/wpcraft",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "WordPress Engineering",
+      "tags": [
+        "wordpress",
+        "fse",
+        "full-site-editing",
+        "frost",
+        "canvas-physics",
+        "webgl",
+        "svg-filters",
+        "web-audio",
+        "wp-cli",
+        "rest-api"
+      ]
     }
   ]
 }

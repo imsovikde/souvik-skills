@@ -77,6 +77,12 @@
       "path": "skills/pdf-vector-engine",
       "manifest": "skills/pdf-vector-engine/SKILL.md",
       "agent": "skills/pdf-vector-engine/agents/openai.yaml"
+    },
+    {
+      "name": "wpcraft",
+      "path": "skills/wpcraft",
+      "manifest": "skills/wpcraft/SKILL.md",
+      "agent": "skills/wpcraft/agents/openai.yaml"
     }
   ]
 }

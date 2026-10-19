@@ -1,0 +1,195 @@
+/**
+ * WPCraft Core Styles: Squircle Bento Grids, Gooey SVG Filters & Micro-Keyframes
+ * Integrates seamlessly with WordPress Full Site Editing (FSE) block themes.
+ */
+
+:root {
+  --wpcraft-bg: #fbfbfb;
+  --wpcraft-text: #111111;
+  --wpcraft-muted: #666666;
+  --wpcraft-border: rgba(0, 0, 0, 0.08);
+  --wpcraft-surface: rgba(255, 255, 255, 0.85);
+  --wpcraft-surface-solid: #ffffff;
+  --wpcraft-primary: #1a49f5;
+  --wpcraft-radius-squircle: 28px;
+  --wpcraft-radius-pill: 9999px;
+  --wpcraft-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --wpcraft-shadow-elevation: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --wpcraft-shadow-hover: 0 16px 32px -4px rgba(0, 0, 0, 0.08), 0 6px 12px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* Base Body Tactile Staging */
+body {
+  background-color: var(--wpcraft-bg);
+  color: var(--wpcraft-text);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Floating Gooey NavPill Chrome */
+.wpcraft-nav-container {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--wpcraft-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--wpcraft-border);
+  border-radius: var(--wpcraft-radius-pill);
+  box-shadow: var(--wpcraft-shadow-elevation);
+}
+
+.wpcraft-nav-link {
+  color: var(--wpcraft-text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--wpcraft-radius-pill);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--wpcraft-ease-spring);
+}
+
+.wpcraft-nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.wpcraft-nav-link.is-active {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Canvas Koi Pond Container */
+.wpcraft-canvas-section {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  overflow: hidden;
+  border-radius: var(--wpcraft-radius-squircle);
+  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f4f6fa 100%);
+  border: 1px solid var(--wpcraft-border);
+  margin-bottom: 48px;
+}
+
+#wpcraft-pond-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Bento Prototype Showcase Grid */
+.wpcraft-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto 64px auto;
+  padding: 0 20px;
+}
+
+.wpcraft-bento-card {
+  background: var(--wpcraft-surface-solid);
+  border-radius: var(--wpcraft-radius-squircle);
+  border: 1px solid var(--wpcraft-border);
+  box-shadow: var(--wpcraft-shadow-elevation);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.4s var(--wpcraft-ease-spring), box-shadow 0.4s var(--wpcraft-ease-spring);
+  cursor: pointer;
+}
+
+.wpcraft-bento-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: var(--wpcraft-shadow-hover);
+}
+
+.wpcraft-col-8 {
+  grid-column: span 8;
+}
+
+.wpcraft-col-4 {
+  grid-column: span 4;
+}
+
+.wpcraft-col-6 {
+  grid-column: span 6;
+}
+
+.wpcraft-col-12 {
+  grid-column: span 12;
+}
+
+@media (max-width: 900px) {
+  .wpcraft-col-8,
+  .wpcraft-col-4,
+  .wpcraft-col-6 {
+    grid-column: span 12;
+  }
+}
+
+/* Micro-Interaction Inline Icons */
+.wpcraft-inline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transition: transform 0.3s var(--wpcraft-ease-spring);
+}
+
+/* Tower stretch */
+.wpcraft-tower-icon:hover {
+  animation: wpcraftTowerStretch 0.5s var(--wpcraft-ease-spring) forwards;
+}
+
+@keyframes wpcraftTowerStretch {
+  0% { transform: scale(1); }
+  50% { transform: scaleY(1.25) scaleX(0.85); }
+  100% { transform: scale(1); }
+}
+
+/* Cardiac Pulse */
+.wpcraft-heart-icon {
+  animation: wpcraftHeartPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes wpcraftHeartPulse {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.12); }
+  70% { transform: scale(1); }
+}
+
+/* Leaf sway */
+.wpcraft-leaf-icon:hover {
+  animation: wpcraftLeafSway 0.6s ease-in-out;
+}
+
+@keyframes wpcraftLeafSway {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-14deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Dynamic Typography Mode Treatments */
+[data-wpcraft-depth-mode="blue"] .wpcraft-bento-card {
+  box-shadow: 0 16px 36px -6px rgba(26, 73, 245, 0.12);
+  border-color: rgba(26, 73, 245, 0.18);
+}
+
+[data-wpcraft-depth-mode="warm"] .wpcraft-bento-card {
+  box-shadow: 0 16px 36px -6px rgba(244, 162, 97, 0.14);
+  border-color: rgba(244, 162, 97, 0.22);
+}
