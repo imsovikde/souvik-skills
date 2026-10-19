@@ -79,6 +79,12 @@
       "agent": "skills/pdf-vector-engine/agents/openai.yaml"
     },
     {
+      "name": "browser-triage",
+      "path": "skills/browser-triage",
+      "manifest": "skills/browser-triage/SKILL.md",
+      "agent": "skills/browser-triage/agents/openai.yaml"
+    },
+    {
       "name": "wpcraft",
       "path": "skills/wpcraft",
       "manifest": "skills/wpcraft/SKILL.md",
