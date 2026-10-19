@@ -119,7 +119,48 @@ Deploying changes reliably requires deterministic, authenticated REST operations
 
 ---
 
-## 6. Verification & Quality Rubric
+## 6. Modular Section Composability Engine
+
+WPCraft treats every page as an assembly of independent, hot-swappable section modules. Agents can mutate, replace, or style any single section without touching adjacent components:
+
+| Section Target | Block Grammar Container | Motion & Engineering Enhancement |
+| :--- | :--- | :--- |
+| **Hero Section** | `<!-- wp:group {"layout":{"type":"constrained","contentSize":"680px"}} -->` | Fluid clamp typography, spring CTA buttons, inline micro-interaction icons. |
+| **Navigation Dock** | `parts/header.html` &rarr; `<!-- wp:html -->` | SVG `#nav-goo` fluid morphing dock, glass frosted backdrop blur, active tab blob. |
+| **Bento Showcase Grid** | `<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->` | 12-col responsive grid, continuous curvature squircles (`28px`), Web Audio hover cues. |
+| **Interactive Physics** | `<!-- wp:html -->` inside constrained container | Zero-dependency 2D/WebGL2 canvas, pointer wave diffusion, procedural IK creatures. |
+| **Design Toolbar** | `<!-- wp:html -->` | Dynamic in-page font family switcher and depth mode toggles (`data-wpcraft-depth`). |
+| **Editorial Footer** | `parts/footer.html` &rarr; `<!-- wp:html -->` | Minimalist editorial signoff, dynamic timezone clock ticker, availability badge. |
+
+See `references/composable-patterns.md` for copy-pasteable, verified Gutenberg block code for every individual section.
+
+---
+
+## 7. Instant Factory Reversion & Rollback Protocol
+
+A major invariant of WPCraft is zero permanent destruction. Any customization can be instantly rolled back to the pristine theme defaults via deterministic REST operations:
+
+1. **Revert Block Templates**:
+   ```bash
+   curl -s -X DELETE -H "$AUTH_HEADER" "https://imsovikde.me/wp-json/wp/v2/templates/{theme}//home?force=true"
+   curl -s -X DELETE -H "$AUTH_HEADER" "https://imsovikde.me/wp-json/wp/v2/templates/{theme}//index?force=true"
+   ```
+   Deleting the user `wp_template` database post immediately restores the theme's bundled `.html` files (`source: theme`).
+2. **Revert Template Parts**:
+   ```bash
+   curl -s -X DELETE -H "$AUTH_HEADER" "https://imsovikde.me/wp-json/wp/v2/template-parts/{theme}//header?force=true"
+   curl -s -X DELETE -H "$AUTH_HEADER" "https://imsovikde.me/wp-json/wp/v2/template-parts/{theme}//footer?force=true"
+   ```
+3. **Reset User Global Styles**:
+   ```bash
+   curl -s -X POST -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+     -d '{"settings": {}, "styles": {}}' \
+     "https://imsovikde.me/wp-json/wp/v2/global-styles/<id>"
+   ```
+
+---
+
+## 8. Verification & Quality Rubric
 
 Before presenting work as complete, run the automated verification suite:
 ```bash
