@@ -2,6 +2,17 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.12.0](https://github.com/imsovikde/souvik-skills/compare/v0.11.0...v0.12.0) (2026-10-20)
+
+
+### Features
+
+* add browser-triage skill ([#39](https://github.com/imsovikde/souvik-skills/issues/39)) ([1e87568](https://github.com/imsovikde/souvik-skills/commit/1e87568865d8c4b7110792d21ae7e973c1085f87))
+* **apex-bug-hunter:** add autonomous 7-pass bug hunting and zero-regression remediation engine ([#44](https://github.com/imsovikde/souvik-skills/issues/44)) ([1cdd590](https://github.com/imsovikde/souvik-skills/commit/1cdd590e8549092d3c64a95057ef954396407b44))
+* **browser-triage:** enhance storage remediation and pointer verification for edge and chromium ([#41](https://github.com/imsovikde/souvik-skills/issues/41)) ([b4ac0b8](https://github.com/imsovikde/souvik-skills/commit/b4ac0b846ad72e86706fcb22f2d9226455a78252))
+* **wpcraft:** add agency-grade wordpress fse motion engineering engine ([#42](https://github.com/imsovikde/souvik-skills/issues/42)) ([7354533](https://github.com/imsovikde/souvik-skills/commit/735453343cc00ffbfc8d79623011d58655f48b49))
+* **wpcraft:** enhance modular composability and production rollback protocol ([#43](https://github.com/imsovikde/souvik-skills/issues/43)) ([3b4b748](https://github.com/imsovikde/souvik-skills/commit/3b4b748c948715ee9bdaf528258baca9addc00a4))
+
 ## [0.11.0](https://github.com/imsovikde/souvik-skills/compare/v0.10.0...v0.11.0) (2026-10-08)
 
 
