@@ -286,6 +286,30 @@
         "wp-cli",
         "rest-api"
       ]
+    },
+    {
+      "name": "apex-bug-hunter",
+      "source": "./skills/apex-bug-hunter",
+      "description": "Autonomous 7-pass differential code review, deep bug hunting, AST blast-radius audit, and zero-regression surgical remediation engine. Traces backwards data-flow, audits removed lines (-), detects green-build delusion, validates MCP and external protocol contracts, and enforces Karpathy surgical coding laws. Use whenever the user asks to hunt bugs, review a PR (PR #N), audit a branch against main, audit the entire codebase, diagnose production regressions, verify an agent report, or fix severe defects.",
+      "version": "0.11.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/apex-bug-hunter",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Code Review & Quality Engineering",
+      "tags": [
+        "code-review",
+        "bug-hunting",
+        "differential-review",
+        "zero-regression",
+        "ast-traversal",
+        "mcp",
+        "anti-reward-hacking",
+        "verification"
+      ]
     }
   ]
 }

@@ -145,6 +145,16 @@
           "type": "json",
           "path": "skills/wpcraft/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[13].version"
+        },
+        {
+          "type": "json",
+          "path": "skills/apex-bug-hunter/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
         }
       ]
     }
