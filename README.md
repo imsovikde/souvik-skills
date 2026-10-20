@@ -55,6 +55,7 @@ npm run build
 | `presscraft` | Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity. |
 | `browser-triage` | Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. |
 | `wpcraft` | Flawlessly transform any WordPress site into an agency-grade, motion-engineered web experience using Full Site Editing block themes while preserving 100% visual CMS editability in the WordPress Site Editor. |
+| `apex-bug-hunter` | Autonomous 7-pass differential code review, deep bug hunting, AST blast-radius audit, and zero-regression surgical remediation engine. |
 
 ## Cross-Agent Install
 
@@ -76,6 +77,7 @@ npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill browser-triage --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill wpcraft --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill apex-bug-hunter --agent <agent>
 ```
 
 ### Global
@@ -94,6 +96,7 @@ npx -y skills add imsovikde/souvik-skills --skill skill-ship --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill browser-triage --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill wpcraft --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill apex-bug-hunter --agent <agent> -g
 ```
 
 ### Try Once
@@ -112,6 +115,7 @@ npx -y skills use imsovikde/souvik-skills@skill-ship | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@presscraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@browser-triage | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@wpcraft | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@apex-bug-hunter | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -139,6 +143,7 @@ Then install any skill you want:
 /plugin install presscraft@souvik-skills
 /plugin install browser-triage@souvik-skills
 /plugin install wpcraft@souvik-skills
+/plugin install apex-bug-hunter@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -184,6 +189,7 @@ npx @imsovikde/skills install skill-ship
 npx @imsovikde/skills install presscraft
 npx @imsovikde/skills install browser-triage
 npx @imsovikde/skills install wpcraft
+npx @imsovikde/skills install apex-bug-hunter
 ```
 
 Install every skill:
@@ -227,6 +233,7 @@ Use $skill-ship to audit this skill, make it marketplace-compliant, and publish 
 Use $presscraft to transform this document into a pristine, publication-grade PDF with macOS code windows, custom typography, zero shrinkage, and 100% verbatim fidelity.
 Use $browser-triage to diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss.
 Use $wpcraft to transform this WordPress site into an agency-grade, motion-engineered experience with FSE block themes, canvas physics, and 100% visual CMS preservation.
+Use $apex-bug-hunter to audit this pull request against main, detect latent bugs, verify external protocol schemas, and engineer surgical zero-regression fixes.
 ```
 
 ## Repository Standard

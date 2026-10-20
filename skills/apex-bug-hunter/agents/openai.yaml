@@ -1,0 +1,4 @@
+interface:
+  display_name: "Apex Bug Hunter"
+  short_description: "Autonomous 7-pass differential code review, deep bug hunting, and zero-regression remediation engine."
+  default_prompt: "Use $apex-bug-hunter to audit this pull request against main, detect latent bugs, verify external protocol schemas, and engineer surgical zero-regression fixes."

@@ -89,6 +89,7 @@
       "path": "skills/wpcraft",
       "manifest": "skills/wpcraft/SKILL.md",
       "agent": "skills/wpcraft/agents/openai.yaml"
-    }
+    },
+    "apex-bug-hunter"
   ]
 }
