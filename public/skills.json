@@ -1,0 +1,22 @@
+[
+  {
+    "id": "apex-bug-hunter",
+    "name": "apex-bug-hunter",
+    "description": "Execute deep multi-pass bug hunting, differential pull request reviews, branch comparisons, full-repository architectural audits, tight-loop bug diagnosis, performance regression bisection, and zero-regression fixes. Trigger automatically whenever the user asks to hunt bugs, review a pull request (PR #N), audit a branch against main, audit the entire main branch or codebase, diagnose production regressions or flaky tests, verify an engineering report, audit MCP or OAuth protocol compliance, or fix severe defects.",
+    "files": [
+      "SKILL.md",
+      ".claude-plugin/plugin.json",
+      "agents/openai.yaml",
+      "references/anti-reward-hacking-and-verification-locks.md",
+      "references/differential-call-graph-audit.md",
+      "references/external-protocol-and-mcp-audit.md",
+      "references/scientific-root-cause-and-ponytail-fixes.md",
+      "scripts/audit-apex-bug-hunter.cjs",
+      "scripts/preflight-diff-and-boundary-scan.cjs",
+      "scripts/preflight-diff-and-boundary-scan.js",
+      "scripts/preflight-diff-and-boundary-scan.sh",
+      "scripts/verify-citations-and-ast-seams.js",
+      "scripts/verify-mcp-and-schema-parity.js"
+    ]
+  }
+]

@@ -3,7 +3,7 @@
 
 /**
  * audit-apex-bug-hunter.cjs
- * Deterministic automated audit for the apex-bug-hunter skill package.
+ * Deterministic automated audit for the apex-bug-hunter skill package (v2.0 100/100/100 Edition).
  * Verifies file anatomy, frontmatter compliance, zero-dash hygiene, line limits,
  * and architectural coverage.
  */
@@ -18,7 +18,7 @@ const pluginJsonPath = path.join(skillDir, ".claude-plugin", "plugin.json");
 const openaiYamlPath = path.join(skillDir, "agents", "openai.yaml");
 
 console.log("==================================================");
-console.log("   Apex Bug Hunter: Architectural Skill Audit");
+console.log("   Apex Bug Hunter: Architectural Skill Audit v2.0");
 console.log("==================================================");
 console.log(`Target: ${skillDir}`);
 
@@ -35,7 +35,7 @@ function assert(condition, message) {
   }
 }
 
-// 1. Structural File Checks
+// 1. Structural File Checks (12 Required Files)
 const requiredFiles = [
   "SKILL.md",
   ".claude-plugin/plugin.json",
@@ -48,6 +48,7 @@ const requiredFiles = [
   "scripts/preflight-diff-and-boundary-scan.cjs",
   "scripts/preflight-diff-and-boundary-scan.js",
   "scripts/verify-mcp-and-schema-parity.js",
+  "scripts/verify-citations-and-ast-seams.js",
 ];
 
 for (const rel of requiredFiles) {
@@ -81,12 +82,15 @@ if (fs.existsSync(skillMdPath)) {
   assert(!content.includes("┌") && !content.includes("└"), "Zero decorative ASCII box-drawings in SKILL.md");
 
   // Core invariant keywords
-  assert(content.includes("7-Pass"), "SKILL.md covers 7-Pass inspection pipeline");
+  assert(content.includes("8-Pass") || content.includes("7-Pass"), "SKILL.md covers multi-pass inspection pipeline");
   assert(content.includes("Karpathy"), "SKILL.md covers Karpathy surgical coding laws");
   assert(content.includes("3-Strike"), "SKILL.md covers 3-Strike Architectural Halt");
   assert(content.includes("outputSchema"), "SKILL.md covers MCP outputSchema verification");
   assert(content.includes("verify-mcp-and-schema-parity"), "SKILL.md references verify-mcp-and-schema-parity");
+  assert(content.includes("verify-citations-and-ast-seams"), "SKILL.md references verify-citations-and-ast-seams");
   assert(content.includes("Green Build Fallacy") || content.includes("Green-Build") || content.includes("green-build"), "SKILL.md covers green-build delusion");
+  assert(content.includes("Complexity Router") || content.includes("Four-Lane"), "SKILL.md covers operational complexity router");
+  assert(content.includes("3-Axis") || content.includes("Three Orthogonal Axes") || content.includes("orthogonal"), "SKILL.md covers 3-axis verdict separation");
 }
 
 // 3. Reference Files Checks
@@ -101,7 +105,18 @@ if (fs.existsSync(refDir)) {
   }
 }
 
-// 4. Plugin Manifest and Agent UI Parity
+// 4. Scripts Hygiene Checks
+const scriptsDir = path.join(skillDir, "scripts");
+if (fs.existsSync(scriptsDir)) {
+  const scriptFiles = fs.readdirSync(scriptsDir);
+  for (const sf of scriptFiles) {
+    const scriptContent = fs.readFileSync(path.join(scriptsDir, sf), "utf8");
+    assert(!scriptContent.includes("\u2014"), `Script file '${sf}' contains zero em-dashes`);
+    assert(!scriptContent.includes("\u2013"), `Script file '${sf}' contains zero en-dashes`);
+  }
+}
+
+// 5. Plugin Manifest and Agent UI Parity
 if (fs.existsSync(pluginJsonPath)) {
   try {
     const pluginData = JSON.parse(fs.readFileSync(pluginJsonPath, "utf8"));

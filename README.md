@@ -55,7 +55,7 @@ npm run build
 | `presscraft` | Transform Markdown, HTML, and code into pristine publication-grade PDFs with AST-driven macOS code windows, zero shrinkage, and verbatim fidelity. |
 | `browser-triage` | Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. |
 | `wpcraft` | Flawlessly transform any WordPress site into an agency-grade, motion-engineered web experience using Full Site Editing block themes while preserving 100% visual CMS editability in the WordPress Site Editor. |
-| `apex-bug-hunter` | Autonomous 7-pass differential code review, deep bug hunting, AST blast-radius audit, and zero-regression surgical remediation engine. |
+| `apex-bug-hunter` | Autonomous 8-pass differential code review, deep bug hunting, AST blast-radius audit, tight-loop bug diagnosis, and zero-regression surgical remediation engine. |
 
 ## Cross-Agent Install
 
