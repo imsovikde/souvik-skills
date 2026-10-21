@@ -1,14 +1,14 @@
 {
   "skill": "merge-gate",
   "version": "0.14.0",
-  "generatedAt": "2026-10-21T14:40:32.735Z",
+  "generatedAt": "2026-10-21T14:46:47.293Z",
   "fileCount": 9,
   "files": [
     {
       "file": ".claude-plugin/plugin.json",
       "bytes": 372,
-      "md5": "e4f9d76816fb6a3d04a56f4df2332d05",
-      "sha256": "45563b89313b10198ec0d0c987563458f080ad755e74fcf1b459a638be1ec553"
+      "md5": "48f45567fcad5f2ef424688d9ae945c4",
+      "sha256": "0aa6ce9990272a89ab8e32b0bd4f871a61bcc9ae0decc8262a36914ce1232ce6"
     },
     {
       "file": "agents/openai.yaml",

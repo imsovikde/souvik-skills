@@ -155,6 +155,16 @@
           "type": "json",
           "path": "skills/apex-bug-hunter/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[14].version"
+        },
+        {
+          "type": "json",
+          "path": "skills/merge-gate/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
         }
       ]
     }

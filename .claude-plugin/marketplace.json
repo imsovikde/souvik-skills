@@ -315,7 +315,7 @@
       "name": "merge-gate",
       "source": "./skills/merge-gate",
       "description": "Pre-flight production merge gatekeeper for pull requests and branches. Performs full-project context comparison against main, whole-diff AST blast-radius auditing, frontend UI and taste checks, backend security and protocol parity, tri-state merge verdicts, and automated humanized PR review comments.",
-      "version": "0.14.0",
+      "version": "0.15.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
