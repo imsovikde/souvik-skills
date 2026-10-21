@@ -90,6 +90,17 @@
       "manifest": "skills/wpcraft/SKILL.md",
       "agent": "skills/wpcraft/agents/openai.yaml"
     },
-    "apex-bug-hunter"
+    {
+      "name": "apex-bug-hunter",
+      "path": "skills/apex-bug-hunter",
+      "manifest": "skills/apex-bug-hunter/SKILL.md",
+      "agent": "skills/apex-bug-hunter/agents/openai.yaml"
+    },
+    {
+      "name": "merge-gate",
+      "path": "skills/merge-gate",
+      "manifest": "skills/merge-gate/SKILL.md",
+      "agent": "skills/merge-gate/agents/openai.yaml"
+    }
   ]
 }

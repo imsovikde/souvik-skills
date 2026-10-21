@@ -56,6 +56,7 @@ npm run build
 | `browser-triage` | Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. |
 | `wpcraft` | Flawlessly transform any WordPress site into an agency-grade, motion-engineered web experience using Full Site Editing block themes while preserving 100% visual CMS editability in the WordPress Site Editor. |
 | `apex-bug-hunter` | Autonomous 8-pass differential code review, deep bug hunting, AST blast-radius audit, tight-loop bug diagnosis, and zero-regression surgical remediation engine. |
+| `merge-gate` | Pre-flight production merge gatekeeper for pull requests and branches with full-project diff comparison, AST blast-radius auditing, UI/taste gates, backend security, and humanized review comments. |
 
 ## Cross-Agent Install
 
@@ -78,6 +79,7 @@ npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill browser-triage --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill wpcraft --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill apex-bug-hunter --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill merge-gate --agent <agent>
 ```
 
 ### Global
@@ -97,6 +99,7 @@ npx -y skills add imsovikde/souvik-skills --skill presscraft --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill browser-triage --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill wpcraft --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill apex-bug-hunter --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill merge-gate --agent <agent> -g
 ```
 
 ### Try Once
@@ -116,6 +119,7 @@ npx -y skills use imsovikde/souvik-skills@presscraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@browser-triage | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@wpcraft | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@apex-bug-hunter | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@merge-gate | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -144,6 +148,7 @@ Then install any skill you want:
 /plugin install browser-triage@souvik-skills
 /plugin install wpcraft@souvik-skills
 /plugin install apex-bug-hunter@souvik-skills
+/plugin install merge-gate@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -190,6 +195,7 @@ npx @imsovikde/skills install presscraft
 npx @imsovikde/skills install browser-triage
 npx @imsovikde/skills install wpcraft
 npx @imsovikde/skills install apex-bug-hunter
+npx @imsovikde/skills install merge-gate
 ```
 
 Install every skill:
@@ -234,6 +240,7 @@ Use $presscraft to transform this document into a pristine, publication-grade PD
 Use $browser-triage to diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss.
 Use $wpcraft to transform this WordPress site into an agency-grade, motion-engineered experience with FSE block themes, canvas physics, and 100% visual CMS preservation.
 Use $apex-bug-hunter to audit this pull request against main, detect latent bugs, verify external protocol schemas, and engineer surgical zero-regression fixes.
+Use $merge-gate to evaluate this pull request against main, verify full-stack invariants, and determine the pre-merge verdict.
 ```
 
 ## Repository Standard
