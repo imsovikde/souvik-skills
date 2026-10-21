@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.14.0](https://github.com/imsovikde/souvik-skills/compare/v0.13.0...v0.14.0) (2026-10-21)
+
+
+### Features
+
+* **apex-bug-hunter:** v2.0 (100/100/100 edition) - 8-pass pipeline, citation verifier, and anti-short-circuiting locks ([#47](https://github.com/imsovikde/souvik-skills/issues/47)) ([1150820](https://github.com/imsovikde/souvik-skills/commit/1150820f0320e1fcde4514f3efede9b0dfc64788))
+
 ## [0.13.0](https://github.com/imsovikde/souvik-skills/compare/v0.12.0...v0.13.0) (2026-10-21)
 
 
