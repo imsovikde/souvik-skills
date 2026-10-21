@@ -1,84 +1,76 @@
 # External Protocol, Model Context Protocol, and Security Audit
 
-Comprehensive reference for auditing Model Context Protocol (MCP) implementations, OAuth 2.1 security invariants, and database multi-tenant isolation.
+This reference governs Pass 1 (External Specification Grounding), Pass 3 (Contract, Protocol, and Output Schema Parity Audit), and Pass 5 (Security, Tenant Isolation, and Error Sanitization Audit).
 
-## 1. External Protocol Grounding Principle
-
-When a codebase interacts with an external protocol, standard, or SDK, developers frequently rely on outdated intuition or shallow code snippets. This generates subtle contract mismatches that compile cleanly but fail under real production traffic.
-
-Before auditing or implementing code that interacts with external protocols, research and verify against the official specification.
-
-## 2. Model Context Protocol (MCP) Audit Architecture
+## 1. Model Context Protocol (MCP) Specification Invariants
 
 The Model Context Protocol (MCP) defines open standards for connecting AI models to external tools, resources, and prompts. In modern MCP specifications (2025-06-18 and 2025-11-25), implementations must satisfy strict protocol invariants:
 
-### Protocol Invariant 1: tools/list and tools/call Parity
+### 1.1 tools/list and tools/call Parity
 
 Every tool advertised in `tools/list` must be executable via `tools/call`.
-- Schema Consistency: The `inputSchema` advertised during tool listing must be identical to the validation schema enforced during tool execution.
-- Capability Annotations: Verify modern tool hints are accurately declared:
+- **Schema Consistency:** The `inputSchema` advertised during tool listing must be identical to the validation schema enforced during tool execution.
+- **Capability Annotations:** Verify modern tool hints are accurately declared:
   - `readOnlyHint`: Declares the tool executes purely read operations with zero side effects.
   - `destructiveHint`: Flags whether the tool permanently deletes or alters data, signaling the host to prompt the human user for confirmation.
   - `idempotentHint`: Declares whether multiple executions with identical inputs produce identical state.
 
-### Protocol Invariant 2: outputSchema and structuredContent Compliance
+### 1.2 outputSchema and structuredContent Compliance
 
 Modern MCP tools declare an optional JSON Schema `outputSchema` describing the data shape returned upon successful execution.
-- Structured Content Requirement: When a tool defines an `outputSchema`, its execution result must populate `structuredContent` conforming to that exact schema. Returning only unstructured `text` violates the protocol contract.
-- Backward Compatibility Text: For hosts that do not yet consume `structuredContent`, the tool must also serialize the structured data as a JSON string within a standard `text` content block.
+- **Structured Content Requirement:** When a tool defines an `outputSchema`, its execution result must populate `structuredContent` conforming to that exact schema. Returning only unstructured `text` violates the protocol contract.
+- **Backward Compatibility Text:** For hosts that do not yet consume `structuredContent`, the tool must also serialize the structured data as a JSON string within a standard `text` content block.
+- **Empty Branch Coverage:** Every conditional return path in the tool handler must populate `structuredContent`. A branch that returns only a `text` block with an empty list or message while omitting `structuredContent` violates the contract and crashes strict SDK clients.
 
-### Protocol Invariant 3: The isError Schema Validation Bypass Rule
+### 1.3 Payload Truncation vs. Schema Integrity
 
-When an operational failure occurs (such as file not found, unauthorized tenant, or invalid query):
+If an outbound interceptor or response builder truncates oversized tool outputs (for example, capping responses at a maximum character or byte budget):
+- Never truncate the raw JSON string in `content[0].text` while leaving `structuredContent` either missing, un-truncated, or stripped of required schema fields (`items`, `total`, `nextCursor`, `truncated: true`).
+- Truncation must happen at the structured domain array level (slicing items to fit the budget and setting `truncated: true` and `nextCursor`) before serializing content and validating `structuredContent` against `outputSchema`.
+
+### 1.4 Error Serialization (isError: true)
+
+When a tool execution fails due to validation, missing entities (`NOT_FOUND`), collisions (`CONFLICT`), or ambiguity (`AMBIGUOUS`):
 - The tool must return `isError: true` within the `CallToolResult`.
 - The tool must provide human-readable failure details inside a `text` content block.
-- Error Bypass Rule: When `isError: true` is set, client SDKs (including `@modelcontextprotocol/sdk`) must bypass `outputSchema` validation. If a tool fails to set `isError: true` and returns an error message as normal content, the client SDK will attempt to validate the error string against the success `outputSchema`, resulting in a client-side schema validation crash.
+- **Error Bypass Rule:** When `isError: true` is set, client SDKs (including `@modelcontextprotocol/sdk`) must bypass `outputSchema` validation. If a tool fails to set `isError: true` and returns an error message as normal content, the client SDK will attempt to validate the error string against the success `outputSchema`, resulting in a client-side schema validation crash.
 
-### Protocol Invariant 4: Deep-Clone Schema Sanitization
+### 1.5 Multi-Client Schema Sanitization and Immutability
 
-Servers serving multiple concurrent LLM clients often sanitize schemas dynamically (e.g. stripping internal fields based on client role).
-- In-Place Mutation Trap: Sanitizers that delete properties directly from a shared schema object (`delete schema.properties.secretField`) mutate the server-wide singleton. Sibling client connections will receive corrupted, truncated schemas.
-- Deep Clone Invariant: Sanitizers must operate on deep clones (`structuredClone(schema)`) before performing modifications.
+When an MCP server sanitizes JSON Schemas for specific downstream LLM providers (for example, stripping `additionalProperties`, `$schema`, `format`, or converting `anyOf` unions for Gemini, OpenAI, or Claude tool definitions):
+- Always deep-clone (`structuredClone(schema)`) the canonical tool schema before mutating properties.
+- Never mutate the registered schema object in place, as in-place mutation corrupts subsequent `tools/list` responses and server-side validation for other connected clients.
 
-### Protocol Invariant 5: Manifest Parity and Encoding Hygiene
+### 1.6 Static Manifest and Encoding Hygiene
 
-Static manifest files (`plugin.json`, `marketplace.json`, tool manifests) must remain byte-identical in semantic meaning to live endpoints:
-- Zero BOM: Files must be encoded in UTF-8 without Byte Order Marks (BOM). A UTF-8 BOM (`EF BB BF`) crashes many standard JSON and YAML parsers.
-- No Drift: Tool descriptions and version strings must never drift between static plugin manifests and runtime registration handlers.
+If the repository publishes static tool manifests (`mcp.json`, `tools.json`, `openapi.json`, or `.well-known/` discovery files):
+- Verify 1:1 parity between static manifests and live runtime `tools/list` output (tool count, names, `inputSchema`, `outputSchema`, and annotations).
+- Verify all JSON and source files are encoded in clean UTF-8 with zero Byte Order Mark (`0xEF 0xBB 0xBF` BOM) and zero unescaped control characters.
 
-## 3. OAuth 2.1 Security and Authentication Invariants
+## 2. OAuth 2.1 and RFC 8707 Resource Indicator Invariants
 
-OAuth 2.1 consolidates modern OAuth best practices, eliminating insecure legacy flows. Audit all authentication modules for compliance:
+When auditing authentication, token exchange, or MCP HTTP transport boundaries:
 
-### PKCE Enforcement
+### 2.1 Protected Zero-Touch Enforcement
+If the user designates OAuth routes or auth modules as protected, verify `git diff` is 0 bytes across those files.
 
-Proof Key for Code Exchange (PKCE) is mandatory for all OAuth 2.1 authorization code flows:
-- Enforce PKCE (`code_challenge` with method `S256` and `code_verifier`) across both public clients (Single Page Apps, mobile apps) and confidential server-rendered clients.
-- Verify that authorization code exchange rejects requests lacking a valid `code_verifier`.
+### 2.2 Audience and Resource Binding (RFC 8707)
+Verify access tokens are validated against the specific MCP server resource URI / `aud` claim to prevent confused-deputy token replay across services.
 
-### Refresh Token Rotation and Revocation
+### 2.3 PKCE Enforcement
+Verify authorization code flows require `code_challenge` and `code_verifier` (`S256`) and reject plain or missing PKCE parameters.
 
-- Long-lived, non-expiring refresh tokens are prohibited.
-- Enforce Refresh Token Rotation: Every refresh request issues a new refresh token and invalidates the previous token.
-- Reuse Detection: If an invalidated refresh token is presented, the authorization server must immediately revoke all tokens previously granted to that authorization session.
+### 2.4 Strict Redirect URI Matching
+Confirm redirect URIs are compared using exact string/URI matching against pre-registered allowlists with zero open-redirect wildcards.
 
-### Redirect URI Exact Matching
+### 2.5 Token Hygiene in Logs and URLs
+Access tokens and refresh tokens must never appear in query strings, URLs, or command-line arguments. Audit logging configurations to guarantee authorization headers (`Bearer ey...`) are stripped or masked prior to log persistence.
 
-- Wildcards, partial regex matches, and path traversals in `redirect_uri` are strictly forbidden.
-- The authorization server must perform exact string matching against pre-registered client redirect URIs.
+## 3. Multi-Tenant Isolation and Error Sanitization (Pass 5)
 
-### Token Hygiene in Logs and URLs
+### 3.1 Composite Tenant Lookup ((owner_id, id))
 
-- Access tokens and refresh tokens must never appear in query strings, URLs, or command-line arguments.
-- Audit logging configurations to guarantee authorization headers (`Bearer ey...`) are stripped or masked prior to log persistence.
-
-## 4. Multi-Tenant Isolation and Database Security
-
-Tenant data leakage is an existential security failure. Audit all database layers for isolation invariants:
-
-### The Composite Key Invariant
-
-In multi-tenant systems, never execute lookups using only a record's primary key (`id`):
+Every SQL query, ORM lookup, update, and delete on tenant-owned tables must bind both the authenticated `owner_id` (or `tenant_id`) and the entity `id` in the WHERE clause:
 
 ```typescript
 // INSECURE: Allows cross-tenant data access if user guesses ID
@@ -90,16 +82,25 @@ const item = await db.item.findFirst({
 });
 ```
 
-A database lookup that queries by record identifier without scoping to the authenticated tenant or owner identifier is classified as a P1 CRITICAL defect.
+If an entity ID exists in the database but belongs to a different tenant, the lookup must return `NOT_FOUND` (identical to a non-existent ID) so cross-tenant probing cannot enumerate foreign IDs.
 
-### Foreign Key Tenant Consistency
+### 3.2 Foreign Key Tenant Consistency
 
 When inserting child records with foreign keys (e.g. adding an `OrderItem` to an `Order`):
 - Verify that both the parent `Order` and the new `OrderItem` belong to the same authenticated `tenant_id`.
 - Prevent attackers from associating items with foreign tenant parents by forging foreign key IDs.
 
-### Database Driver Error Sanitization
+### 3.3 Grant-Tier Field Redaction
 
-Never return raw database exceptions to API consumers:
-- Raw errors leak schema structures, table names, constraint definitions, and database engine versions.
-- Catch database exceptions at the repository boundary and transform them into generic domain errors (`DatabaseError`, `ConflictError`, `NotFoundError`).
+When sharing or delegated access grants (`viewer`, `commenter`, `public_link`) are supported, verify that outbound serializers strip internal metadata, private notes, owner email addresses, and billing identifiers unauthorized for that grant tier.
+
+### 3.4 Database and Driver Error Sanitization
+
+Never expose raw PostgreSQL/SQLite error strings (such as `duplicate key value violates unique constraint "idx_items_owner_parent_name"`), table names, or stack traces in HTTP or MCP responses. Map driver error codes (such as SQLSTATE `23505` or `23503`) to deterministic domain error codes (`CONFLICT`, `NOT_FOUND`, `INVALID_INPUT`).
+
+### 3.5 Row-Level Security (RLS) Verification
+
+When using PostgreSQL Row-Level Security or similar database-native isolation:
+- Verify that RLS policies are enabled on all tables containing multi-tenant data (`ALTER TABLE ... ENABLE ROW LEVEL SECURITY; ALTER TABLE ... FORCE ROW LEVEL SECURITY`).
+- Confirm that the database role used by the application server does NOT bypass RLS via `BYPASSRLS` privilege or `SET ROLE` escalation.
+- Test cross-tenant access by authenticating as Tenant A and requesting a known Tenant B record ID. The query must return zero rows.
