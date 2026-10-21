@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.13.0](https://github.com/imsovikde/souvik-skills/compare/v0.12.0...v0.13.0) (2026-10-21)
+
+
+### Features
+
+* **apex-bug-hunter:** mythic upgrade with archive precision, static MCP auditor, and defense-in-depth reference expansion ([#45](https://github.com/imsovikde/souvik-skills/issues/45)) ([e4a19ae](https://github.com/imsovikde/souvik-skills/commit/e4a19ae5e32837d0a46aa918ff9d2a628dcc7e8e))
+
 ## [0.12.0](https://github.com/imsovikde/souvik-skills/compare/v0.11.0...v0.12.0) (2026-10-20)
 
 
