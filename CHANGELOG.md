@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.15.1](https://github.com/imsovikde/souvik-skills/compare/v0.15.0...v0.15.1) (2026-10-21)
+
+
+### Bug Fixes
+
+* **merge-gate:** align skill manifest and marketplace version with 0.15.0 ([#51](https://github.com/imsovikde/souvik-skills/issues/51)) ([648d998](https://github.com/imsovikde/souvik-skills/commit/648d998682e72a06ffd31d9b782cdca810d38b1a))
+
 ## [0.15.0](https://github.com/imsovikde/souvik-skills/compare/v0.14.0...v0.15.0) (2026-10-21)
 
 
