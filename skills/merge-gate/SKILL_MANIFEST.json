@@ -1,0 +1,62 @@
+{
+  "skill": "merge-gate",
+  "version": "0.14.0",
+  "generatedAt": "2026-10-21T14:40:32.735Z",
+  "fileCount": 9,
+  "files": [
+    {
+      "file": ".claude-plugin/plugin.json",
+      "bytes": 372,
+      "md5": "e4f9d76816fb6a3d04a56f4df2332d05",
+      "sha256": "45563b89313b10198ec0d0c987563458f080ad755e74fcf1b459a638be1ec553"
+    },
+    {
+      "file": "agents/openai.yaml",
+      "bytes": 264,
+      "md5": "42e44d2ad11765df3c00d6f2879ed6ef",
+      "sha256": "255950df44fa72d9c98ba918037133cac175954407115a33de4c194456d168dd"
+    },
+    {
+      "file": "references/backend-security-and-mcp-gate.md",
+      "bytes": 7165,
+      "md5": "5840afe047fc42253cbe77c084f9be0d",
+      "sha256": "5c15dcfd3b27cf3bfe21609cbc197acf4ad484202a3b8d5042a39bba8b7a73ca"
+    },
+    {
+      "file": "references/frontend-ui-and-taste-gate.md",
+      "bytes": 6656,
+      "md5": "f36c5b755aeab4a20ef22e8cd83e2997",
+      "sha256": "f1ee0cd1565465baa2f60e4a4a6aaa45ac7e4141c0c19a70d9b6fa0a66901822"
+    },
+    {
+      "file": "references/tri-state-verdict-and-humanizer-pr-comment.md",
+      "bytes": 7138,
+      "md5": "11bfd44a0b840465cb0c18d98914925d",
+      "sha256": "401adf4029953f3232b49321ab703d211b9cc9e3fa62a6e0b223e1d201d2aeff"
+    },
+    {
+      "file": "references/whole-project-main-diff-engine.md",
+      "bytes": 7562,
+      "md5": "1c3790fd600909aae13fe9eab499a95a",
+      "sha256": "05e55f567e26fdcc865a6b999317956eb02c86de0052b4d0ef9b066c05327dab"
+    },
+    {
+      "file": "scripts/preflight-merge-gate.js",
+      "bytes": 16088,
+      "md5": "117fffe057aa9a2e6348af266cdcfcda",
+      "sha256": "8a4f071e1387aa98f252d138c9db262e6bbdae633fdf4d11a0d1fcf29c73c0dd"
+    },
+    {
+      "file": "scripts/validate-skill-md5.js",
+      "bytes": 6155,
+      "md5": "2108c86eac39508200752eed7e5c6c40",
+      "sha256": "a92164a72f611e9b24efad390a15c84d14e6dc90d6decbcee2f023500b466f81"
+    },
+    {
+      "file": "SKILL.md",
+      "bytes": 11966,
+      "md5": "f734e8b812860c77e2e69976349deae1",
+      "sha256": "0956aba730671f5e93ddbd43ff9e13dff76f3095effaf31b9dba5e990d217a9d"
+    }
+  ]
+}

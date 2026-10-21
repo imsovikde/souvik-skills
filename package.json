@@ -78,8 +78,9 @@
     "audit:presscraft": "node skills/presscraft/scripts/audit-presscraft.cjs",
     "audit:ars": "node skills/ars/scripts/audit-ars.cjs .",
     "audit:wpcraft": "node skills/wpcraft/scripts/audit-wpcraft.cjs .",
-    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run audit:ars && npm run audit:presscraft && npm run audit:wpcraft && npm run audit:apex-bug-hunter",
-    "audit:apex-bug-hunter": "node skills/apex-bug-hunter/scripts/audit-apex-bug-hunter.cjs"
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run audit:ars && npm run audit:presscraft && npm run audit:wpcraft && npm run audit:apex-bug-hunter && npm run audit:merge-gate",
+    "audit:apex-bug-hunter": "node skills/apex-bug-hunter/scripts/audit-apex-bug-hunter.cjs",
+    "audit:merge-gate": "node skills/merge-gate/scripts/validate-skill-md5.js"
   },
   "engines": {
     "node": ">=20.9.0"

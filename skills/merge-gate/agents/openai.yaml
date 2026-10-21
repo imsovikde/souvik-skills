@@ -1,0 +1,3 @@
+display_name: "Merge Gate"
+short_description: "Pre-flight production merge gatekeeper for pull requests and branches."
+default_prompt: "Use $merge-gate to evaluate this pull request against main, verify full-stack invariants, and determine the pre-merge verdict."

@@ -18,5 +18,22 @@
       "scripts/verify-citations-and-ast-seams.js",
       "scripts/verify-mcp-and-schema-parity.js"
     ]
+  },
+  {
+    "id": "merge-gate",
+    "name": "merge-gate",
+    "description": "Pre-flight production merge gatekeeper for pull requests and branches. Performs full-project context comparison against main, whole-diff AST blast-radius auditing, frontend UI and taste checks, backend security and protocol parity, tri-state merge verdicts, and automated humanized PR review comments.",
+    "files": [
+      "SKILL.md",
+      "SKILL_MANIFEST.json",
+      ".claude-plugin/plugin.json",
+      "agents/openai.yaml",
+      "references/backend-security-and-mcp-gate.md",
+      "references/frontend-ui-and-taste-gate.md",
+      "references/tri-state-verdict-and-humanizer-pr-comment.md",
+      "references/whole-project-main-diff-engine.md",
+      "scripts/preflight-merge-gate.js",
+      "scripts/validate-skill-md5.js"
+    ]
   }
 ]
