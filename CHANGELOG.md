@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.15.0](https://github.com/imsovikde/souvik-skills/compare/v0.14.0...v0.15.0) (2026-10-21)
+
+
+### Features
+
+* **merge-gate:** add pre-flight production merge gatekeeper with cryptographic AST validation, tri-state verdicts, and humanized reviews ([#49](https://github.com/imsovikde/souvik-skills/issues/49)) ([0163c79](https://github.com/imsovikde/souvik-skills/commit/0163c79208b74110dd842228e5f9dbfc5adbf914))
+
 ## [0.14.0](https://github.com/imsovikde/souvik-skills/compare/v0.13.0...v0.14.0) (2026-10-21)
 
 
