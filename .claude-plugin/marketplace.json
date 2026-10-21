@@ -290,7 +290,7 @@
     {
       "name": "apex-bug-hunter",
       "source": "./skills/apex-bug-hunter",
-      "description": "Autonomous 7-pass differential code review, deep bug hunting, AST blast-radius audit, and zero-regression surgical remediation engine. Traces backwards data-flow, audits removed lines (-), detects green-build delusion, validates MCP and external protocol contracts, and enforces Karpathy surgical coding laws. Use whenever the user asks to hunt bugs, review a PR (PR #N), audit a branch against main, audit the entire codebase, diagnose production regressions, verify an agent report, or fix severe defects.",
+      "description": "Autonomous 8-pass differential code review, deep bug hunting, AST blast-radius audit, tight-loop bug diagnosis, performance regression bisection, and zero-regression surgical remediation engine. Traces backwards data-flow, audits removed lines (-), detects green-build delusion, validates MCP and external protocol contracts, and enforces Karpathy surgical coding laws. Use whenever the user asks to hunt bugs, review a PR (PR #N), audit a branch against main, audit the entire codebase, diagnose production regressions or flaky tests, verify an agent report, or fix severe defects.",
       "version": "0.13.0",
       "author": {
         "name": "Souvik Dey",
