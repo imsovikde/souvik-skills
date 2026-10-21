@@ -1,119 +1,91 @@
-# Scientific Root-Cause Analysis and Ponytail Surgical Fixes
+# Scientific Root-Cause Debugging and Ponytail Zero-Regression Fixes Reference
 
-Comprehensive reference for systematic root-cause tracing, 4-phase scientific debugging, Karpathy coding laws, and Ponytail minimal-remediation engineering.
+This reference defines the mandatory root-cause investigation workflow (Obra superpowers), surgical coding constraints (Andrej Karpathy's 4 Laws), defense-in-depth validation layers, and Ponytail Engineering commit hygiene for Pass 4 and Pass 7.
 
-## 1. The Iron Law of Debugging
+## 1. Obra Superpowers: Systematic Debugging and Root-Cause Tracing
+
+### 1.1 The Iron Law of Debugging
 
 ```
 NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 ```
 
-Attempting to patch symptoms without proving the root cause is engineering malpractice. Symptom patches introduce technical debt, mask deeper structural defects, and create unpredictable regression cascades.
+Never apply a symptom patch (such as wrapping a crashing expression in `try / catch {}` or coalescing `undefined` to `""`) without proving why the invalid state originated.
 
-If you have not pinpointed the exact mechanistic trigger where valid state transitions into invalid state, you are forbidden from proposing or applying code modifications.
+### 1.2 The 4-Phase Scientific Debugging Loop
 
-## 2. The 4-Phase Scientific Debugging Cycle
+#### Phase 1: Root-Cause Investigation (Backward Trace)
+Start at the exact `file:line` where the symptom manifests (exception, wrong return payload, or failed assertion). Trace the corrupted value backward through every function return, parameter pass, database query, and input parser until reaching the exact line where valid intent diverged into invalid state.
 
-apex-bug-hunter enforces the 4-phase scientific debugging methodology:
+#### Phase 2: Pattern and Sibling Analysis
+Once the faulty pattern is identified in one handler or repository method, scan all sibling handlers and modules for the identical pattern. Bugs rarely exist in isolation; fix the entire class of defect across the codebase.
 
-### Phase 1: Root Cause Investigation
+#### Phase 3: Falsifiable Hypothesis and Minimal Reproduction Test
+Formulate a precise hypothesis: "Input X causes Handler Y at `file:line` to bypass check Z and return state W." Write or identify a minimal automated reproduction test that deterministically fails because of this exact mechanism.
 
-Execute five diagnostic steps before writing or modifying any code:
+#### Phase 4: Surgical Implementation and Cold Verification
+Implement the root-cause fix at the originating boundary. Run the reproduction test and full verification suite cold to prove the fix resolves the defect with zero collateral breakage.
 
-1. Read Error Artifacts Completely: Examine stack traces, line numbers, error codes, and stderr output in full. Never skim or truncate stack traces.
-2. Build a Deterministic Reproducer: Create the minimal automated script or test case that triggers the defect with 100% reliability. If the issue cannot be reproduced deterministically, gather additional telemetry instead of guessing.
-3. Inspect Recent Changes: Check `git log` and `git diff` for recent commits, dependency upgrades, environment shifts, or database migrations that altered assumptions.
-4. Backward Data-Flow Tracing:
-   - Identify the point of failure (the line where an exception is thrown or invalid state is detected).
-   - Trace the offending variable backward to the function that passed it.
-   - Continue tracing upward across layer boundaries until locating the original site of corruption.
-   - Fix the defect at the source of invalid data, never at the point of symptom detection.
-5. Multi-Component Boundary Logging: When an error spans multiple distributed services (e.g. CLI to Gateway to Database):
-   - Instrument entry and exit points at each component boundary.
-   - Run the reproducer once to isolate which boundary corrupts or drops data.
-   - Focus investigation strictly on the failing boundary.
+### 1.3 The 3-Strike Architectural Halt Rule
 
-### Phase 2: Pattern Analysis
+If three consecutive fix attempts fail to pass verification or introduce secondary regressions in adjacent tests:
+1. **HALT** all code mutation immediately.
+2. **Revert** working-tree mutations to the last clean state.
+3. **Diagnose** why the underlying module architecture, coupling, or schema design resists a clean fix, and report the architectural conflict to the user before proceeding.
 
-Before designing a solution:
-1. Locate Working Counterparts: Find similar functionality in the same codebase that functions correctly.
-2. Compare Implementations: Line by line, identify every difference between the working code and the broken code. Do not dismiss subtle differences in configuration, typing, or async handling.
-3. Check Authoritative References: Compare the implementation against canonical documentation and official protocol specifications. Skimming documentation leads to flawed assumptions.
+## 2. Defense-in-Depth Validation Architecture
 
-### Phase 3: Hypothesis and Minimal Testing
+Never rely on a single validation check. Enforce structural invariants across all four system layers:
 
-1. Formulate a Single Falsifiable Hypothesis: State clearly: "I hypothesize that defect X occurs because condition Y causes state Z."
-2. Design a Minimal Test: Make the smallest possible modification or probe to test this hypothesis in isolation. Test one variable at a time.
-3. Evaluate Results:
-   - If evidence confirms the hypothesis, proceed to Phase 4.
-   - If evidence refutes the hypothesis, revert changes and formulate a new hypothesis. Never layer fixes atop failed assumptions.
+| Layer | Responsibility | Required Enforcement |
+| :--- | :--- | :--- |
+| Layer 1: Entry Boundary | HTTP controllers, MCP tools/call handlers, CLI parsers | Strict schema validation (Zod / JSON Schema), stripped or rejected unknown keys, normalized pagination limits, and verified auth context |
+| Layer 2: Domain State Machine | Business services, hierarchy managers, workflow engines | Explicit state transition guards, parent existence checks, cycle detection (A -> B -> A), sibling collision (CONFLICT), and multi-match (AMBIGUOUS) checks |
+| Layer 3: Repository Persistence | SQL/ORM queries, transaction scopes, cache adapters | Composite (owner_id, id) tenant scoping, parameterized queries, atomic BEGIN...COMMIT transactions, and clientRequestId idempotency locking |
+| Layer 4: Outbound Serializer | Response formatters, MCP structuredContent builders | Runtime output schema validation, grant-tier field redaction, deterministic key ordering, and sanitized error envelopes (isError: true) |
 
-### Phase 4: Implementation and Cold Verification
+## 3. Andrej Karpathy's 4 Surgical Coding Laws
 
-1. Write a Failing Test First: Commit the minimal reproducing test in a failing state.
-2. Apply the Surgical Fix: Implement the root-cause fix at the appropriate architectural layer.
-3. Run Cold Verification: Execute the reproduction test to verify it passes. Run the entire test suite to ensure zero collateral regressions.
-4. Document the Cause: Record the mechanistic breakdown of what failed and why the fix works.
-
-## 3. The 3-Strike Architectural Halt Rule
-
-If three successive remediation attempts fail to resolve a defect or introduce secondary regressions, stop immediately.
-
-Do not attempt a fourth fix. A 3-strike failure indicates an architectural mismatch rather than a localized bug:
-- The underlying state model may be inadequate for the concurrency or lifecycle requirements.
-- The interface abstraction may leak internal state across module boundaries.
-- Assumptions regarding data ownership or transaction boundaries may be invalid.
-
-Halt all code mutations, document the three attempted approaches and their failure evidence, and present the findings to the human architect for design review.
-
-## 4. Andrej Karpathy's 4 Surgical Coding Laws
-
-When modifying code, adhere strictly to the four surgical coding laws:
+When authoring Fix Blueprints (Stage 1) or applying code edits (Stage 2), obey all four laws:
 
 ### Law 1: Think Before Coding
-
-Do not jump into editing files based on initial intuition. State all implicit assumptions explicitly:
-- What assumptions does this module make about caller permissions?
-- What invariants must remain true before and after this function runs?
-- How does this code behave when input collections are empty, null, or exceeding limits?
+Surface all hidden assumptions about nullability, concurrency, ordering, and protocol versions explicitly before writing code. Never silently guess when specifications or requirements are ambiguous.
 
 ### Law 2: Simplicity First
-
-Always implement the simplest solution that completely resolves the root cause:
-- No speculative features: Do not add flags or configurability for hypothetical future needs.
-- No unneeded abstractions: Do not introduce factories, adapters, or visitor patterns when a simple pure function solves the issue.
-- The Senior Engineer Test: If a seasoned developer would look at the code and say "this is overcomplicated", reject the design.
+Write the minimum code required to solve the root cause cleanly. Do not introduce speculative abstractions, generic factory wrappers, or unrequested configuration flags. If a 200-line patch can be expressed clearly in 40 lines, rewrite it.
 
 ### Law 3: Surgical Changes
-
-Touch only what is strictly necessary to resolve the root cause:
-- Zero collateral damage: Do not reformat adjacent lines, reorder unrelated imports, or modify unrelated comments.
-- One concern per change: Isolate bug fixes from refactoring and formatting changes.
-- Traceability: Every changed line must map directly to the root cause identified in Phase 1.
+Every modified line in `git diff` must trace directly to a confirmed bug ID. Never reformat unrelated lines, reorder imports in untouched sections, alter comments, or refactor adjacent working code.
 
 ### Law 4: Goal-Driven Execution
+Define concrete, falsifiable verification criteria before mutating code, and iterate until every criterion passes cold execution.
 
-Never rely on vague completion goals like "improve validation" or "make it more robust":
-- Formulate concrete, falsifiable criteria: "When an invalid UUID is passed to `/api/v1/items/:id`, the route returns HTTP 400 Bad Request with code `INVALID_IDENTIFIER` instead of HTTP 500."
-- Execute the verification loop until this exact condition is confirmed with raw output.
+## 4. State Machine, Hierarchy, and Idempotency Invariants (Pass 4)
 
-## 5. Ponytail Minimal-Fix Engineering
+Check every CRUD and hierarchy operation against these seven invariants:
 
-The Ponytail engineering philosophy dictates: the smallest change that fully solves the task is the best change.
+1. **Pure Read Separation:** `get`, `list`, `search`, and `resolve` endpoints must never insert default records, mutate timestamps, or trigger side effects.
+2. **Strict Parent Validation:** Moving or creating a node under `parentId` must verify that `parentId` exists, belongs to the same tenant, and is not trashed or archived. Never silently fall back to `parentId: null` when a provided `parentId` is invalid; throw `NOT_FOUND` or `INVALID_ID`.
+3. **Trash-Batch Hints:** When a lookup fails because the target or its ancestor is in the trash, return a structured `NOT_FOUND` error with an actionable hint indicating the item resides in trash.
+4. **Graph Cycle Detection:** Before updating `parentId` on any hierarchical entity, walk the ancestor chain of the target parent to confirm the entity being moved is not an ancestor of its new parent.
+5. **Sibling Uniqueness (CONFLICT):** Creating, renaming, moving, or restoring an item into a parent container where an active sibling already shares the same normalized name must fail with `CONFLICT`.
+6. **Multi-Match Disambiguation (AMBIGUOUS):** Name-based or prefix-based resolution helpers must query active records first; if more than one active record matches, throw `AMBIGUOUS` listing candidate IDs rather than arbitrarily picking `results[0]`.
+7. **Idempotency Replay:** Mutations accepting `clientRequestId` must store the request hash and outcome per tenant; replaying the same `clientRequestId` with identical parameters must return the original result without re-executing side effects.
 
-Every line of code added to a repository represents ongoing maintenance debt, test burden, and review overhead. Prefer solutions in this order:
+## 5. Ponytail Commit Packaging and Post-Change Visualization
 
-1. Deletion: The best fix is deleting redundant, dead, or misconfigured code that should never have existed.
-2. Standard Library Reuse: Replace hand-rolled parsers or complex utility functions with standard library primitives (such as `URL`, `crypto.randomUUID`, `path.resolve`, or `datetime.timezone`).
-3. Targeted Correction: Fix the single incorrect operator, condition, or argument at the exact line of root cause.
-4. Addition: Add new functions or modules only when existing infrastructure cannot express the required invariant.
+When executing Stage 2 fixes:
 
-### The Lean Review Checklist
+### Granular GPG-Signed Commits
+Group fixes logically by bug or module and commit using `git commit -S -m "fix(<scope>): <concise root-cause summary> (BUG-XX)"`.
 
-Before finalizing any fix, review every line of the proposed diff:
-- Can this be accomplished by deleting code instead of adding code?
-- Does the codebase already contain a helper that performs this task? Name its exact path.
-- Is there any speculative error handling for conditions that are mathematically or structurally impossible?
-- Did this change add any dependency that could be handled natively?
+### Same-Commit HALL_OF_SHAME.md Update
+If the repository tracks recurring failure modes in `HALL_OF_SHAME.md`, append the root cause, `file:line`, and prevention invariant in the same commit as the code fix.
 
-If any proposed line fails this checklist, strip it immediately.
+### 5-Point Post-Change Verification Summary
+After completing Stage 2 fixes, provide a structured 5-point summary covering:
+1. Exact root causes resolved
+2. Call-graph blast radius verified
+3. Defense-in-depth gates added
+4. Cold verification commands and outputs
+5. Git commit hashes and GPG signature status

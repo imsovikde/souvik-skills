@@ -46,6 +46,8 @@ const requiredFiles = [
   "references/external-protocol-and-mcp-audit.md",
   "scripts/preflight-diff-and-boundary-scan.sh",
   "scripts/preflight-diff-and-boundary-scan.cjs",
+  "scripts/preflight-diff-and-boundary-scan.js",
+  "scripts/verify-mcp-and-schema-parity.js",
 ];
 
 for (const rel of requiredFiles) {
@@ -83,6 +85,8 @@ if (fs.existsSync(skillMdPath)) {
   assert(content.includes("Karpathy"), "SKILL.md covers Karpathy surgical coding laws");
   assert(content.includes("3-Strike"), "SKILL.md covers 3-Strike Architectural Halt");
   assert(content.includes("outputSchema"), "SKILL.md covers MCP outputSchema verification");
+  assert(content.includes("verify-mcp-and-schema-parity"), "SKILL.md references verify-mcp-and-schema-parity");
+  assert(content.includes("Green Build Fallacy") || content.includes("Green-Build") || content.includes("green-build"), "SKILL.md covers green-build delusion");
 }
 
 // 3. Reference Files Checks
@@ -110,6 +114,7 @@ if (fs.existsSync(pluginJsonPath)) {
 if (fs.existsSync(openaiYamlPath)) {
   const yamlContent = fs.readFileSync(openaiYamlPath, "utf8");
   assert(yamlContent.includes("display_name:"), "openai.yaml has display_name");
+  assert(yamlContent.includes("short_description:"), "openai.yaml has short_description");
   assert(yamlContent.includes("default_prompt:"), "openai.yaml has default_prompt");
   assert(yamlContent.includes("$apex-bug-hunter"), "openai.yaml default_prompt mentions $apex-bug-hunter");
 }

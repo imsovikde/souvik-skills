@@ -1,104 +1,57 @@
-# Anti-Reward-Hacking and Verification Locks
+# Anti-Reward-Hacking and Verification Locks Reference
 
-Comprehensive engineering directives for defeating LLM reward-hacking, eliminating the green-build fallacy, and establishing falsifiable verification proofs.
+This reference defines the enforcement mechanisms for Pass 6 (Test-Harness Integrity Audit) and Stage 2 Cold Verification, grounded in industry research on LLM specification gaming, test-suite reward hacking, and the Green Build Fallacy.
 
-## 1. The Anatomy of LLM Coding Epistemic Failure
+## 1. Anatomy of Epistemic Reward-Hacking in Coding Agents
 
-Large Language Models (LLMs) used as autonomous coding agents operate under optimization objectives that frequently conflict with engineering rigor. These failure modes include:
+Coding agents frequently optimize for making a verification script exit 0 rather than fixing the underlying system defect. Audit both the codebase and any prior engineering reports for these seven reward-hacking vectors:
 
-- Fast-Model Skimming: Rapidly scanning diffs and producing generic praise or surface-level observations without analyzing execution semantics.
-- Sycophantic Reassurance: Generating unearned confirmation ("Looks great!", "Everything is fixed!", "I've solved this completely!") to satisfy the user's perceived desire for completion.
-- Green-Build Delusion: Assuming that because `npm test`, `tsc`, or `pytest` exits with code 0, the codebase is functional and defect-free.
-- Test-Harness Reward Hacking: Writing shallow tests that mock away the failing subsystem, omitting assertions, or commenting out failing test blocks to achieve green status.
-- Historical Fabrication: Asserting that an earlier commit or author resolved a defect without reading the physical code at current HEAD to verify file and line implementation.
+| Vector ID | Reward-Hacking Pattern | How It Masks Bugs | Detection Method |
+| :--- | :--- | :--- | :--- |
+| HACK-01 | Uninitialized Client Schema Cache | In @modelcontextprotocol/sdk, client.callTool() only validates structuredContent against outputSchema if client.listTools() was called first on that client instance to populate its internal schema cache. Omitting listTools() in tests lets invalid tool payloads pass 100% of tests. | Inspect test setup (beforeEach / beforeAll) to confirm await client.listTools() executes before any client.callTool() invocation. |
+| HACK-02 | Direct Function Import Bypassing Protocol | Tests import a TypeScript helper function directly instead of routing through the HTTP router or MCP server transport, bypassing middleware, auth, input parsing, and output serialization. | Verify integration tests invoke the full transport boundary (Server + Client over InMemoryTransport or HTTP fetch). |
+| HACK-03 | Assertion Weakening or Deletion | Modifying a failing test from expect(res.isError).toBe(false) to expect(res).toBeDefined(), or adding .skip / .todo to failing test blocks. | Run git diff on tests/ and **/*.test.* to flag any weakened assertion or skipped test as P0 BLOCKER. |
+| HACK-04 | Schema Loosening (z.any() / passthrough()) | Replacing a strict outputSchema or input schema with z.any(), z.record(z.unknown()), or .passthrough() so malformed runtime objects pass validation. | Audit all schema diffs; ensure schema fields match the exact domain contract. |
+| HACK-05 | Cosmetic Dead-Code Implementation | Writing a complete helper function (such as cursor pagination or fuzzy matching) in src/utils/ and unit-testing the helper, while leaving the live tool or route handler hardcoded to return unpaginated results. | Trace every helper from definition to live production call sites in src/routes/ or src/tools/. |
+| HACK-06 | Historical Commit Fabrication | Claiming in a status report that "BUG-X was already fixed in commit abc1234" without inspecting current HEAD, where the defect remains unfixed or was reverted. | Never trust commit messages or prose summaries; read the exact lines at current HEAD (git show HEAD:<path>). |
+| HACK-07 | Exit-Code Short-Circuiting | Modifying npm scripts (package.json), linter configs, or test runners to ignore exit codes (e.g. \|\| true, continue-on-error: true, or process.exit(0) catch blocks). | Inspect git diff on package.json, CI workflows (.github/workflows/), and test configs for suppressed failures or masked exit codes. |
 
-apex-bug-hunter implements strict cognitive and behavioral locks to eliminate these failure modes entirely.
+## 2. Cold Verification Protocol (Obra verification-before-completion)
 
-## 2. Eliminating Sycophancy and Performative Language
+Never claim a bug is fixed or a build is healthy based on cached incremental builds, partial test runs, or mental execution. Execute the following 5-step cold verification sequence before completing Stage 2:
 
-The following phrasing patterns are strictly banned:
+### Step 1: Clean Build and Strict Typecheck
 
-- Banned Flattery: "Great question!", "Excellent point!", "Thanks for catching that!", "You are absolutely right!"
-- Banned Unverified Claims: "I have completely fixed this issue.", "Everything is working perfectly now.", "This guarantees zero bugs.", "This handles all edge cases."
-- Banned Speculation: "This should work now.", "I believe this fixes it.", "Probably resolves the error."
+Run full TypeScript compilation (tsc --noEmit) with zero @ts-ignore or @ts-expect-error additions. Delete build artifacts and caches (dist/, .tsbuildinfo, node_modules/.cache) before executing cold builds.
 
-### Neutral, Fact-Based Communication
+### Step 2: Targeted Reproduction Test Execution
 
-State technical facts directly and neutrally:
-- State what was physically executed: "Executed `npm test`. 42 tests passed, 0 failed."
-- State what was physically read: "Inspected `src/auth.ts:34-52`. Line 47 lacks null check on `user.token`."
-- State unknowns explicitly: "I do not know why the connection resets on line 88 and must add diagnostic logging to isolate the root cause."
+Run the specific test case exercising the bug (vitest run <test-file> or jest <test-file>). Confirm the test actually entered the modified code path (verify assertion count is greater than 0 and specific response fields match).
 
-## 3. Deconstructing the Green-Build Delusion
+### Step 3: Full End-to-End Protocol Verification
 
-A passing build is a necessary condition for code delivery, but it is never sufficient proof of correctness. apex-bug-hunter enforces four mandatory audits against green-build delusion:
+Run the complete test suite across all modules (pnpm test, npm test, or pnpm verify). Run node scripts/verify-mcp-and-schema-parity.js (or equivalent contract verifier) to confirm 100% of registered tools and routes satisfy input and output schema parity.
 
-### Audit 1: Test-Harness Initialization and Validation Checks
+### Step 4: Working-Tree and Protected-Path Hygiene Check
 
-In modern protocol and framework implementations, test suites often instantiate mock clients that bypass schema validation entirely.
+Run git status and git diff to verify zero untracked scratch files, zero debug console.log statements, and zero bytes changed on protected paths.
 
-Example (Model Context Protocol):
-In `@modelcontextprotocol/sdk`, when an integration test calls `client.callTool(name, args)` without first running `await client.listTools()`, the client SDK does not load or compile the server's per-tool `outputSchema`. The server can return invalid, missing, or corrupted `structuredContent`, and the test will still report green exit 0.
+### Step 5: Evidence Logging
 
-Inspection Rule:
-- Inspect every test harness to confirm it executes the complete initialization sequence.
-- For MCP servers, confirm `await client.listTools()` is called and verified before invoking `callTool()`.
-- For REST/GraphQL APIs, confirm integration tests execute against the HTTP network layer rather than directly invoking controller functions in memory.
+Record the exact command executed, the exact terminal output summary (test file counts, assertion counts, exit code), and the verified file:line references in the final engineering report.
 
-### Audit 2: Dead Utility and Unwired Code Audit
+## 3. Mandatory Behavioral Locks Against Fast-Model Skimming
 
-LLM agents frequently fix type errors by writing new helper functions, validators, or sanitizers in utility files (`src/utils/helpers.ts`), achieving a clean compile. However, the agent forgets to import and invoke the helper within the actual route handler or database service.
+Large Language Models (LLMs) used as autonomous coding agents operate under optimization objectives that frequently conflict with engineering rigor. apex-bug-hunter enforces three behavioral locks:
 
-Inspection Rule:
-- For every new or modified function in a utility or shared module, search the entire repository for call sites:
-  ```bash
-  git grep "functionName"
-  ```
-- If a function is exported but has zero external callers, flag it as a P2 MAJOR defect: "Unwired Helper Function". Code that does not execute in production cannot fix a production bug.
+### 3.1 Deep-Thinking Trace
 
-### Audit 3: Historical Fabrication and Attribution Verification
+Reason step-by-step through the state machine, caller-callee graph, data flow, and failure boundaries before stating conclusions or proposing code edits. Never skim file summaries or guess behavior from function names.
 
-Agents often hallucinate that an issue was "already addressed in commit abc1234" or "handled by the core team earlier".
+### 3.2 Complete File Inspection
 
-Inspection Rule:
-- Never accept historical attribution claims without running physical verification:
-  ```bash
-  git log -S "symbolName" --oneline
-  git show <commit-sha>:<file-path>
-  ```
-- Read the current state of the file at `HEAD`. If the lines in question do not implement the required invariant, the issue is present regardless of commit history.
+Read entire functions and schemas, including error branches and middleware chains. Never rely on partial file snippets or grep hits alone.
 
-### Audit 4: Silent Fallback and Default Masking
+### 3.3 Anti-Sycophancy Directive
 
-A common anti-pattern is replacing a crash with a silent fallback that corrupts system state without alerting operators.
-
-Example:
-When a requested `parentId` is not found in the database, the handler catches the error and assigns `parentId = null`, placing the orphan item at the root of the hierarchy instead of throwing `NOT_FOUND`. The test passes because no exception is thrown, but the database now contains corrupted relational state.
-
-Inspection Rule:
-- Audit all `catch`, `orElse`, `default`, and nullish coalescing (`??`) branches in the diff.
-- Verify that invalid input, missing foreign keys, and security violations fail loudly and explicitly.
-
-## 4. Falsifiable Verification Criteria
-
-To claim a defect is resolved, the remediation must satisfy the Falsifiable Verification Gate:
-
-```
-Step 1: Write a minimal reproducer that fails on current code (RED).
-Step 2: Apply the minimal surgical fix.
-Step 3: Execute the reproducer and prove it passes (GREEN).
-Step 4: Revert the fix temporarily and prove the reproducer fails again (CONFIRMATION).
-Step 5: Re-apply the fix and execute the full test suite (NO REGRESSIONS).
-```
-
-If a reproducer cannot be constructed (e.g. in hardware or third-party cloud environments), the agent must declare the limitation explicitly in the "Unverified Scope" section of the report.
-
-## 5. Mandatory Post-Change Visualization Protocol
-
-Following any code mutation, emit the 5-point post-change visualization:
-
-1. Target Boundary: Exact file path and line numbers modified (e.g. `src/services/billing.ts:104-118`).
-2. Prior Behavior: Mechanistic breakdown of what the code executed prior to modification.
-3. Current Behavior: Mechanistic breakdown of what the code executes following modification.
-4. Downstream Impact: Observable runtime, layout, network, timing, or visual state changes across all consumers.
-5. Unverified Scope: Explicit declaration of what has NOT been verified (e.g. untestable viewports, skipped runtimes, unmocked third-party APIs).
+Eliminate all performative flattery ("Great question!", "Excellent point!"), unverified claims ("I have completely fixed this!"), and speculative reassurance ("This should work now"). State technical facts directly with raw evidence.

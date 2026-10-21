@@ -1,150 +1,141 @@
 ---
 name: apex-bug-hunter
-description: Autonomous 7-pass differential code review, deep bug hunting, AST blast-radius audit, and zero-regression surgical remediation engine. Traces backwards data-flow, audits removed lines (-), detects green-build delusion, validates MCP and external protocol contracts, and enforces Karpathy surgical coding laws. Use whenever the user asks to hunt bugs, review a PR (PR #N), audit a branch against main, audit the entire codebase, diagnose production regressions, verify an agent report, or fix severe defects.
+description: Execute deep multi-pass bug hunting, differential pull request reviews, branch comparisons, full-repository architectural audits, root-cause debugging, and zero-regression fixes. Trigger automatically whenever the user asks to hunt bugs, review a pull request (PR #N), audit a branch against main, audit the entire main branch or codebase, diagnose production regressions, verify an engineering report, audit MCP or OAuth protocol compliance, or fix severe defects.
 ---
 
 # Apex Bug Hunter
 
-Autonomous 7-pass differential code review, multi-layer bug hunting, and zero-regression remediation engine. Designed for principal systems architects, security reviewers, and mission-critical codebases where latent defects cause production outages or data corruption.
+A deterministic, multi-stage bug-hunting, differential code review, and zero-regression remediation skill integrating the CodeRabbit 4-Stage AST and Call-Graph Review Pipeline, Obra Superpowers Systematic Debugging (`systematic-debugging`, `root-cause-tracing`, `defense-in-depth`, `verification-before-completion`), Andrej Karpathy's 4 Surgical Coding Laws, Anti-Reward-Hacking Verification Locks, and Ponytail Zero-Regression Engineering.
 
-apex-bug-hunter operates on a fundamental axiom: passing test suites and green builds do not prove correctness. Only mechanistic proof, backwards data-flow tracing, and disconfirming-evidence audits establish reliability.
+## When to Use
 
-## 1. Operating Rules and Iron Laws
+- Auditing a Pull Request (`PR #N`) or commit range for regressions, contract drift, or security flaws
+- Comparing a feature or fix branch against `main` or `origin/main`
+- Performing a whole-branch or full-repository architectural, boundary, contract, and state-machine audit
+- Diagnosing production bugs, flaky tests, schema mismatches, or multi-layer state corruption
+- Auditing an AI agent's engineering report or "green build" claim against actual `HEAD` source code and runtime behavior
+- Executing surgical, zero-regression fixes with cold verification and granular GPG-signed commits
 
-All analysis conducted by apex-bug-hunter adheres to non-negotiable core invariants:
+## 1. Cognitive Lock Against Fast-Model Skimming and Epistemic Reward-Hacking
 
-1. Evidence Over Assertion: Never state a defect is absent or fixed without raw command output, exit codes, and physical file inspection. Speculative reassurance is prohibited.
-2. The Iron Law of Debugging: No fixes without root-cause investigation first. Symptom suppression is classified as architectural failure.
-3. Karpathy Surgical Coding Laws:
-   - Think Before Coding: Identify and articulate hidden assumptions before touching code.
-   - Simplicity First: Implement the minimum code necessary to solve the defect. Avoid speculative abstractions.
-   - Surgical Changes: Every changed line must map directly to the root cause. Zero collateral reformatting.
-   - Goal-Driven Execution: Establish falsifiable verification criteria prior to mutation and loop until proven.
-4. The 3-Strike Architectural Halt: If three successive remediation attempts fail to resolve a defect or pass cold verification, halt all mutations immediately and elevate the issue to an architectural discussion.
-5. Absolute Anti-Sycophancy: Forbid performative praise and celebratory claims. Report technical findings neutrally, concisely, and factually.
+Before inspecting files or emitting any analysis, engage all three cognitive locks. For full enforcement criteria, read `references/anti-reward-hacking-and-verification-locks.md`.
 
-## 2. Universal Scope Resolution and Two-Stage Gate
+### 1.1 Mandatory Deep-Thinking Trace
 
-Upon invocation, apex-bug-hunter determines the target scope from user input:
+Reason step-by-step through the state machine, caller-callee graph, data flow, and failure boundaries before stating conclusions or proposing code edits. Never skim file summaries or guess behavior from function names.
 
-| Target Scope | Invocation Pattern | Git Differential Command | Traversal Depth |
-| :--- | :--- | :--- | :--- |
-| Pull Request | PR #N or PR URL | `git diff <base>...<head>` | PR commits, diff hunks, upstream callers, downstream consumers |
-| Branch Compare | Branch name | `git diff origin/main...<branch>` | Modified files plus multi-hop symbol dependencies |
-| Whole Repo | main or no target | Full tree traversal | Full architectural, contract, state-machine, and RLS audit |
+### 1.2 Eliminate Sycophancy and Unverified Praise
 
-### Protected Zero-Touch Path Lock
+Omit all performative agreement, conversational filler, and premature celebratory claims. State findings plainly with exact `file:line` evidence and logical proof.
 
-Inspect repository configuration for protected file paths (such as OAuth 2.1 routes, cryptographic primitives, production migration files, and security vaults). Enforce a hard 0-byte diff guard:
+### 1.3 Defeat the Green Build Fallacy
 
-```bash
-git diff <base>...<head> -- <protected-path>
-```
+Never equate a passing `pnpm verify`, `npm run build`, `tsc`, or `vitest` exit code 0 with system correctness. Always audit for these four failure modes:
 
-If any protected file contains modifications not explicitly authorized by the user, fail the audit immediately with a P0 BLOCKER violation.
+1. **Unvalidated Test Harness:** Check whether the test suite initialized protocol or schema validation before invoking handlers. In Model Context Protocol servers, confirm `await client.listTools()` executes before `client.callTool()`, ensuring `@modelcontextprotocol/sdk` per-tool `outputSchema` validation is active and not bypassed by an uninitialized client.
+2. **Dead Helper Code:** Verify that newly created helper functions (pagination cursors, fuzzy matchers, sanitizers) are actually imported and wired into live route and tool handlers rather than sitting unused in utility files. Use `git grep "functionName"` to enumerate all call sites.
+3. **Historical Fabrication:** Never claim an earlier commit resolved a defect without reading the exact lines at current `HEAD` and verifying `file:line`. Run `git show <sha>:<file>` before attributing resolution to any prior commit.
+4. **Silent Fallbacks:** Check whether missing or invalid parent IDs, foreign keys, or enum values silently fall back to root placement (`parentId: null`) or default objects instead of raising explicit `NOT_FOUND` or `INVALID_ID` errors.
 
-### Two-Stage Command Gate
+## 2. Universal Scope Resolution and Default Command Behavior
 
-apex-bug-hunter enforces a strict two-stage execution gate to prevent unintended workspace mutations:
+Resolve the operational scope from the user's request before starting Pass 1. Run `scripts/preflight-diff-and-boundary-scan.sh` and `scripts/verify-mcp-and-schema-parity.js` to gather deterministic baseline telemetry.
 
-- Stage 1 (Default Review Mode): Execute the complete 7-Pass inspection pipeline. Catalog all defects deterministically (`BUG-01`, `BUG-02`, ...), trace exact file and line locations, and synthesize the Zero-Regression Surgical Blueprint. Present the findings report and await human instruction.
-- Stage 2 (Remediation Mode): Triggered only when the user explicitly commands "Fix it", "Execute", or requests immediate resolution. Apply approved surgical fixes, execute cold test suites, verify protocol contracts, and record granular commits.
+### 2.1 Automatic Target Scope Resolution
 
-## 3. Cognitive Locks Against Green-Build Delusion
+| Mode | Trigger Condition | Inspection Scope |
+| :--- | :--- | :--- |
+| **Pull Request Mode** | User specifies `PR #N` or a PR URL | Audit `git diff <base>...<head>`, all commits in the PR, and all upstream callers and downstream callees in the AST symbol graph |
+| **Branch Comparison Mode** | User specifies a branch name | Audit `git diff origin/main...<branch>` plus all transitive call-graph dependencies |
+| **Whole-Branch / Repository Mode** | User specifies `main`, whole repo, or no diff target | Audit the full system architecture, entry boundaries, schemas, state machines, persistence layers, and test harnesses across all modules |
+| **Protected Zero-Touch Path Lock** | Protected paths exist (OAuth 2.1 routes, token issuers, production auth configs) | Enforce a strict 0-byte diff guard: `git diff` must be completely empty on all protected paths |
 
-Fast inference models often fall victim to the green-build fallacy, equating `exit 0` from a compiler or test runner with complete correctness. apex-bug-hunter enforces mandatory verification locks:
+### 2.2 Two-Stage Command Gate
 
-- Test Harness Integrity: Inspect test harnesses to confirm they invoke active schema validation. In Model Context Protocol servers, confirm `await client.listTools()` executes before `client.callTool()`, ensuring `@modelcontextprotocol/sdk` outputSchema validation is active.
-- Dead Utility Detection: Detect functions added to utility modules that allow the codebase to compile cleanly but are never wired into live routes, CLI commands, or event dispatchers.
-- Historical Fabrication Prevention: Never claim an earlier commit resolved a defect without reading the physical code at current `HEAD` and confirming the fix is active in the executing branch.
-- Silent Fallback Detection: Flag fallback branches that convert invalid inputs, missing parent identifiers, or null pointers into default roots (such as `parentId: null`) instead of raising explicit errors.
-- Mandatory Deep-Thinking Trace: Reason step-by-step through state machines, data flows, and failure boundaries before emitting any audit conclusion or code edit.
+Operate in a strict two-stage gate unless the user explicitly commands immediate code mutation in their initial prompt:
 
-For comprehensive verification rules, consult `references/anti-reward-hacking-and-verification-locks.md`.
+1. **Stage 1: Deep Audit and Zero-Regression Fix Blueprint (Default):**
+   - Execute the complete 7-Pass Inspection Pipeline across the resolved scope.
+   - Assign every confirmed defect a deterministic identifier (`BUG-01`, `BUG-02`, ...) ordered by severity (`P0 BLOCKER`, `P1 CRITICAL`, `P2 MAJOR`, `P3 MINOR`).
+   - Trace the exact `file:line` symptom and backward root cause.
+   - Engineer a complete Zero-Regression Surgical Fix Blueprint containing exact replacement code and a cross-file blast-radius proof.
+   - Present the structured report and wait for the user's explicit execution command.
+2. **Stage 2: Surgical Execution, Cold Verification, and GPG Commit (Triggered on "Fix it" or "Execute"):**
+   - Apply approved fixes across all affected files adhering strictly to Karpathy's 4 Surgical Coding Laws.
+   - Run cold, fresh verification suites and protocol runtime checks proving the failing code path was exercised.
+   - Package changes into granular GPG-signed commits (`git commit -S`) with same-commit `HALL_OF_SHAME.md` updates when present, and do not return until 100% of severe defects are resolved and verified.
 
-## 4. The 7-Pass Inspection Pipeline
+## 3. The 7-Pass Inspection Pipeline
 
-Execute every pass sequentially. Never collapse or omit passes:
+Execute all seven passes in sequence. Do not skip passes even if an early pass discovers a blocker.
 
-```
-Pass 1: Governance & Spec Grounding
-   │
-Pass 2: Differential Line-Deletion (-) Audit
-   │
-Pass 3: Contract, Protocol & Output Schema Parity
-   │
-Pass 4: State Machine, Hierarchy & Idempotency
-   │
-Pass 5: Security, Tenant Isolation & Error Sanitization
-   │
-Pass 6: Test-Harness Integrity & Coverage Gaps
-   │
-Pass 7: Ponytail Zero-Regression Fix Synthesis
-```
+### Pass 1: Governance, Invariants, and External Specification Grounding
 
-### Pass 1: Governance, Invariants, and External Spec Grounding
+- Read repository governance documents first: `AGENTS.md`, `CLAUDE.md`, `INVARIANTS.md`, and `HALL_OF_SHAME.md`.
+- Identify all external protocols, SDKs, and specifications touched by the codebase (Model Context Protocol `2025-06-18` and `2025-11-25`, OAuth 2.1, RFC 8707 Resource Indicators, PostgreSQL Row-Level Security).
+- Consult `references/external-protocol-and-mcp-audit.md` and verify official specification requirements before auditing implementation code.
 
-Read project standards (`AGENTS.md`, `CLAUDE.md`, `INVARIANTS.md`, `HALL_OF_SHAME.md`). If the codebase integrates external protocols (Model Context Protocol, OAuth 2.1, SQLite WAL, PostgreSQL RLS), research and verify against the official protocol specification before evaluating code logic.
+### Pass 2: Differential Line-Deletion (`-`) and Boundary Validation Audit
 
-### Pass 2: Differential Line-Deletion (-) and Boundary Validation Audit
-
-Extract and audit every deleted line in `git diff`. Determine if removed lines:
-- Bypassed input validation schemas (such as Zod, Pydantic, or TypeBox safeParse calls).
-- Eliminated security authorization gates or permission checks.
-- Removed error-handling catch branches, allowing unhandled rejections to bubble up.
-- Stripped sanitization logic on outbound API payloads.
-
-For full differential traversal mechanics, consult `references/differential-call-graph-audit.md`.
+- Read schemas before call sites, and business logic before tests.
+- Inspect every deleted line (`-`) and modified line (`+`) in `git diff`.
+- Verify that entry-boundary Zod/JSON schemas, `.refine()` / `.superRefine()` constraints, and repository-level `safeParse` gates were not removed, widened to `z.any()`, or bypassed.
+- Flag any removed `await` keyword that converts a Promise into an unhandled rejection.
+- Consult `references/differential-call-graph-audit.md` for AST symbol graph construction and blast-radius traversal rules.
 
 ### Pass 3: Contract, Protocol, and Output Schema Parity Audit
 
-Inspect all API, RPC, and tool handlers against declared output schemas:
-- Verify that every conditional execution branch returns data conforming to its declared `outputSchema`.
-- Confirm no handler returns `undefined` inside `structuredContent`.
-- In MCP servers, verify that operational failures set `isError: true` so clients do not crash attempting to validate error text against success schemas.
-- Ensure multi-client schema sanitizers operate on deep clones to prevent cross-request prototype or object mutations.
-- Confirm static manifests match runtime tools with zero byte-order-mark (BOM) or UTF-8 encoding corruption.
-
-For protocol details, consult `references/external-protocol-and-mcp-audit.md`.
+- Compare every route or tool handler's runtime return value across all conditional branches against its declared `outputSchema`.
+- Verify that no execution branch returns `undefined` for required `structuredContent` when an `outputSchema` is declared.
+- Confirm that payload truncation or summarization logic preserves all required top-level schema keys and valid JSON structures.
+- Verify that error responses (`isError: true`) serialize cleanly without triggering success-schema validation crashes in strict SDK clients.
+- Check that multi-client schema sanitizers operate on deep clones (`structuredClone`) so sanitizing for one client never mutates shared in-memory definitions.
+- Confirm static manifest files match live registered endpoints with zero UTF-8 BOM or encoding corruption.
 
 ### Pass 4: State Machine, Hierarchy, Collision, and Idempotency Audit
 
-Analyze stateful operations for consistency invariants:
-- Distinguish pure read lookups from find-or-create mutations. Ensure read paths never mutate database records.
-- Verify parent existence and batch hierarchy relationships before inserting child records.
-- Enforce cycle detection in nested folder, category, or graph hierarchies.
-- Audit sibling rename and move operations for name collision checks.
-- Resolve multi-match queries with explicit disambiguation rather than picking the first record arbitrarily.
-- Verify pagination cursors are wired end-to-end through query layers.
-- Enforce `clientRequestId` deduplication on all state-mutating actions.
+- Verify that read operations (`get`, `list`, `search`, `resolve`) are pure and non-mutating, never triggering hidden find-or-create side effects.
+- Check parent-child hierarchy operations for parent existence checks, trash-batch hints, and strict cycle detection (`A -> B -> A`) before persisting moves.
+- Verify sibling name collision checks return `CONFLICT` on create, rename, move, or restore.
+- Verify multi-match lookups check match cardinality and return `AMBIGUOUS` when multiple active records match a non-unique query.
+- Ensure resolution order prioritizes active records over archived or soft-deleted items.
+- Confirm pagination cursors (`cursor`, `nextCursor`, `limit`) are wired end-to-end from input schema through repository query to response output.
+- Verify `clientRequestId` idempotency keys replay cached responses on duplicate requests without duplicating mutations.
 
 ### Pass 5: Security, Tenant Isolation, and Error Sanitization Audit
 
-Audit data persistence and serialization boundaries:
-- Enforce composite key lookups `(tenant_id, id)` or `(owner_id, id)` across all SQL queries, ORM calls, and document lookups. A query using only `id` is a P1 security defect.
-- Verify grant-tier and role-based field redaction on all outbound serializers.
-- Ensure database driver errors, raw SQL queries, and stack traces are sanitized before returning responses to callers.
-- Check for leaked API tokens, unhashed credentials, and insecure randomness primitives.
+- Verify every database read, update, and delete scopes queries by composite `(owner_id, id)` or tenant context, returning `NOT_FOUND` (never `FORBIDDEN` that leaks existence) on foreign IDs.
+- Verify grant-tier or role-based field redaction strips sensitive fields before serialization.
+- Confirm raw database driver errors, SQL constraint names, and internal stack traces are caught and mapped to sanitized domain error codes.
+- Scan for hardcoded secrets, tokens, or banned anti-patterns.
 
-### Pass 6: Test-Harness Integrity and Coverage Audit
+### Pass 6: Test-Harness Integrity Audit
 
-Audit automated test suites for masking mechanisms:
-- Scan for skipped tests (`it.skip`, `describe.skip`, `@unittest.skip`), ignored assertions, or commented-out test blocks.
-- Verify tests assert negative conditions (rejection on invalid input) in addition to happy paths.
-- Ensure end-to-end integration tests execute against authentic client instances rather than shallow stubs that bypass schema validation.
+- Audit the test suite to confirm tests invoke the real validating client or router across 100% of registered endpoints and tools.
+- Flag any `.skip`, `.todo`, `.only`, or mocked-out schema validators that mask runtime failures.
+- Verify negative test coverage exists for invalid inputs, missing parent IDs, cross-tenant access, and malformed cursors.
+- Run `scripts/verify-mcp-and-schema-parity.js` to detect unwired helpers and uninitialized test harness clients programmatically.
 
-### Pass 7: Ponytail Zero-Regression Fix Synthesis
+### Pass 7: Ponytail Engineering Zero-Regression Fix Synthesis
 
-For every confirmed bug, engineer the smallest surgical fix that resolves the root cause:
-- Trace all callers and callees in the call graph to verify the fix introduces zero side effects.
-- Prefer fixes that simplify or remove redundant code over adding layers of abstraction.
-- Prepare a comprehensive post-change visualization.
+- Follow Obra's Iron Law: no fixes without root-cause investigation first. Trace backward from symptom to original trigger across layer boundaries.
+- Apply the 3-Strike Architectural Halt Rule: if 3 attempted fixes fail verification, halt code mutation immediately and escalate the architectural flaw.
+- Engineer minimal, surgical fixes at the proper layer with defense-in-depth validation at entry, domain, persistence, and outbound serialization layers.
+- Trace all callers, callees, schemas, and sibling files to prove fixing `BUG-X` introduces zero new regressions.
+- Consult `references/scientific-root-cause-and-ponytail-fixes.md` for commit packaging, `HALL_OF_SHAME.md` updates, and the mandatory 5-point post-change architecture visualization.
 
-For scientific debugging and minimal fix patterns, consult `references/scientific-root-cause-and-ponytail-fixes.md`.
+## 4. Progressive Disclosure Reference Map
+
+Load these auxiliary files when executing specific passes:
+
+- `references/differential-call-graph-audit.md`: CodeRabbit 4-stage pipeline, AST symbol graph traversal, line-deletion (`-`) auditing, and disconfirming-evidence noise filtering.
+- `references/scientific-root-cause-and-ponytail-fixes.md`: Obra 4-phase scientific debugging, backward root-cause tracing, defense-in-depth layers, Karpathy's 4 Surgical Coding Laws, and Ponytail commit rules.
+- `references/anti-reward-hacking-and-verification-locks.md`: Anti-green-build-delusion checks, test-harness validation audits, dead-code detection, and cold verification protocols.
+- `references/external-protocol-and-mcp-audit.md`: MCP `2025-06-18` and `2025-11-25` specification invariants, `outputSchema` and `structuredContent` parity, OAuth 2.1 and RFC 8707 checks, and tenant RLS verification.
+- `scripts/preflight-diff-and-boundary-scan.sh`: Automated shell scanner for scope resolution, protected-path 0-byte diff enforcement, deleted validation gates, and skipped tests.
+- `scripts/verify-mcp-and-schema-parity.js`: Node.js static analyzer for MCP tool registration parity, dead helper wiring, and test-harness `listTools()` initialization checks.
 
 ## 5. Deterministic Severity Classification
-
-Rank all findings using standard severity levels:
 
 | Level | Severity | Definition | Remediation Window |
 | :--- | :--- | :--- | :--- |
@@ -153,58 +144,31 @@ Rank all findings using standard severity levels:
 | P2 | MAJOR | Missing boundary validation, state-machine race condition, or broken pagination | Fix required before next release |
 | P3 | MINOR | Dead helper function, sub-optimal query index, or imprecise error message | Tracked for scheduled cleanup |
 
-## 6. Zero-Regression Blueprint and Report Schema
+## 6. Required Output Structure
 
-Present findings using this exact markdown schema:
+### Stage 1 Output: Bug Hunt and Zero-Regression Fix Blueprint
 
-```markdown
-# Apex Bug Hunter Audit Report
+For each confirmed finding, output a structured table and blueprint block:
 
-## Audit Scope
-- Target: [PR #N / Branch / Full Repository]
-- Commits Analyzed: [Commit count and SHAs]
-- Protected Paths Status: [0-byte diff verified / N/A]
+| Bug ID | Severity | Pass | Location (`file:line`) | Summary | Blast Radius |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `BUG-01` | `P0 BLOCKER` | Pass 3 | `src/tools/items.ts:142` | Missing `structuredContent` on empty search branch | `client.callTool` crashes on schema validation |
 
-## Findings Summary
-| Bug ID | Severity | Category | File:Line | Summary |
-| :--- | :--- | :--- | :--- | :--- |
-| BUG-01 | P0 BLOCKER | Security / Multi-Tenant | `src/db/users.ts:42` | Missing tenant_id check in findById |
+Follow the summary table with a detailed section per bug containing:
 
-## Detailed Vulnerability Analysis
+1. **Symptom and Root-Cause Trace:** Exact backward data-flow trace from failure point to origin.
+2. **Disconfirming Evidence Check:** Proof that no upstream guard or middleware mitigates the bug.
+3. **Surgical Fix Blueprint:** Exact `file:line` diff replacement and caller/callee blast-radius verification.
+4. **Falsifiable Verification Command:** The exact test or runtime command that fails before the fix and passes after.
 
-### BUG-01: Missing Tenant Isolation in User Lookup
-- Severity: P0 BLOCKER
-- Target Boundary: `src/db/users.ts:42-58`
-- Root Cause: Lookup queries by primary key without scoping to authenticated tenant.
-- Call Graph Blast Radius:
-  - Caller: `src/api/routes/users.ts:18` (`getUserHandler`)
-  - Outbound Serializer: `src/serializers/user.ts:12`
-- Proof of Failure: Reproducible request with foreign ID returns 200 OK with foreign data.
+### Stage 2 Output: Remediation and Verification Record
 
-#### Zero-Regression Surgical Fix
-```typescript
-// Replacement code for src/db/users.ts:42-58
-export async function findUser(tenantId: string, userId: string): Promise<User> {
-  const user = await db.user.findFirst({
-    where: { id: userId, tenantId },
-  });
-  if (!user) {
-    throw new NotFoundError(`User ${userId} not found`);
-  }
-  return user;
-}
-```
+After executing approved fixes, emit:
 
-## Post-Change Visualization Protocol
-1. Target Boundary: `src/db/users.ts:42-58`
-2. Prior Behavior: Queried user by `id` only, allowing cross-tenant read.
-3. Current Behavior: Enforces compound filter `(id, tenantId)` and raises `NotFoundError`.
-4. Downstream Impact: Caller `getUserHandler` now returns 404 for unauthorized IDs.
-5. Unverified Scope: External Redis session cache invalidation was not verified.
-
-## Remediation Status
-Stage 1 complete. Awaiting user command ("Fix it" or "Execute") to proceed to Stage 2.
-```
+1. **Commit Record:** The exact commit SHA, subject line, and `git show --stat` output.
+2. **Cold Verification Evidence:** Raw terminal output of the verification command suite with exit codes.
+3. **Post-Change Visualization:** 5-point protocol: Target Boundary, Prior Behavior, Current Behavior, Downstream Impact, Unverified Scope.
+4. **HALL_OF_SHAME.md Update:** Confirm the regression ledger was updated in the same commit as the fix.
 
 ## 7. Stage 2 Remediation Protocol
 
@@ -216,13 +180,3 @@ When commanded to execute fixes:
 4. Execute full cold test and build suites (`npm test`, `npm run build`, `pnpm verify`).
 5. Update repository regression ledgers (`HALL_OF_SHAME.md`) in the same commit.
 6. Record granular, GPG-signed commits (`git commit -S`) using Conventional Commit format with zero AI attribution trailers.
-
-## 8. Deep Reference Directory
-
-For domain-specific checklists and detailed execution mechanics, consult the bundled references:
-
-- Differential Call-Graph Traversal: Read `references/differential-call-graph-audit.md` for AST symbol graph construction, cross-file blast-radius mapping, and line-deletion audits.
-- Scientific Root-Cause and Ponytail Fixes: Read `references/scientific-root-cause-and-ponytail-fixes.md` for backward data-flow tracing, 4-phase debugging, and minimal fix synthesis.
-- Anti-Reward-Hacking and Verification: Read `references/anti-reward-hacking-and-verification-locks.md` for test harness audits, green-build delusion prevention, and falsifiable proof rules.
-- External Protocols and MCP Grounding: Read `references/external-protocol-and-mcp-audit.md` for Model Context Protocol 2025 specs, OAuth 2.1 RFCs, and database isolation checks.
-- Preflight Scanner Script: Run `scripts/preflight-diff-and-boundary-scan.sh` or `scripts/preflight-diff-and-boundary-scan.cjs` to scan diffs for deleted lines and boundary violations.
