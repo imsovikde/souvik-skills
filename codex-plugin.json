@@ -101,6 +101,12 @@
       "path": "skills/merge-gate",
       "manifest": "skills/merge-gate/SKILL.md",
       "agent": "skills/merge-gate/agents/openai.yaml"
+    },
+    {
+      "name": "local-systematic-verification-ocr",
+      "path": "skills/local-systematic-verification-ocr",
+      "manifest": "skills/local-systematic-verification-ocr/SKILL.md",
+      "agent": "skills/local-systematic-verification-ocr/agents/openai.yaml"
     }
   ]
 }

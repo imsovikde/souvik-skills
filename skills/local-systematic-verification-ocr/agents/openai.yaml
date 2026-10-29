@@ -1,0 +1,4 @@
+interface:
+  display_name: "Local Systematic Verification OCR"
+  short_description: "Precision-first document transcription and mathematical OCR with 12-level systematic verification"
+  default_prompt: "Use $local-systematic-verification-ocr to transcribe this scanned PDF or document image into verified Markdown or LaTeX with 100% verified-or-flagged coverage, multi-engine deterministic cross-checking, and symbol-by-symbol formula verification."

@@ -165,6 +165,16 @@
           "type": "json",
           "path": "skills/merge-gate/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[15].version"
+        },
+        {
+          "type": "json",
+          "path": "skills/local-systematic-verification-ocr/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
         }
       ]
     }
