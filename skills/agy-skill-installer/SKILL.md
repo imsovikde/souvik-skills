@@ -3,43 +3,54 @@ name: agy-skill-installer
 description: Install any agent skill into Anti-Gravity IDE with 100% fidelity, automated YAML frontmatter validation, dual-root provisioning, security scanning, and slash command integration.
 ---
 
-# Anti-Gravity Skill Installer
+# Anti-Gravity Skill & Plugin Installer
 
-Install any skill or multi-skill collection into Anti-Gravity IDE 2.0 with **100% fidelity**. Zero truncation, zero omitted subfolders, zero broken dependencies.
+Install any skill, multi-skill collection, or native plugin into Anti-Gravity IDE with **100% fidelity**. Zero truncation, zero omitted subfolders, zero broken dependencies.
 
 ## Overview
 
-Anti-Gravity IDE requires skills to be structured with valid YAML frontmatter, dual-root placement (`~/.gemini/config/skills` and `.agents/skills`), and sanitized telemetry/tracking to ensure slash commands (`/agy-skill-installer`) index properly in the editor UI.
+Anti-Gravity IDE supports two primary customization constructs:
+1. **Agent Skills**: Procedural runbooks and commands discovered across the 4 discovery roots (`~/.gemini/config/skills/`, `.agents/skills/`, `~/.gemini/antigravity/skills/`, and `~/.agents/skills/`).
+2. **Native Antigravity Plugins (The Ponytail Standard)**: Namespaced bundles (`~/.gemini/config/plugins/<name>/` and `.agents/plugins/<name>/`) packaging skills, `AGENTS.md` rules, hooks, and MCP servers into an authoritative unit that is registered in `~/.gemini/config/config.json` with direct toggle control (`"enabled": true / false`) inside the Antigravity Customization Settings UI.
 
 ## Operating Protocol
 
-1. **Source Parsing**: Accept GitHub URL (`https://github.com/user/repo`), skill monorepo, or local path.
-2. **Clone & Extract**: Clone complete repository into a temporary directory. Never scrape partial snippets.
-3. **YAML Frontmatter Normalization & Repair**:
-   - Parse `SKILL.md` frontmatter.
-   - Fix unquoted colons and formatting issues that crash the Anti-Gravity YAML parser.
-   - Ensure `name:` matches the directory name exactly.
-4. **Security & Privacy Scanning**:
-   - Scan files for hardcoded API secrets, tracking beacons, and telemetry calls.
-   - Strip tracking while preserving functional API calls.
-5. **Dual-Root Provisioning**:
-   - Copy 100% of files (scripts, templates, references, agents) to:
-     - Global: `~/.gemini/config/skills/<name>/`
-     - Workspace: `.agents/skills/<name>/`
-     - Antigravity: `~/.gemini/antigravity/skills/<name>/`
-   - Remove nested `.git` directories.
-6. **Slash Command Verification**:
-   - Test YAML frontmatter parsing with safe YAML loader.
-   - Confirm active slash command trigger: `/<name>`.
+### A. Native Antigravity Plugin Installation (Ponytail Standard)
+1. **Detection**: Automatically identifies plugin repositories by inspecting `plugin.json`, `gemini-extension.json`, or `.antigravity-plugin/plugin.json`, or via explicit `-AsPlugin` flag.
+2. **Authoritative Deployment**:
+   - Deploys full plugin package to Global (`~/.gemini/config/plugins/<name>/`) and Local (`.agents/plugins/<name>/`).
+   - Ensures valid `plugin.json` declaring plugin identity at the root.
+   - Ensures `AGENTS.md` is preserved at the plugin root for runtime rules discovery.
+3. **Customization Settings Control Registration**:
+   - Atomically registers `plugins.<name> = { "enabled": true }` into `~/.gemini/config/config.json`.
+   - Exposes native toggle switches in Antigravity IDE -> Settings -> Customizations -> Plugins, allowing users to enable or disable the entire plugin and all its capabilities instantly.
+4. **Bundled Skill Provisioning**:
+   - Recursively maps all bundled skills (`skills/*`) to all 4 skill roots for immediate slash command access (`/<skill-name>`).
+
+### B. Standalone Skill Installation
+1. **Source Parsing**: Clones Git repository or resolves local directory.
+2. **YAML Normalization**: Fixes unquoted colons, invalid block scalars, and ensures `name:` matches the directory name exactly.
+3. **Security & Privacy Scanning**: Scans for leaked keys and tracking beacons.
+4. **Multi-Root Provisioning**: Copies files with 100% fidelity to:
+   - Global: `~/.gemini/config/skills/<name>/`
+   - Local: `.agents/skills/<name>/`
+   - Antigravity Root: `~/.gemini/antigravity/skills/<name>/`
+   - User Agent Root: `~/.agents/skills/<name>/`
+5. **Slash Command Registration**: Automatically registers `/<name>` in the chat interface.
 
 ## Reusable Automation Scripts
 
-- **Windows (PowerShell):**
+- **Windows (PowerShell) - Standalone Skill:**
   ```powershell
   powershell -ExecutionPolicy Bypass -File "skills/agy-skill-installer/scripts/install-skill.ps1" -SourceUrlOrPath "<REPO_URL>"
   ```
 
+- **Windows (PowerShell) - Native Antigravity Plugin (Ponytail Standard):**
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File "skills/agy-skill-installer/scripts/install-skill.ps1" -SourceUrlOrPath "<REPO_URL>" -AsPlugin
+  ```
+
 - **Linux / macOS (Bash):**
   ```bash
-  bash skills/agy-skill-installer/scripts/install-skill.sh "<REPO_URL>"
+  bash skills/agy-skill-installer/scripts/install-skill.sh "<REPO_URL>" [--plugin]
   ```
