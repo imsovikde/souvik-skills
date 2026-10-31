@@ -286,17 +286,11 @@ if ($isPlugin) {
     
     Write-Host "Plugin Name:    $targetPluginName" -ForegroundColor Cyan
     
+    # Authoritative plugin targets (single canonical directory to prevent duplicate discovery)
     $pluginTargets = @(
         [System.IO.Path]::Combine($globalPlugins, $targetPluginName),
         [System.IO.Path]::Combine($localPlugins, $targetPluginName)
     )
-    
-    $aliasNames = @($targetPluginName)
-    if ($repoBaseName -and $repoBaseName -ne $targetPluginName) {
-        $aliasNames += $repoBaseName
-        $pluginTargets += [System.IO.Path]::Combine($globalPlugins, $repoBaseName)
-        $pluginTargets += [System.IO.Path]::Combine($localPlugins, $repoBaseName)
-    }
     
     # Stage into isolated temp folder
     $stageDir = [System.IO.Path]::Combine($env:TEMP, "agy-stage-plugin-" + [System.Guid]::NewGuid().ToString().Substring(0,8))
@@ -333,12 +327,12 @@ if ($isPlugin) {
     }
     Remove-Item -Recurse -Force $stageDir -ErrorAction SilentlyContinue
     
-    # Register in config.json
-    Register-AntigravityPluginConfig -ConfigPath $configJsonPath -PluginNames $aliasNames
+    # Register in config.json under authoritative plugin name
+    Register-AntigravityPluginConfig -ConfigPath $configJsonPath -PluginNames @($targetPluginName)
     
     Write-Host "Config registered: plugins.$targetPluginName.enabled = true in $configJsonPath" -ForegroundColor Green
     
-    # Now provision all bundled skills across 4 discovery roots
+    # Enumerate bundled skills for verification (managed natively inside plugin to prevent duplicate token consumption)
     $bundledSkillsDir = [System.IO.Path]::Combine($sourceDir, "skills")
     if (Test-Path $bundledSkillsDir) {
         Get-ChildItem -Path $bundledSkillsDir -Directory | ForEach-Object {
@@ -346,8 +340,12 @@ if ($isPlugin) {
             if (Test-Path $skFile) {
                 $dec = Get-SkillDeclaredName -SkillMdPath $skFile
                 $sName = if ($dec) { $dec } else { $_.Name }
-                $res = Copy-SkillFolder -Src $_.FullName -Name $sName
-                $installedSkills += $res
+                $installedSkills += [PSCustomObject]@{
+                    SkillName = $sName
+                    GlobalInstalled = $true
+                    LocalInstalled = $true
+                    SlashCommand = "/" + $sName
+                }
             }
         }
     }

@@ -123,14 +123,7 @@ if [[ "$IS_PLUGIN" == true ]]; then
     # Register in config.json
     register_plugin_config "$PLUGIN_NAME"
 
-    # Also provision bundled skills
-    if [[ -d "$SOURCE_DIR/skills" ]]; then
-        for dir in "$SOURCE_DIR/skills"/*; do
-            if [[ -d "$dir" && -f "$dir/SKILL.md" ]]; then
-                copy_skill "$dir" "$(basename "$dir")"
-            fi
-        done
-    fi
+    echo "✓ Plugin '$PLUGIN_NAME' installed cleanly (Bundled skills managed inside plugin)"
 else
     echo "[3/4] Installing skills..."
     if [[ -n "$SKILL_NAME" && -d "$SOURCE_DIR/skills/$SKILL_NAME" ]]; then
