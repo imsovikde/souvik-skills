@@ -1,6 +1,6 @@
 {
   "name": "browser-triage",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. Scans extensions for capture-phase listeners, repairs LevelDB and GPU shader caches, and verifies fixes with physical OS pointer events. Use when browser dropdowns fail, web actions freeze, or suspect extensions hijack pointer events.",
   "author": {
     "name": "Souvik Dey",
