@@ -1,5 +1,5 @@
 {
   "name": "wpcraft",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "Flawlessly transform any WordPress site into an agency-grade, motion-engineered web experience using Full Site Editing (FSE) block themes (like Frost) while preserving 100% visual CMS editability in the WordPress Site Editor. Use when asked to deeply customize WordPress without bloat, build or clone artistic websites (like shwn.design) into WordPress, implement WebGL/Canvas physics, SVG gooey morphing navigations, custom theme.json design tokens, dynamic typography switchers, squircle Bento grids, and Web Audio synthesis via WP-CLI and the WordPress REST API."
 }

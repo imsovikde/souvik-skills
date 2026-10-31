@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.17.0](https://github.com/imsovikde/souvik-skills/compare/v0.16.0...v0.17.0) (2026-10-31)
+
+
+### Features
+
+* **installer:** add native Antigravity plugin installation and Ponytail-standard UI controls ([#55](https://github.com/imsovikde/souvik-skills/issues/55)) ([6e61c1b](https://github.com/imsovikde/souvik-skills/commit/6e61c1b439e03046b4e92355631601f5aae60db3))
+
 ## [0.16.0](https://github.com/imsovikde/souvik-skills/compare/v0.15.1...v0.16.0) (2026-10-29)
 
 
