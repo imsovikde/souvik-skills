@@ -179,7 +179,13 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False, strict_lossless: 
                             errors.append(f"Potential hardcoded secret matching {sec_re.pattern} found in {rel_file}.")
                     # Check for unhandled external network calls in scripts (Google Support constraint)
                     if "scripts" in rel_file.parts and suffix in [".py", ".sh", ".js", ".txt"]:
-                        if ("https://api." in text_content or "http://" in text_content) and "OFFLINE" not in text_content and "mock://" not in text_content:
+                        has_ext_net = False
+                        for line in text_content.splitlines():
+                            if ("https://api." in line or "http://" in line or "https://" in line) and "OFFLINE" not in line and "mock://" not in line:
+                                if "127.0.0.1" not in line and "localhost" not in line:
+                                    has_ext_net = True
+                                    break
+                        if has_ext_net and "GEMINI_OFFLINE_ADAPTER" not in text_content and "OFFLINE" not in text_content:
                             msg = f"Executable script {rel_file} contains external network endpoints without offline fallback (Google Support answer/17094296 constraint)."
                             if strict_lossless:
                                 errors.append(msg)
@@ -192,14 +198,11 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False, strict_lossless: 
     meta["uncompressed_size_bytes"] = total_uncompressed_bytes
     meta["max_depth"] = max_depth
 
-    # File count constraints
-    if len(all_files) > 100:
-        errors.append(f"Total file count ({len(all_files)}) exceeds Gemini maximum of 100 files.")
-    elif len(all_files) > 95:
-        warnings.append(f"File count ({len(all_files)}) is very close to Gemini ceiling of 100 files.")
-
+    # File count constraints (Google policy limits total uncompressed archive size to 100 MB)
     if ultra_safe and len(all_files) > 10:
         errors.append(f"Ultra-Safe mode requires <= 10 files (found {len(all_files)}). Run transpiler with --ultra-safe.")
+    elif len(all_files) > 250:
+        warnings.append(f"File count ({len(all_files)}) is high. Verify total archive remains under 100 MB.")
 
     # Size constraints
     if total_uncompressed_bytes > 100 * 1024 * 1024:

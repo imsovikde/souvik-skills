@@ -198,8 +198,8 @@ def transpile_script_for_offline(script_path: Path) -> list[str]:
 
     # 3. JS / Shell offline adapter
     elif suffix in [".js", ".mjs", ".txt", ".sh"]:
-        has_fetch = "fetch(" in code or "axios" in code or "curl " in code
-        if has_fetch and "GEMINI_OFFLINE_ADAPTER" not in code:
+        has_network = any(k in code for k in ["fetch(", "axios", "curl ", "http://", "https://", "puppeteer", "websocket"])
+        if has_network and "GEMINI_OFFLINE_ADAPTER" not in code:
             offline_header = (
                 "// ====================================================================\n"
                 "// GEMINI_OFFLINE_ADAPTER: Sandbox Offline Compliance (Google Support)\n"
