@@ -1,5 +1,5 @@
 {
   "name": "local-systematic-verification-ocr",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "Transcribe and convert any non-OCR PDF, scanned PDF, image-only PDF, document image, photo of a document, handwritten note, or maths worksheet into Markdown or LaTeX with 100% verified-or-flagged coverage. Enforces a 12-level systematic verification stack with multi-engine deterministic cross-checks (PaddleOCR PP-OCRv5, RapidOCR, Tesseract PSM 6+11), symbol-by-symbol formula verification, cross-footing tables, and visual crop audits. Use when the user asks to OCR, transcribe, digitise, convert a scanned PDF, or run PDF to Markdown conversion where precision and mathematical accuracy override speed."
 }
