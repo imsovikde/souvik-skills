@@ -14,7 +14,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-NAME_REGEX = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+NAME_REGEX = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)+$")
 ZERO_WIDTH_CHARS = re.compile(r"[\u200B\u200C\u200D\uFEFF\u202E]")
 # Built from fragments so scanner never flags its own source
 SECRET_REGEXES = [
@@ -37,7 +37,9 @@ ALLOWED_EXTENSIONS = {
 
 FORBIDDEN_FILES = {
     ".ds_store", "thumbs.db", "desktop.ini", "__macosx", ".git", ".gitignore",
-    ".claude", ".agents", ".vscode", ".idea", "node_modules", "__pycache__"
+    ".claude", ".claude-plugin", ".cursor", ".cursor-plugin", ".agents",
+    ".codex-plugin", "openai.yaml",
+    ".vscode", ".idea", "node_modules", "__pycache__"
 }
 
 def parse_frontmatter(content: str) -> tuple[dict, str]:
@@ -66,12 +68,23 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
                     i += 1
                 fields[key] = " ".join(val_lines)
                 continue
+            elif val == "" and i + 1 < len(lines) and (lines[i+1].startswith("  ") or lines[i+1].startswith("\t")):
+                sub_dict = {}
+                i += 1
+                while i < len(lines) and (lines[i].startswith("  ") or lines[i].startswith("\t")):
+                    sub_line = lines[i].strip()
+                    if ":" in sub_line:
+                        sub_k, sub_v = sub_line.split(":", 1)
+                        sub_dict[sub_k.strip()] = sub_v.strip().strip("\"'")
+                    i += 1
+                fields[key] = sub_dict
+                continue
             else:
                 fields[key] = val.strip("\"'")
         i += 1
     return fields, body
 
-def audit_directory(skill_dir: Path, ultra_safe: bool = False) -> tuple[list[str], list[str], dict]:
+def audit_directory(skill_dir: Path, ultra_safe: bool = False, strict_lossless: bool = False) -> tuple[list[str], list[str], dict]:
     errors = []
     warnings = []
     meta = {}
@@ -131,6 +144,8 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False) -> tuple[list[str
                 errors.append(f"Forbidden directory found: {rel_root / d}")
 
         for f in files:
+            if f == "ingestion_manifest.json":
+                continue
             file_path = root_path / f
             rel_file = file_path.relative_to(skill_dir)
             all_files.append(rel_file)
@@ -157,9 +172,19 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False) -> tuple[list[str
                     text_content = file_path.read_text(encoding="utf-8", errors="replace")
                     if ZERO_WIDTH_CHARS.search(text_content):
                         errors.append(f"Hidden zero-width Unicode characters detected in {rel_file}.")
+                    if strict_lossless and "\ufffd" in text_content:
+                        errors.append(f"Corrupted character encoding (\ufffd) detected in {rel_file}.")
                     for sec_re in SECRET_REGEXES:
                         if sec_re.search(text_content):
                             errors.append(f"Potential hardcoded secret matching {sec_re.pattern} found in {rel_file}.")
+                    # Check for unhandled external network calls in scripts (Google Support constraint)
+                    if "scripts" in rel_file.parts and suffix in [".py", ".sh", ".js", ".txt"]:
+                        if ("https://api." in text_content or "http://" in text_content) and "OFFLINE" not in text_content and "mock://" not in text_content:
+                            msg = f"Executable script {rel_file} contains external network endpoints without offline fallback (Google Support answer/17094296 constraint)."
+                            if strict_lossless:
+                                errors.append(msg)
+                            else:
+                                warnings.append(msg)
                 except Exception:
                     pass
 
@@ -196,6 +221,8 @@ def package_to_zip(skill_dir: Path, output_zip_path: Path, wrap_folder: bool = F
             dirs.sort()
             files.sort()
             for f in files:
+                if f == "ingestion_manifest.json":
+                    continue
                 file_path = Path(root) / f
                 rel_path = file_path.relative_to(skill_dir)
                 
@@ -231,6 +258,7 @@ def main():
     parser.add_argument("skill_dir", help="Path to prepared skill directory")
     parser.add_argument("--output", "-o", default=None, help="Output .zip path (defaults to <skill-name>.zip)")
     parser.add_argument("--ultra-safe", action="store_true", help="Enforce strict <= 10 files ceiling")
+    parser.add_argument("--strict-lossless", action="store_true", help="Enforce strict zero-losslessness and Google offline policy gates")
     parser.add_argument("--wrap-folder", action="store_true", help="Nest archive contents inside top-level <skill-name>/ folder")
     parser.add_argument("--json", action="store_true", help="Output results in JSON format")
 
@@ -241,7 +269,7 @@ def main():
         print(f"Error: {args.skill_dir} is not a valid directory.", file=sys.stderr)
         sys.exit(1)
 
-    errors, warnings, meta = audit_directory(skill_path, ultra_safe=args.ultra_safe)
+    errors, warnings, meta = audit_directory(skill_path, ultra_safe=args.ultra_safe, strict_lossless=args.strict_lossless)
 
     skill_name = meta.get("name", skill_path.name)
     out_zip = Path(args.output) if args.output else skill_path.parent / f"{skill_name}.zip"

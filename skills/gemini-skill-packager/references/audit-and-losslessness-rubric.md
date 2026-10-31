@@ -20,6 +20,8 @@ Every packaged skill must pass 100% of these assertions before being declared up
 | **ZR-08** | Zero-Width Unicode | Zero occurrences of `\u200b`, `\u200c`, `\u200d`, `\ufeff`, `\u202e` | Returns True |
 | **ZR-09** | Secret Redaction | Zero unredacted tokens matching `sk-...`, `ghp_...`, `AKIA...`, `AIza...` | Returns True |
 | **ZR-10** | Archive Integrity | `zipfile.ZipFile(zip_path).testzip()` | Returns None (zero errors) |
+| **ZR-11** | Strict Lossless Media | Zero dropped source images/assets; all media retained or mapped | Returns True |
+| **ZR-12** | Offline Sandbox Gate | Zero unhandled external network calls in executable scripts | Returns True |
 
 ---
 

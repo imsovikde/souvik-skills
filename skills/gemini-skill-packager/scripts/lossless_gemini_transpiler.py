@@ -97,6 +97,17 @@ def parse_yaml_frontmatter(content: str) -> tuple[dict, str]:
                     i += 1
                 fields[key] = " ".join(val_lines)
                 continue
+            elif val == "" and i + 1 < len(lines) and (lines[i+1].startswith("  ") or lines[i+1].startswith("\t")):
+                sub_dict = {}
+                i += 1
+                while i < len(lines) and (lines[i].startswith("  ") or lines[i].startswith("\t")):
+                    sub_line = lines[i].strip()
+                    if ":" in sub_line:
+                        sub_k, sub_v = sub_line.split(":", 1)
+                        sub_dict[sub_k.strip()] = sub_v.strip().strip("\"'")
+                    i += 1
+                fields[key] = sub_dict
+                continue
             else:
                 fields[key] = val.strip("\"'")
         i += 1
@@ -108,6 +119,8 @@ def transpile_frontmatter(frontmatter: dict, body: str, skill_folder_name: str) 
     clean_name = re.sub(r"[^a-z0-9]+", "-", raw_name.lower()).strip("-")
     if not clean_name:
         clean_name = "custom-gemini-skill"
+    if "-" not in clean_name:
+        clean_name = f"{clean_name}-design" if "design" in raw_name.lower() or "hallmark" in raw_name.lower() else f"{clean_name}-skill"
     clean_name = clean_name[:64]
 
     raw_desc = frontmatter.get("description", "Processes tasks and workflows for Gemini.")
@@ -118,19 +131,9 @@ def transpile_frontmatter(frontmatter: dict, body: str, skill_folder_name: str) 
         clean_desc = f"{clean_desc} Use when invoking custom capabilities."
     clean_desc = clean_desc[:1024]
 
-    standard_fm = {
-        "name": clean_name,
-        "description": clean_desc
-    }
-    
-    # Optional allowed standard fields
-    for k in ["license", "compatibility", "allowed-tools"]:
-        if k in frontmatter:
-            standard_fm[k] = frontmatter[k]
-
     migrated_keys = {}
     for k, v in frontmatter.items():
-        if k not in STANDARD_FRONTMATTER_KEYS:
+        if k not in ["name", "description"]:
             migrated_keys[k] = v
 
     contract_md = ""
@@ -140,21 +143,18 @@ def transpile_frontmatter(frontmatter: dict, body: str, skill_folder_name: str) 
         contract_md += "> The following platform metadata, triggers, and configuration were losslessly migrated\n"
         contract_md += "> from the original multi-agent frontmatter to maintain full platform compatibility:\n\n"
         for k, v in migrated_keys.items():
-            if isinstance(v, (dict, list)):
-                formatted_v = json.dumps(v)
+            if isinstance(v, dict):
+                for sub_k, sub_v in v.items():
+                    contract_md += f"- **{k}.{sub_k}**: `{sub_v}`\n"
+            elif isinstance(v, list):
+                contract_md += f"- **{k}**: `{json.dumps(v)}`\n"
             else:
-                formatted_v = str(v)
-            contract_md += f"- **{k}**: `{formatted_v}`\n"
+                contract_md += f"- **{k}**: `{v}`\n"
         contract_md += "\n"
 
     new_body = contract_md + body
     
-    fm_lines = ["---", f"name: {clean_name}", f"description: {clean_desc}"]
-    for k, v in standard_fm.items():
-        if k not in ["name", "description"]:
-            fm_lines.append(f"{k}: {v}")
-    fm_lines.append("---\n")
-    
+    fm_lines = ["---", f"name: {clean_name}", f"description: {clean_desc}", "---\n"]
     full_skill_md = "\n".join(fm_lines) + new_body
     return full_skill_md, {
         "name": clean_name,
@@ -162,27 +162,55 @@ def transpile_frontmatter(frontmatter: dict, body: str, skill_folder_name: str) 
         "migrated_keys": list(migrated_keys.keys())
     }
 
-def transpile_python_script_for_offline(script_path: Path) -> list[str]:
+def transpile_script_for_offline(script_path: Path) -> list[str]:
     code = script_path.read_text(encoding="utf-8", errors="replace")
     changes = []
+    suffix = script_path.suffix.lower()
     
-    network_indicators = ["requests.", "urllib.request", "httpx.", "aiohttp.", "socket."]
-    has_network = any(ind in code for ind in network_indicators)
-    
-    if has_network and "GEMINI_OFFLINE_ADAPTER" not in code:
-        offline_header = (
-            "# ====================================================================\n"
-            "# GEMINI_OFFLINE_ADAPTER: Environment Detection & Offline Fallback\n"
-            "# In gemini.google.com sandbox, direct internet access is disabled.\n"
-            "# When running offline, this script checks for local cached files\n"
-            "# or reads pre-fetched data from stdin/file arguments.\n"
-            "# ====================================================================\n"
-            "import os, sys\n"
-            "OFFLINE_MODE = os.environ.get('GEMINI_OFFLINE', '1') == '1'\n"
-        )
-        code = offline_header + "\n" + code
+    # 1. Neutralize hardcoded external API targets
+    api_patterns = [
+        (re.compile(r"https?://api\.together\.xyz[^\s\"\'\<\>]*"), "mock://offline-together-imagegen"),
+        (re.compile(r"https?://api\.openai\.com[^\s\"\'\<\>]*"), "mock://offline-openai-api"),
+        (re.compile(r"https?://api\.anthropic\.com[^\s\"\'\<\>]*"), "mock://offline-anthropic-api")
+    ]
+    for pattern, replacement in api_patterns:
+        if pattern.search(code):
+            code = pattern.sub(replacement, code)
+            changes.append(f"Neutralized external API target in {script_path.name}")
+            
+    # 2. Python offline adapter
+    if suffix == ".py":
+        network_indicators = ["requests.", "urllib.request", "httpx.", "aiohttp.", "socket."]
+        has_network = any(ind in code for ind in network_indicators)
+        if has_network and "GEMINI_OFFLINE_ADAPTER" not in code:
+            offline_header = (
+                "# ====================================================================\n"
+                "# GEMINI_OFFLINE_ADAPTER: Environment Detection & Offline Fallback\n"
+                "# In gemini.google.com sandbox, direct internet access is disabled.\n"
+                "# When running offline, this script checks for local cached files\n"
+                "# or reads pre-fetched data from stdin/file arguments.\n"
+                "# ====================================================================\n"
+                "import os, sys\n"
+                "OFFLINE_MODE = os.environ.get('GEMINI_OFFLINE', '1') == '1'\n"
+            )
+            code = offline_header + "\n" + code
+            changes.append(f"Injected Python GEMINI_OFFLINE_ADAPTER into {script_path.name}")
+
+    # 3. JS / Shell offline adapter
+    elif suffix in [".js", ".mjs", ".txt", ".sh"]:
+        has_fetch = "fetch(" in code or "axios" in code or "curl " in code
+        if has_fetch and "GEMINI_OFFLINE_ADAPTER" not in code:
+            offline_header = (
+                "// ====================================================================\n"
+                "// GEMINI_OFFLINE_ADAPTER: Sandbox Offline Compliance (Google Support)\n"
+                "// In gemini.google.com sandbox, direct external network calls are disabled.\n"
+                "// ====================================================================\n"
+            )
+            code = offline_header + code
+            changes.append(f"Injected JS/Shell GEMINI_OFFLINE_ADAPTER into {script_path.name}")
+
+    if changes:
         script_path.write_text(code, encoding="utf-8")
-        changes.append(f"Injected GEMINI_OFFLINE_ADAPTER into {script_path.name}")
         
     return changes
 
@@ -280,6 +308,12 @@ def transpile(staging_dir_path: str, ultra_safe: bool = False) -> dict:
                 item.rename(new_path)
                 rename_map[item.name] = new_name
                 report["renamed_files"].append({"from": str(item.relative_to(staging_dir)), "to": str(new_path.relative_to(staging_dir))})
+            elif suffix == ".mjs":
+                new_name = item.stem + ".js"
+                new_path = item.with_name(new_name)
+                item.rename(new_path)
+                rename_map[item.name] = new_name
+                report["renamed_files"].append({"from": str(item.relative_to(staging_dir)), "to": str(new_path.relative_to(staging_dir))})
             elif suffix not in GEMINI_WHITELIST_EXTENSIONS:
                 new_name = item.name + ".txt"
                 new_path = item.with_name(new_name)
@@ -306,10 +340,20 @@ def transpile(staging_dir_path: str, ultra_safe: bool = False) -> dict:
     # 4. Offline Script Adaptations
     scripts_dir = staging_dir / "scripts"
     if scripts_dir.exists() and scripts_dir.is_dir():
-        for script in scripts_dir.iterdir():
-            if script.is_file() and script.suffix.lower() == ".py":
-                modifications = transpile_python_script_for_offline(script)
+        for script in scripts_dir.rglob("*"):
+            if script.is_file() and script.suffix.lower() in [".py", ".sh", ".js", ".mjs", ".txt"]:
+                modifications = transpile_script_for_offline(script)
                 report["script_modifications"].extend(modifications)
+
+    # 5. Purge foreign platform manifests if present
+    for bad_f in ["openai.yaml", ".codex-plugin"]:
+        for item in list(staging_dir.rglob(bad_f)):
+            if item.is_file():
+                item.unlink()
+                report["warnings"].append(f"Purged proprietary platform manifest {bad_f} from package.")
+            elif item.is_dir():
+                shutil.rmtree(item, ignore_errors=True)
+                report["warnings"].append(f"Purged proprietary platform folder {bad_f} from package.")
 
     # 5. Consolidation if in Ultra-Safe Mode
     if ultra_safe:

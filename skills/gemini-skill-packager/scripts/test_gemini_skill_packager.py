@@ -197,5 +197,45 @@ class TestGeminiSkillPackager(unittest.TestCase):
         file_count = len([f for f in total_files if f.is_file()])
         self.assertLessEqual(file_count, 10)
 
+    def test_07_strict_losslessness_and_offline_gate(self):
+        """Test strict losslessness gate catches unhandled network calls."""
+        staging = self.temp_dir / "stage_strict"
+        staging.mkdir(parents=True)
+        (staging / "SKILL.md").write_text(
+            "---\nname: strict-skill\ndescription: Test strict losslessness. Use when validating offline compliance.\n---\n# Strict\n",
+            encoding="utf-8"
+        )
+        scripts_dir = staging / "scripts"
+        scripts_dir.mkdir()
+        (scripts_dir / "bad_call.js").write_text("const ep = 'https://api.external.com/v1';", encoding="utf-8")
+        
+        pkg_script = SKILL_DIR / "scripts" / "validate_and_package_zip.py"
+        cmd = [sys.executable, str(pkg_script), str(staging), "--strict-lossless"]
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        self.assertNotEqual(proc.returncode, 0, "Strict losslessness must fail when unhandled external network calls exist")
+        self.assertIn("external network endpoints", proc.stderr + proc.stdout)
+
+    def test_08_kebab_case_hyphen_enforcement(self):
+        """Test validator rejects single-word unhyphenated name, and transpiler fixes it."""
+        staging = self.temp_dir / "stage_single_word"
+        staging.mkdir(parents=True)
+        (staging / "SKILL.md").write_text(
+            "---\nname: hallmark\ndescription: Anti-slop frontend web design skill. Use when building UI.\n---\n# Single Word\n",
+            encoding="utf-8"
+        )
+        pkg_script = SKILL_DIR / "scripts" / "validate_and_package_zip.py"
+        proc = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
+        self.assertNotEqual(proc.returncode, 0, "Validator must reject single-word unhyphenated name")
+        self.assertIn("violates kebab-case regex", proc.stderr + proc.stdout)
+
+        # Transpiler must fix it by adding hyphenated suffix
+        transpile_script = SKILL_DIR / "scripts" / "lossless_gemini_transpiler.py"
+        proc_trans = subprocess.run([sys.executable, str(transpile_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc_trans.returncode, 0)
+        
+        # Now validator must pass
+        proc_pass = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc_pass.returncode, 0, f"Validator should pass after transpiler fix: {proc_pass.stderr}")
+
 if __name__ == "__main__":
     unittest.main()
