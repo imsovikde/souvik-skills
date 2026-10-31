@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Souvik Dey's marketplace-ready AI agent skills for GitHub readiness, repository safety, premium interface motion, Magento/Adobe Commerce leadership, and music score conversion.",
-    "version": "0.17.1"
+    "version": "0.18.0"
   },
   "plugins": [
     {
       "name": "agy-skill-installer",
       "source": "./skills/agy-skill-installer",
       "description": "Install any agent skill into Anti-Gravity IDE with 100% fidelity, automated YAML frontmatter validation, dual-root provisioning, security scanning, and slash command integration.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -33,7 +33,7 @@
       "name": "ars",
       "source": "./skills/ars",
       "description": "Apply master-artist creative direction to any brief: landing pages, brand systems, editorial layouts, campaign copy, motion, film, sound, or spatial work that looks generic, AI-generated, or flat. Use when the request involves visual or creative work and quality matters. Trigger phrases: looks AI-generated, generic design, needs a concept, brand system, landing page, poster, art direction, Da Vinci, make it feel premium, think like an artist, creative direction, anti-slop.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -56,7 +56,7 @@
       "name": "claude-md-init",
       "source": "./skills/claude-md-init",
       "description": "Scaffold or update a project's CLAUDE.md with a repo snapshot and hard rules for owner-only commit attribution and verified commits.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -76,7 +76,7 @@
       "name": "delink-github",
       "source": "./skills/delink-github",
       "description": "Safely isolate copied repositories by removing Git history, GitHub workflow metadata, inherited license metadata, stale names, outside links, and author contacts before starting clean local history.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -96,7 +96,7 @@
       "name": "gh-ready",
       "source": "./skills/gh-ready",
       "description": "Make repositories SEO-friendly, package-ready, release-ready, badge-ready, secure, and professional for GitHub publication.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -116,7 +116,7 @@
       "name": "magento-team-lead",
       "source": "./skills/magento-team-lead",
       "description": "Lead Magento Open Source and Adobe Commerce architecture, reviews, debugging, delivery planning, and releases.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -136,7 +136,7 @@
       "name": "motioncraft",
       "source": "./skills/motioncraft",
       "description": "Design, audit, and implement project-specific premium motion systems with psychology, archetype playbooks, tokens, reduced motion, and browser verification.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -156,7 +156,7 @@
       "name": "score2md",
       "source": "./skills/score2md",
       "description": "Convert MusicXML, MXL, ABC, MIDI, score PDFs/images, audio, video, and YouTube sources into playable Markdown ABC with verification reports and guarded media preflight.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -175,7 +175,7 @@
       "name": "skill-ship",
       "source": "./skills/skill-ship",
       "description": "Audit, scaffold, adopt, and publish agent skills to the Souvik Skills marketplace with verified owner-only commits, telemetry stripping for third-party skills, and the full npm release chain.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -195,7 +195,7 @@
       "name": "presscraft",
       "source": "./skills/presscraft",
       "description": "Transform Markdown, HTML, and code into pristine publication-grade PDFs with cognitive readability ergonomics, macOS code windows, zero shrinkage, and verbatim fidelity.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -220,7 +220,7 @@
       "name": "pdf-vector-engine",
       "source": "./skills/pdf-vector-engine",
       "description": "Ultimate zero-distortion PDF engine for vector-preserving stream compression into exact target byte windows (e.g. 1.8-2.0 MB for RBI/statutory portals), lossless PDF merging, page transformations, and high-fidelity rendering without text degradation under 1000% zoom. Use whenever compressing, resizing, merging, or converting PDFs where legal readability, vector sharpness, or strict size budgets are required.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -241,7 +241,7 @@
       "name": "browser-triage",
       "source": "./skills/browser-triage",
       "description": "Diagnose and surgically remediate Chromium and Brave UI freezes, event hijacking, and storage corruption without user data loss. Scans extensions for capture-phase listeners, repairs LevelDB and GPU shader caches, and verifies fixes with physical OS pointer events. Use when browser dropdowns fail, web actions freeze, or suspect extensions hijack pointer events.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -265,7 +265,7 @@
       "name": "wpcraft",
       "source": "./skills/wpcraft",
       "description": "Flawlessly transform any WordPress site into an agency-grade, motion-engineered web experience using Full Site Editing (FSE) block themes (like Frost) while preserving 100% visual CMS editability in the WordPress Site Editor. Use when asked to deeply customize WordPress without bloat, build or clone artistic websites (like shwn.design) into WordPress, implement WebGL/Canvas physics, SVG gooey morphing navigations, custom theme.json design tokens, dynamic typography switchers, squircle Bento grids, and Web Audio synthesis via WP-CLI and the WordPress REST API.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -291,7 +291,7 @@
       "name": "apex-bug-hunter",
       "source": "./skills/apex-bug-hunter",
       "description": "Autonomous 8-pass differential code review, deep bug hunting, AST blast-radius audit, tight-loop bug diagnosis, performance regression bisection, and zero-regression surgical remediation engine. Traces backwards data-flow, audits removed lines (-), detects green-build delusion, validates MCP and external protocol contracts, and enforces Karpathy surgical coding laws. Use whenever the user asks to hunt bugs, review a PR (PR #N), audit a branch against main, audit the entire codebase, diagnose production regressions or flaky tests, verify an agent report, or fix severe defects.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -315,7 +315,7 @@
       "name": "merge-gate",
       "source": "./skills/merge-gate",
       "description": "Pre-flight production merge gatekeeper for pull requests and branches. Performs full-project context comparison against main, whole-diff AST blast-radius auditing, frontend UI and taste checks, backend security and protocol parity, tri-state merge verdicts, and automated humanized PR review comments.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -339,7 +339,7 @@
       "name": "local-systematic-verification-ocr",
       "source": "./skills/local-systematic-verification-ocr",
       "description": "Transcribe and convert any non-OCR PDF, scanned PDF, image-only PDF, document image, photo of a document, handwritten note, or maths worksheet into Markdown or LaTeX with 100% verified-or-flagged coverage. Enforces a 12-level systematic verification stack with multi-engine deterministic cross-checks (PaddleOCR PP-OCRv5, RapidOCR, Tesseract PSM 6+11), symbol-by-symbol formula verification, cross-footing tables, and visual crop audits. Use when the user asks to OCR, transcribe, digitise, convert a scanned PDF, or run PDF to Markdown conversion where precision and mathematical accuracy override speed.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"
@@ -363,7 +363,7 @@
       "name": "gemini-skill-packager",
       "source": "./skills/gemini-skill-packager",
       "description": "Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. Use when preparing skills for Gemini Apps upload, fixing upload rejections, converting Claude or Codex skills to Gemini, or packaging custom skills.",
-      "version": "0.17.1",
+      "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
         "email": "imsovikde@gmail.com"

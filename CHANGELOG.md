@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.18.0](https://github.com/imsovikde/souvik-skills/compare/v0.17.1...v0.18.0) (2026-10-31)
+
+
+### Features
+
+* add gemini-skill-packager skill for zero-rejection Gemini custom skills ([#59](https://github.com/imsovikde/souvik-skills/issues/59)) ([2017aa1](https://github.com/imsovikde/souvik-skills/commit/2017aa12ec1e3227e696fbe68d8057d64bd94f39))
+
 ## [0.17.1](https://github.com/imsovikde/souvik-skills/compare/v0.17.0...v0.17.1) (2026-10-31)
 
 
