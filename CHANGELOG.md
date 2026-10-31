@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.17.1](https://github.com/imsovikde/souvik-skills/compare/v0.17.0...v0.17.1) (2026-10-31)
+
+
+### Bug Fixes
+
+* **installer:** encapsulate native plugin skills to prevent duplicate registration ([#57](https://github.com/imsovikde/souvik-skills/issues/57)) ([d10fc04](https://github.com/imsovikde/souvik-skills/commit/d10fc04fe28d6df76b418ae7c04c4da8bd0eb0b2))
+
 ## [0.17.0](https://github.com/imsovikde/souvik-skills/compare/v0.16.0...v0.17.0) (2026-10-31)
 
 
