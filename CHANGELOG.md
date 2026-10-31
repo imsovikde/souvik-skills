@@ -2,6 +2,19 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.19.0](https://github.com/imsovikde/souvik-skills/compare/v0.18.0...v0.19.0) (2026-10-31)
+
+
+### Features
+
+* **gemini-skill-packager:** enforce strict kebab-case hyphenation, offline compliance, and lossless media preservation ([#61](https://github.com/imsovikde/souvik-skills/issues/61)) ([d2ebd57](https://github.com/imsovikde/souvik-skills/commit/d2ebd57b4d11e5658c782e6c8adf9b58842b655c))
+
+
+### Bug Fixes
+
+* **gemini-skill-packager:** enforce 100-file ceiling and auto-consolidate subdirectories without media loss ([#64](https://github.com/imsovikde/souvik-skills/issues/64)) ([045beff](https://github.com/imsovikde/souvik-skills/commit/045beffa7938c3cfa5321c5f1c3151f3ff44a88d))
+* **gemini-skill-packager:** refine local loopback detection and align file limits with Google 100MB spec ([#63](https://github.com/imsovikde/souvik-skills/issues/63)) ([1476885](https://github.com/imsovikde/souvik-skills/commit/147688584584a41ff59f02353acf2468c0fe02a3))
+
 ## [0.18.0](https://github.com/imsovikde/souvik-skills/compare/v0.17.1...v0.18.0) (2026-10-31)
 
 
