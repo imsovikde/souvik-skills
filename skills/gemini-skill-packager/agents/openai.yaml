@@ -1,0 +1,4 @@
+interface:
+  display_name: Gemini Skill Packager
+  short_description: Package and transpile agent skills into zero-rejection ZIP archives for gemini.google.com
+  default_prompt: Use $gemini-skill-packager to transpile, validate, and package this skill into a zero-rejection ZIP archive for gemini.google.com.

@@ -75,11 +75,12 @@
     "test:skill-ship": "node skills/skill-ship/scripts/test_preflight.cjs",
     "test:pdf-vector-engine": "python skills/pdf-vector-engine/scripts/test_engine.py",
     "test:local-systematic-verification-ocr": "python skills/local-systematic-verification-ocr/scripts/test_skill.py",
+    "test:gemini-skill-packager": "python skills/gemini-skill-packager/scripts/test_gemini_skill_packager.py",
     "validate:skills": "node scripts/validate-skills.cjs",
     "audit:presscraft": "node skills/presscraft/scripts/audit-presscraft.cjs",
     "audit:ars": "node skills/ars/scripts/audit-ars.cjs .",
     "audit:wpcraft": "node skills/wpcraft/scripts/audit-wpcraft.cjs .",
-    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run test:local-systematic-verification-ocr && npm run audit:ars && npm run audit:presscraft && npm run audit:wpcraft && npm run audit:apex-bug-hunter && npm run audit:merge-gate",
+    "test": "npm run validate:skills && npm run test:delink-github && npm run test:score2md && npm run test:claude-md-init && npm run test:skill-ship && npm run test:pdf-vector-engine && npm run test:local-systematic-verification-ocr && npm run test:gemini-skill-packager && npm run audit:ars && npm run audit:presscraft && npm run audit:wpcraft && npm run audit:apex-bug-hunter && npm run audit:merge-gate",
     "audit:apex-bug-hunter": "node skills/apex-bug-hunter/scripts/audit-apex-bug-hunter.cjs",
     "audit:merge-gate": "node skills/merge-gate/scripts/validate-skill-md5.js"
   },

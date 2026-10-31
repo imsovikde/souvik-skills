@@ -358,6 +358,30 @@
         "tesseract",
         "precision"
       ]
+    },
+    {
+      "name": "gemini-skill-packager",
+      "source": "./skills/gemini-skill-packager",
+      "description": "Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. Use when preparing skills for Gemini Apps upload, fixing upload rejections, converting Claude or Codex skills to Gemini, or packaging custom skills.",
+      "version": "0.17.1",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/gemini-skill-packager",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Agent Packaging & Compilers",
+      "tags": [
+        "gemini",
+        "gemini-skills",
+        "zip-packager",
+        "transpiler",
+        "zero-rejection",
+        "lossless",
+        "agent-skills",
+        "packaging"
+      ]
     }
   ]
 }

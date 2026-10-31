@@ -107,6 +107,12 @@
       "path": "skills/local-systematic-verification-ocr",
       "manifest": "skills/local-systematic-verification-ocr/SKILL.md",
       "agent": "skills/local-systematic-verification-ocr/agents/openai.yaml"
+    },
+    {
+      "name": "gemini-skill-packager",
+      "path": "skills/gemini-skill-packager",
+      "manifest": "skills/gemini-skill-packager/SKILL.md",
+      "agent": "skills/gemini-skill-packager/agents/openai.yaml"
     }
   ]
 }
