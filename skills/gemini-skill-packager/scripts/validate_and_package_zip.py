@@ -198,11 +198,14 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False, strict_lossless: 
     meta["uncompressed_size_bytes"] = total_uncompressed_bytes
     meta["max_depth"] = max_depth
 
-    # File count constraints (Google policy limits total uncompressed archive size to 100 MB)
+    # File count constraints (Google Gemini Apps enforces a hard ceiling of 100 files; > 100 triggers 'The skill folder contains too many files')
+    if len(all_files) > 100:
+        errors.append(f"Total file count ({len(all_files)}) exceeds Gemini maximum ceiling of 100 files (Google constraint: 'The skill folder contains too many files'). Consolidate fragmented reference files into structured manuals while preserving all media.")
+    elif len(all_files) > 95:
+        warnings.append(f"File count ({len(all_files)}) is approaching the Gemini ceiling of 100 files.")
+
     if ultra_safe and len(all_files) > 10:
         errors.append(f"Ultra-Safe mode requires <= 10 files (found {len(all_files)}). Run transpiler with --ultra-safe.")
-    elif len(all_files) > 250:
-        warnings.append(f"File count ({len(all_files)}) is high. Verify total archive remains under 100 MB.")
 
     # Size constraints
     if total_uncompressed_bytes > 100 * 1024 * 1024:

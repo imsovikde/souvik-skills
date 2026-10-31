@@ -214,6 +214,147 @@ def transpile_script_for_offline(script_path: Path) -> list[str]:
         
     return changes
 
+def consolidate_subdirectories_lossless(staging_dir: Path, ceiling: int = 100) -> list[str]:
+    logs = []
+    ref_dir = staging_dir / "references"
+    if not ref_dir.exists():
+        return logs
+
+    # A. Themes Consolidation (references/themes/*.md -> references/themes-catalog.md)
+    themes_dir = ref_dir / "themes"
+    if themes_dir.exists() and themes_dir.is_dir():
+        theme_mds = sorted([f for f in themes_dir.iterdir() if f.is_file() and f.suffix.lower() == ".md" and f.name.lower() != "readme.md"])
+        if len(theme_mds) > 5:
+            catalog_path = ref_dir / "themes-catalog.md"
+            parts = [
+                "# Hallmark Visual Themes Catalog & Palettes\n\n",
+                "> [!IMPORTANT]\n",
+                "> Complete verbatim catalog of all 50 distinctive visual themes, palettes, typography,\n",
+                "> surface textures, and design principles, losslessly consolidated for Gemini.\n\n",
+                "## Table of Contents\n\n"
+            ]
+            for tm in theme_mds:
+                slug = tm.stem
+                parts.append(f"- [{slug.capitalize()}](#{slug})\n")
+            parts.append("\n---\n\n")
+            for tm in theme_mds:
+                slug = tm.stem
+                text = tm.read_text(encoding="utf-8", errors="replace").strip()
+                parts.append(f'<a id="{slug}"></a>\n\n')
+                parts.append(f"## Theme: {slug.capitalize()}\n\n")
+                if (themes_dir / f"{slug}.jpg").exists():
+                    parts.append(f"![{slug.capitalize()} Preview](themes/{slug}.jpg)\n\n")
+                parts.append(text + "\n\n---\n\n")
+            catalog_path.write_text("".join(parts), encoding="utf-8")
+            for tm in theme_mds:
+                tm.unlink()
+            logs.append(f"Consolidated {len(theme_mds)} theme markdown files into {catalog_path.name} while preserving all photos.")
+
+    # B. Macrostructures Consolidation (references/macrostructures/*.md -> references/macrostructures-guide.md)
+    macro_dir = ref_dir / "macrostructures"
+    if macro_dir.exists() and macro_dir.is_dir():
+        macro_mds = sorted([f for f in macro_dir.iterdir() if f.is_file() and f.suffix.lower() == ".md"])
+        if len(macro_mds) > 5:
+            guide_path = ref_dir / "macrostructures-guide.md"
+            parts = [
+                "# Hallmark Page Macrostructures & Layout Archetypes\n\n",
+                "> [!IMPORTANT]\n",
+                "> Verbatim guide to high-impact page structures and sectional composition.\n\n",
+                "## Table of Contents\n\n"
+            ]
+            for mf in macro_mds:
+                slug = mf.stem
+                parts.append(f"- [{slug}](#{slug})\n")
+            parts.append("\n---\n\n")
+            for mf in macro_mds:
+                slug = mf.stem
+                text = mf.read_text(encoding="utf-8", errors="replace").strip()
+                parts.append(f'<a id="{slug}"></a>\n\n')
+                parts.append(f"## {slug}\n\n")
+                parts.append(text + "\n\n---\n\n")
+            guide_path.write_text("".join(parts), encoding="utf-8")
+            for mf in macro_mds:
+                mf.unlink()
+            try:
+                macro_dir.rmdir()
+            except Exception:
+                pass
+            logs.append(f"Consolidated {len(macro_mds)} macrostructure files into {guide_path.name}.")
+
+    # C. Genres Consolidation (references/genres/*.md -> references/genres-guide.md)
+    genres_dir = ref_dir / "genres"
+    if genres_dir.exists() and genres_dir.is_dir():
+        genre_mds = sorted([f for f in genres_dir.iterdir() if f.is_file() and f.suffix.lower() == ".md"])
+        if len(genre_mds) > 1:
+            guide_path = ref_dir / "genres-guide.md"
+            parts = [
+                "# Hallmark Design Genres & Aesthetic Principles\n\n",
+                "> [!IMPORTANT]\n",
+                "> Verbatim rules for Atmospheric, Editorial, Modern Minimal, and Playful aesthetics.\n\n",
+                "## Table of Contents\n\n"
+            ]
+            for gf in genre_mds:
+                slug = gf.stem
+                parts.append(f"- [{slug.capitalize()}](#{slug})\n")
+            parts.append("\n---\n\n")
+            for gf in genre_mds:
+                slug = gf.stem
+                text = gf.read_text(encoding="utf-8", errors="replace").strip()
+                parts.append(f'<a id="{slug}"></a>\n\n')
+                parts.append(f"## Genre: {slug.capitalize()}\n\n")
+                parts.append(text + "\n\n---\n\n")
+            guide_path.write_text("".join(parts), encoding="utf-8")
+            for gf in genre_mds:
+                gf.unlink()
+            try:
+                genres_dir.rmdir()
+            except Exception:
+                pass
+            logs.append(f"Consolidated {len(genre_mds)} genre files into {guide_path.name}.")
+
+    # D. Bundle Fixtures if present in scripts/fixtures/
+    fixtures_dir = staging_dir / "scripts" / "fixtures"
+    if fixtures_dir.exists() and fixtures_dir.is_dir():
+        fixture_files = [p for p in fixtures_dir.rglob("*") if p.is_file()]
+        if len(fixture_files) > 2:
+            bundle = {}
+            for fp in fixture_files:
+                rel = fp.relative_to(fixtures_dir).as_posix()
+                try:
+                    bundle[rel] = fp.read_text(encoding="utf-8", errors="replace")
+                except Exception:
+                    pass
+            bundle_file = fixtures_dir / "sloplint_fixtures_bundle.json"
+            bundle_file.write_text(json.dumps(bundle, indent=2), encoding="utf-8")
+            for fp in fixture_files:
+                if fp != bundle_file:
+                    fp.unlink()
+            for d in sorted(fixtures_dir.rglob("*"), reverse=True):
+                if d.is_dir():
+                    try:
+                        d.rmdir()
+                    except Exception:
+                        pass
+            logs.append(f"Bundled {len(fixture_files)} test fixtures into {bundle_file.name}.")
+
+    # E. Remap links across all remaining markdown files and SKILL.md
+    link_map = {
+        "references/themes/<slug>.md": "references/themes-catalog.md#<slug>",
+        "references/themes/": "references/themes-catalog.md#",
+        "references/macrostructures/": "references/macrostructures-guide.md#",
+        "references/macrostructures.md": "references/macrostructures-guide.md",
+        "references/genres/": "references/genres-guide.md#"
+    }
+    for md_file in staging_dir.rglob("*.md"):
+        content = md_file.read_text(encoding="utf-8", errors="replace")
+        new_content = content
+        for old_link, new_link in link_map.items():
+            new_content = new_content.replace(old_link, new_link)
+        if new_content != content:
+            md_file.write_text(new_content, encoding="utf-8")
+
+    return logs
+
 def consolidate_reference_files(staging_dir: Path, max_files: int = 10) -> list[str]:
     ref_dir = staging_dir / "references"
     if not ref_dir.exists() or not ref_dir.is_dir():
@@ -355,7 +496,13 @@ def transpile(staging_dir_path: str, ultra_safe: bool = False) -> dict:
                 shutil.rmtree(item, ignore_errors=True)
                 report["warnings"].append(f"Purged proprietary platform folder {bad_f} from package.")
 
-    # 5. Consolidation if in Ultra-Safe Mode
+    # 5. Automatic Lossless Subdirectory Consolidation if total files exceed Gemini 100-file ceiling
+    file_count = len([p for p in staging_dir.rglob("*") if p.is_file() and p.name != "ingestion_manifest.json"])
+    if file_count > 100:
+        lossless_logs = consolidate_subdirectories_lossless(staging_dir, ceiling=100)
+        report["consolidations"] = lossless_logs
+
+    # 6. Consolidation if in Ultra-Safe Mode
     if ultra_safe:
         cons_logs = consolidate_reference_files(staging_dir, max_files=10)
         report["consolidations"] = cons_logs
