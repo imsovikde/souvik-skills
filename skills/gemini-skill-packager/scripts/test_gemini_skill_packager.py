@@ -237,5 +237,44 @@ class TestGeminiSkillPackager(unittest.TestCase):
         proc_pass = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
         self.assertEqual(proc_pass.returncode, 0, f"Validator should pass after transpiler fix: {proc_pass.stderr}")
 
+    def test_09_file_count_ceiling_and_automatic_lossless_consolidation(self):
+        """Test validator rejects > 100 files, and transpiler consolidates subdirectories to <= 100 files without dropping media."""
+        staging = self.temp_dir / "stage_100_files"
+        staging.mkdir(parents=True)
+        (staging / "SKILL.md").write_text(
+            "---\nname: mega-skill\ndescription: Test 100 file limit gate. Use when testing file count constraints.\n---\n# Mega\n",
+            encoding="utf-8"
+        )
+        themes_dir = staging / "references" / "themes"
+        themes_dir.mkdir(parents=True)
+        # Create 60 theme md files and 60 image files
+        for i in range(60):
+            (themes_dir / f"theme_{i}.md").write_text(f"Theme {i} definition with full color tokens.\n", encoding="utf-8")
+            (themes_dir / f"theme_{i}.jpg").write_bytes(b"\xff\xd8\xff\xe0" + b"\x00"*20) # minimal mock jpeg header
+            
+        pkg_script = SKILL_DIR / "scripts" / "validate_and_package_zip.py"
+        # Total files is > 120 -> validator must fail
+        proc = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
+        self.assertNotEqual(proc.returncode, 0, "Validator must reject > 100 files")
+        self.assertIn("exceeds Gemini maximum ceiling of 100 files", proc.stderr + proc.stdout)
+
+        # Run transpiler
+        transpile_script = SKILL_DIR / "scripts" / "lossless_gemini_transpiler.py"
+        proc_trans = subprocess.run([sys.executable, str(transpile_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc_trans.returncode, 0, f"Transpiler failed: {proc_trans.stderr}")
+
+        # Check all 60 JPG photos are STILL there!
+        jpgs = list(themes_dir.glob("*.jpg"))
+        self.assertEqual(len(jpgs), 60, "All 60 theme photos must be 100% retained!")
+
+        # Check themes-catalog.md exists and contains theme content
+        catalog = staging / "references" / "themes-catalog.md"
+        self.assertTrue(catalog.exists(), "themes-catalog.md must exist")
+        self.assertIn("Theme 0 definition", catalog.read_text(encoding="utf-8"))
+
+        # Validator must now pass because file count is <= 100
+        proc_pass = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc_pass.returncode, 0, f"Validator should pass: {proc_pass.stderr}")
+
 if __name__ == "__main__":
     unittest.main()
