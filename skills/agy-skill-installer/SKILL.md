@@ -24,8 +24,8 @@ Anti-Gravity IDE supports two primary customization constructs:
 3. **Customization Settings Control Registration**:
    - Atomically registers `plugins.<name> = { "enabled": true }` into `~/.gemini/config/config.json`.
    - Exposes native toggle switches in Antigravity IDE -> Settings -> Customizations -> Plugins, allowing users to enable or disable the entire plugin and all its capabilities instantly.
-4. **Bundled Skill Provisioning**:
-   - Recursively maps all bundled skills (`skills/*`) to all 4 skill roots for immediate slash command access (`/<skill-name>`).
+4. **Bundled Skill Encapsulation (Zero Duplicate & Token Optimization)**:
+   - Preserves bundled skills exclusively within `plugins/<name>/skills/`. Antigravity's plugin engine automatically discovers and mounts them with the plugin badge without duplicating them into standalone skills roots, eliminating context token waste and ensuring clean lifecycle control when toggled on/off in Settings.
 
 ### B. Standalone Skill Installation
 1. **Source Parsing**: Clones Git repository or resolves local directory.

@@ -77,7 +77,7 @@ Antigravity IDE tracks the active state of plugins in `~/.gemini/config/config.j
 
 - When `"enabled": true`, Antigravity IDE loads the plugin's `AGENTS.md` rules, MCP servers, hooks, and skills.
 - Users can toggle any installed plugin on or off directly from the Antigravity IDE Customization Settings panel (`Settings > Customizations > Plugins`), exactly as demonstrated by the Ponytail plugin.
-- In addition, all bundled skills are provisioned into the 4 skills roots so their slash commands (`/<skill-name>`) are registered globally in the chat interface.
+- Bundled skills are encapsulated natively within `<plugin-dir>/skills/` to prevent duplicate indexing and context token bloat, ensuring that toggling the plugin OFF in Antigravity Settings instantly disables all bundled skills and rules across the environment.
 
 ## 5. Slash Command Generation
 
