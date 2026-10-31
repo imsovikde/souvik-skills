@@ -2,7 +2,6 @@
 name: gemini-skill-packager
 description: Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. Use when preparing skills for Gemini Apps upload, fixing upload rejections, converting Claude or Codex skills to Gemini, or packaging custom skills.
 ---
-
 # Gemini Skill Packager
 
 Transpile, validate, and package agent skills from any source (local folders, GitHub repositories, Claude Code plugins, Codex skills, or monorepos) into zero-rejection, sandbox-compliant `.zip` archives designed for immediate upload to `gemini.google.com`.

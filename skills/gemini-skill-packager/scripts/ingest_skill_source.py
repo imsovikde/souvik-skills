@@ -10,6 +10,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tarfile
 import tempfile
@@ -20,7 +21,9 @@ CLUTTER_PATTERNS = {
     ".git", ".github", ".gitignore", ".gitattributes",
     ".DS_Store", "__MACOSX", "Thumbs.db", "desktop.ini",
     ".vscode", ".idea", ".pytest_cache", "__pycache__",
-    "node_modules", ".coverage", ".mypy_cache"
+    "node_modules", ".coverage", ".mypy_cache",
+    ".claude-plugin", ".cursor-plugin", ".cursor",
+    ".codex-plugin", "openai.yaml"
 }
 
 def is_clutter(path: Path) -> bool:
@@ -77,9 +80,19 @@ def find_candidate_skills(root_dir: Path) -> list[dict]:
     return candidates
 
 def ingest(source: str, output_dir: str, target_skill_name: str | None = None) -> dict:
-    src_path = Path(source).resolve()
-    if not src_path.exists():
-        raise FileNotFoundError(f"Source not found: {source}")
+    temp_git_clone = None
+    if source.startswith("http://") or source.startswith("https://") or source.startswith("git@"):
+        temp_git_clone = Path(tempfile.mkdtemp(prefix="gemini_git_"))
+        clone_cmd = ["git", "clone", "--depth", "1", source, str(temp_git_clone)]
+        res = subprocess.run(clone_cmd, capture_output=True, text=True)
+        if res.returncode != 0:
+            shutil.rmtree(temp_git_clone, ignore_errors=True)
+            raise RuntimeError(f"Git clone failed: {res.stderr}")
+        src_path = temp_git_clone
+    else:
+        src_path = Path(source).resolve()
+        if not src_path.exists():
+            raise FileNotFoundError(f"Source not found: {source}")
 
     temp_extract = Path(tempfile.mkdtemp(prefix="gemini_ingest_"))
     try:
@@ -158,6 +171,8 @@ def ingest(source: str, output_dir: str, target_skill_name: str | None = None) -
 
     finally:
         shutil.rmtree(temp_extract, ignore_errors=True)
+        if temp_git_clone:
+            shutil.rmtree(temp_git_clone, ignore_errors=True)
 
 def main():
     parser = argparse.ArgumentParser(description="Ingest and normalize skill sources for Gemini packaging.")
