@@ -386,7 +386,7 @@
     {
       "name": "indian-legal-verification",
       "source": "./skills/indian-legal-verification",
-      "description": "Enforce multi-level verification and precise statutory citations for Indian legal analysis, complaints, notices, and dispute drafting across banking, regulatory, consumer, criminal, and constitutional matters. Use when analyzing Indian legal disputes, drafting legal notices, filing complaints with the RBI Ombudsman, SEBI SCORES, IRDAI Bima Bharosa, Consumer Commissions, or courts, verifying citations under BNS, BNSS, BSA, IPC, CrPC, or conducting maintainability and limitation audits.",
+      "description": "Indian legal writer, advisor, and multi-level verification engine. Analyzes full email correspondence histories to draft legally validated, forceful emails, notices, complaints, and representations under Indian law. Use when asked to understand email correspondence, draft a formal email to a regulated entity or bank, prepare a legal notice, seek legal advice under RBI, Consumer Protection, BNS, BNSS, BSA, SEBI, or IRDAI frameworks, or verify legal drafts against statutory citations and maintainability rules.",
       "version": "0.18.0",
       "author": {
         "name": "Souvik Dey",
