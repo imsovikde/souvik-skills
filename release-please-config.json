@@ -185,6 +185,16 @@
           "type": "json",
           "path": "skills/gemini-skill-packager/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[17].version"
+        },
+        {
+          "type": "json",
+          "path": "skills/indian-legal-verification/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
         }
       ]
     }

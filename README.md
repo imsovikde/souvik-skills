@@ -59,6 +59,7 @@ npm run build
 | `merge-gate` | Pre-flight production merge gatekeeper for pull requests and branches with full-project diff comparison, AST blast-radius auditing, UI/taste gates, backend security, and humanized review comments. |
 | `local-systematic-verification-ocr` | Precision-first document transcription and mathematical OCR for non-OCR PDFs and images with 12-level systematic verification, multi-engine cross-checking, and zero-hallucination guarantees. |
 | `gemini-skill-packager` | Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. |
+| `indian-legal-verification` | Enforce multi-level verification and precise statutory citations for Indian legal analysis, complaints, notices, and dispute drafting. |
 
 ## Cross-Agent Install
 
@@ -84,6 +85,7 @@ npx -y skills add imsovikde/souvik-skills --skill apex-bug-hunter --agent <agent
 npx -y skills add imsovikde/souvik-skills --skill merge-gate --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill local-systematic-verification-ocr --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill gemini-skill-packager --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill indian-legal-verification --agent <agent>
 ```
 
 ### Global
@@ -106,6 +108,7 @@ npx -y skills add imsovikde/souvik-skills --skill apex-bug-hunter --agent <agent
 npx -y skills add imsovikde/souvik-skills --skill merge-gate --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill local-systematic-verification-ocr --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill gemini-skill-packager --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill indian-legal-verification --agent <agent> -g
 ```
 
 ### Try Once
@@ -128,6 +131,7 @@ npx -y skills use imsovikde/souvik-skills@apex-bug-hunter | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@merge-gate | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@local-systematic-verification-ocr | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@gemini-skill-packager | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@indian-legal-verification | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -159,6 +163,7 @@ Then install any skill you want:
 /plugin install merge-gate@souvik-skills
 /plugin install local-systematic-verification-ocr@souvik-skills
 /plugin install gemini-skill-packager@souvik-skills
+/plugin install indian-legal-verification@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -208,6 +213,7 @@ npx @imsovikde/skills install apex-bug-hunter
 npx @imsovikde/skills install merge-gate
 npx @imsovikde/skills install local-systematic-verification-ocr
 npx @imsovikde/skills install gemini-skill-packager
+npx @imsovikde/skills install indian-legal-verification
 ```
 
 Install every skill:
@@ -255,6 +261,7 @@ Use $apex-bug-hunter to audit this pull request against main, detect latent bugs
 Use $merge-gate to evaluate this pull request against main, verify full-stack invariants, and determine the pre-merge verdict.
 Use $local-systematic-verification-ocr to transcribe this scanned PDF into verified Markdown with 100% verified-or-flagged coverage, multi-engine deterministic cross-checking, and symbol-by-symbol formula verification.
 Use $gemini-skill-packager to transpile, validate, and package this skill into a zero-rejection ZIP archive for gemini.google.com.
+Use $indian-legal-verification to conduct multi-level verification and draft legally compliant notices and complaints under Indian law.
 ```
 
 ## Repository Standard

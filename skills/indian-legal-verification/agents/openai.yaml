@@ -1,0 +1,4 @@
+interface:
+  display_name: Indian Legal Verification
+  short_description: Multi-level verification and precise statutory citations for Indian legal analysis and dispute drafting
+  default_prompt: Use $indian-legal-verification to conduct multi-level verification and draft legally compliant notices and complaints under Indian law.
