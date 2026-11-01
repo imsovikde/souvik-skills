@@ -2,6 +2,22 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.19.0](https://github.com/imsovikde/souvik-skills/compare/v0.18.0...v0.19.0) (2026-11-01)
+
+
+### Features
+
+* add indian-legal-verification skill ([#66](https://github.com/imsovikde/souvik-skills/issues/66)) ([42e491c](https://github.com/imsovikde/souvik-skills/commit/42e491c63e670c32d50f9902f6b164767cd75806))
+* **gemini-skill-packager:** add webui rpc payload budget, shebang invariant, and esm runtime hydration ([#65](https://github.com/imsovikde/souvik-skills/issues/65)) ([96e242e](https://github.com/imsovikde/souvik-skills/commit/96e242e3ba3df5cf658a7c86fb24481eb9a92c83))
+* **gemini-skill-packager:** enforce strict kebab-case hyphenation, offline compliance, and lossless media preservation ([#61](https://github.com/imsovikde/souvik-skills/issues/61)) ([d2ebd57](https://github.com/imsovikde/souvik-skills/commit/d2ebd57b4d11e5658c782e6c8adf9b58842b655c))
+* update indian-legal-verification with legal writing and correspondence ingestion ([#67](https://github.com/imsovikde/souvik-skills/issues/67)) ([40e6cc0](https://github.com/imsovikde/souvik-skills/commit/40e6cc07d14803041fb7e57990554ba1068aa34d))
+
+
+### Bug Fixes
+
+* **gemini-skill-packager:** enforce 100-file ceiling and auto-consolidate subdirectories without media loss ([#64](https://github.com/imsovikde/souvik-skills/issues/64)) ([045beff](https://github.com/imsovikde/souvik-skills/commit/045beffa7938c3cfa5321c5f1c3151f3ff44a88d))
+* **gemini-skill-packager:** refine local loopback detection and align file limits with Google 100MB spec ([#63](https://github.com/imsovikde/souvik-skills/issues/63)) ([1476885](https://github.com/imsovikde/souvik-skills/commit/147688584584a41ff59f02353acf2468c0fe02a3))
+
 ## [0.18.0](https://github.com/imsovikde/souvik-skills/compare/v0.17.1...v0.18.0) (2026-10-31)
 
 
