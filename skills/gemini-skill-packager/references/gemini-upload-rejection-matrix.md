@@ -52,10 +52,15 @@ This document provides a comprehensive diagnostic catalog of every known upload 
 
 ---
 
-## 4. Sandbox Execution & Content Policy Gates
+## 4. Web UI Ingestion & Sandbox Execution Gates
 
 | Gate ID | Failure Condition | Root Cause | Mechanistic Remedy |
 | :--- | :--- | :--- | :--- |
+| **RPC-01** | `There was an error uploading the skill. Please try again.` | Archive exceeds 3.0 MB. Synchronous `batchexecute` gRPC message limit is 4.00 MiB (4,194,304 bytes). With 4/3x Base64 expansion, packages > 2.8 MB breach gRPC `max_receive_message_length`. | Enforce strict package size budget: `< 2.0 MB` compressed (`< 3.0 MB` uncompressed). Consolidate reference markdown and visual assets. |
+| **CODE-01** | Raw JavaScript/TypeScript File Rejection | Desktop Web UI upload modal whitelist accepts only `.py` and `.sh` for code execution. Uploading `.js`, `.mjs`, `.cjs`, or `.ts` triggers upload rejection. | Bundle JavaScript scripts into `engine_esm_bundle.json` and generate self-hydrating Python entrypoints (`.py`) writing `{"type": "module"}` to `/tmp/<skill>-runtime/`. Archive contains zero `.js` files. |
+| **SHEBANG-01** | Shebang Line-1 Invariant Violation | Prepending offline adapter comments above `#!/usr/bin/env` moves hashbang to line 2+, breaking Linux loaders and causing Node `SyntaxError: Unexpected token '!'`. | Hashbang must start strictly at Line 1 Byte 0. Always insert offline adapters and preambles starting on Line 2. |
+| **STAGE-01** | Image Staging Fan-Out Failure | More than 8-10 individual raster images (.jpg, .png) trigger client-side staging timeouts in the Web UI file unpacker. | Consolidate visual themes into 5 genre contact sheets (`atlas-*.jpg`) and reference coordinates in `index.json`. Sliced at runtime via Pillow. |
+| **BLOAT-01** | Marketing Bloat & Root License Storage Waste | Unused banners (`assets/banner.png`), headers (`assets/readme-header.svg`), and root licenses consume file count and size budget without runtime value. | Purge marketing images and root licenses during ingestion and transpilation. |
 | **EXEC-01** | Offline Sandbox Socket Error | Script attempts outbound HTTP/HTTPS network calls (`requests.get`, `urllib`, `curl`, `pip install`). | Inject `GEMINI_OFFLINE_ADAPTER` fallback; instruct Gemini in `SKILL.md` to use native Google Search tools and pipe inputs locally. |
 | **EXEC-02** | Pipe to Shell Pattern | Script or doc contains `curl ... \| sh` or `wget ... \| bash`. | Neutralize shell pipe patterns into offline python scripts or documented local inspection steps. |
 | **NET-02** | External Web Service Endpoints | Scripts contain hardcoded external API targets (`api.together.xyz`) violating Google's "No external actions" rule. | Neutralize endpoint URLs with offline mock stubs and instructions to rely on local context or user-provided artifacts. |

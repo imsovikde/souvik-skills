@@ -96,7 +96,60 @@ In `SKILL.md`, instructions that tell the model to run `curl` or `wget` are adap
 
 ---
 
-## 5. Ultra-Safe File Consolidation Protocol
+## 5. Web UI Synchronous Ingestion & Size Budget
+
+In `gemini.google.com`, the skills upload modal transmits the ZIP file as a Base64-encoded string within a synchronous Google internal `batchexecute` gRPC message.
+- Google RPC infrastructure enforces a default `max_receive_message_length` of 4,194,304 bytes (4.00 MiB).
+- Base64 encoding expands raw binary data by 4/3x (~133.3%). Any archive larger than 2.8 MiB exceeds the 4.00 MiB ceiling, returning HTTP 413 / `RESOURCE_EXHAUSTED` and displaying the generic error banner: `There was an error uploading the skill. Please try again.`
+- **Mandatory Size Budget**:
+  - Compressed `.zip` size: `< 2.0 MB` target (hard ceiling `< 3.0 MB`).
+  - Uncompressed size: `< 3.0 MB` target (hard ceiling `< 10.0 MB`).
+  - Total file count: `<= 45` recommended, `<= 100` hard ceiling.
+  - Raster images: `<= 8` images recommended to prevent browser staging fan-out failure.
+
+---
+
+## 6. Shebang Line-1 Invariant
+
+Operating system kernel loaders (`execve`) and scripting engines require the hashbang interpreter directive (`#!/usr/bin/env python3` or `#!/bin/bash`) to sit strictly at Line 1, Byte 0 (offset 0).
+- If any comment, offline adapter, or whitespace is prepended above the hashbang, the directive is ignored by the kernel and in JavaScript/Node it triggers `SyntaxError: Unexpected token '!'`.
+- **Compiler Rule**: When injecting `GEMINI_OFFLINE_ADAPTER` into scripts, always verify whether line 1 starts with `#!`. If so, preserve line 1 verbatim and inject the adapter starting on Line 2.
+
+---
+
+## 7. Python Self-Hydrating Runtime for JavaScript / ESM Skills
+
+The desktop Web UI drag-and-drop file filter strictly accepts documents, tables, images, and only `.py` or `.sh` for code execution. Uploading raw `.js`, `.mjs`, `.cjs`, or `.ts` files triggers upload failure.
+
+To package Node.js and ESM skills losslessly:
+1. All `.js` scripts are bundled into `scripts/engine_esm_bundle.json`.
+2. Python entrypoint wrappers (`<script_name>.py`) are generated for each CLI command.
+3. At runtime, the Python wrapper extracts the ESM scripts into `/tmp/<skill>-runtime/scripts/` (or `%TEMP%/<skill>-runtime/scripts/` on Windows) and generates a `package.json` with `{"type": "module"}` so ES module imports execute without `SyntaxError: Cannot use import statement outside a module`.
+4. The wrapper invokes `node` passing through `sys.argv[1:]` and propagates the exit code.
+5. All raw `.js` files are removed from the archive, ensuring zero `.js` files exist in the packaged ZIP.
+
+---
+
+## 8. Visual Asset Consolidation & Contact Sheet Tiling
+
+Skills containing large numbers of reference images (such as 50 theme photos) trigger Web UI staging fan-out timeouts and exceed the 4 MiB Base64 RPC limit.
+
+The transpiler consolidates visual themes into Genre Contact Sheets:
+- Individual photos are tiled into unified contact sheets (`atlas-atmospheric.jpg`, `atlas-editorial-1.jpg`, etc.) at 100% resolution.
+- Bounding box coordinates and genre metadata are indexed in `references/themes/index.json`.
+- At runtime, Python or image helpers crop out exact bounding boxes into `/tmp/` on demand, preserving 100% visual fidelity while reducing file count by 90% and payload size by 75%.
+
+---
+
+## 9. Marketing Bloat and Root License Stripping
+
+Marketing assets (such as `assets/banner.png`, `assets/readme-header.svg`, logos) and root repository licenses consume substantial byte budget without providing runtime execution value to the Gemini model.
+- The transpiler automatically purges unreferenced marketing graphics and root license files during Stage 2.
+- Licensing and attribution are preserved in Markdown documentation within `SKILL.md`.
+
+---
+
+## 10. Ultra-Safe File Consolidation Protocol
 
 For general Gemini chat attachment modes where total file count is capped at 10:
 
