@@ -382,6 +382,30 @@
         "agent-skills",
         "packaging"
       ]
+    },
+    {
+      "name": "indian-legal-verification",
+      "source": "./skills/indian-legal-verification",
+      "description": "Enforce multi-level verification and precise statutory citations for Indian legal analysis, complaints, notices, and dispute drafting across banking, regulatory, consumer, criminal, and constitutional matters. Use when analyzing Indian legal disputes, drafting legal notices, filing complaints with the RBI Ombudsman, SEBI SCORES, IRDAI Bima Bharosa, Consumer Commissions, or courts, verifying citations under BNS, BNSS, BSA, IPC, CrPC, or conducting maintainability and limitation audits.",
+      "version": "0.18.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/indian-legal-verification",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Legal & Compliance",
+      "tags": [
+        "indian-law",
+        "legal-verification",
+        "rbi-ombudsman",
+        "consumer-protection",
+        "bns",
+        "bnss",
+        "bsa",
+        "statutory-citations"
+      ]
     }
   ]
 }
