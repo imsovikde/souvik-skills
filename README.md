@@ -59,7 +59,7 @@ npm run build
 | `merge-gate` | Pre-flight production merge gatekeeper for pull requests and branches with full-project diff comparison, AST blast-radius auditing, UI/taste gates, backend security, and humanized review comments. |
 | `local-systematic-verification-ocr` | Precision-first document transcription and mathematical OCR for non-OCR PDFs and images with 12-level systematic verification, multi-engine cross-checking, and zero-hallucination guarantees. |
 | `gemini-skill-packager` | Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. |
-| `indian-legal-verification` | Enforce multi-level verification and precise statutory citations for Indian legal analysis, complaints, notices, and dispute drafting. |
+| `indian-legal-verification` | Master Indian legal writer, advisor, and verification engine for drafting fully validated emails, notices, and complaints. |
 
 ## Cross-Agent Install
 

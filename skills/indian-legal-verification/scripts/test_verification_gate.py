@@ -127,5 +127,30 @@ Mumbai, Maharashtra.
         self.assertEqual(verdict, "PASS")
         self.assertEqual(len(defects), 0)
 
+    def test_clean_legal_email_to_regulated_entity_pass(self):
+        """Clean Legal Email: Verified email to bank Principal Nodal Officer passing all checks."""
+        email_draft = """
+To: pno@hdfcbank.com
+Subject: Escalation regarding unauthorised transaction reversal under RBI Circular DBR.No.Leg.BC.78/09.07.005/2017-18 - Ref #492810
+
+Dear Principal Nodal Officer,
+
+I write regarding Account ending in 4921 and unresolved complaint #492810.
+
+Following our email correspondence, I place the following two points on record:
+1. The unauthorised debit of Rs 10,000 occurred on 12.09.2024 and was reported on 13.09.2024.
+2. Under Paragraph 6(b) of RBI Circular DBR.No.Leg.BC.78/09.07.005/2017-18, the customer bears zero liability.
+
+The official circular is available at [Reserve Bank of India](https://www.rbi.org.in/) (https://www.rbi.org.in/).
+
+Please resolve this within 7 days, failing which we shall escalate to the Ombudsman under the Reserve Bank of India - Integrated Ombudsman Scheme, 2021.
+
+Sincerely,
+Customer Representative
+"""
+        verdict, defects = audit_draft_text(email_draft)
+        self.assertEqual(verdict, "PASS")
+        self.assertEqual(len(defects), 0)
+
 if __name__ == "__main__":
     unittest.main()
