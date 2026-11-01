@@ -276,5 +276,93 @@ class TestGeminiSkillPackager(unittest.TestCase):
         proc_pass = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
         self.assertEqual(proc_pass.returncode, 0, f"Validator should pass: {proc_pass.stderr}")
 
+    def test_10_shebang_line_1_invariant(self):
+        """Test shebang remains at Line 1 Byte 0 when offline adapter is injected."""
+        staging = self.temp_dir / "stage_shebang"
+        staging.mkdir(parents=True)
+        (staging / "SKILL.md").write_text(
+            "---\nname: shebang-skill\ndescription: Test shebang line-1 invariant. Use when validating script headers.\n---\n# Shebang\n",
+            encoding="utf-8"
+        )
+        scripts_dir = staging / "scripts"
+        scripts_dir.mkdir()
+        script_file = scripts_dir / "fetcher.py"
+        script_file.write_text("#!/usr/bin/env python3\nimport requests\nprint('fetch')\n", encoding="utf-8")
+
+        transpile_script = SKILL_DIR / "scripts" / "lossless_gemini_transpiler.py"
+        proc = subprocess.run([sys.executable, str(transpile_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, f"Transpilation failed: {proc.stderr}")
+
+        updated = script_file.read_text(encoding="utf-8")
+        self.assertTrue(updated.startswith("#!/usr/bin/env python3\n"), "Shebang must remain on Line 1 Byte 0")
+        self.assertIn("GEMINI_OFFLINE_ADAPTER", updated)
+
+        # Verify validator catches shebang violation if #! is shifted
+        broken_file = scripts_dir / "broken.py"
+        broken_file.write_text("# Header comment\n#!/usr/bin/env python3\nprint(1)\n", encoding="utf-8")
+        pkg_script = SKILL_DIR / "scripts" / "validate_and_package_zip.py"
+        proc_broken = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
+        self.assertNotEqual(proc_broken.returncode, 0, "Validator must reject broken shebang offset")
+        self.assertIn("Shebang Line-1 Invariant violated", proc_broken.stderr + proc_broken.stdout)
+
+    def test_11_javascript_self_hydrating_bundle(self):
+        """Test JavaScript scripts are bundled into engine_esm_bundle.json and converted to Python wrappers."""
+        staging = self.temp_dir / "stage_js"
+        staging.mkdir(parents=True)
+        (staging / "SKILL.md").write_text(
+            "---\nname: js-bundle-skill\ndescription: Test JS self-hydrating bundling. Use when packaging Node skills.\n---\n# JS Bundle\nRun `node scripts/runner.js`.\n",
+            encoding="utf-8"
+        )
+        scripts_dir = staging / "scripts"
+        scripts_dir.mkdir()
+        (scripts_dir / "runner.js").write_text("console.log('Runner active');\n", encoding="utf-8")
+
+        transpile_script = SKILL_DIR / "scripts" / "lossless_gemini_transpiler.py"
+        proc = subprocess.run([sys.executable, str(transpile_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, f"Transpilation failed: {proc.stderr}")
+
+        # Zero raw .js files in output
+        js_files = list(staging.rglob("*.js"))
+        self.assertEqual(len(js_files), 0, "Archive must contain zero raw .js files")
+
+        # Bundle JSON and Python wrapper must exist
+        bundle_file = scripts_dir / "engine_esm_bundle.json"
+        self.assertTrue(bundle_file.exists(), "engine_esm_bundle.json must exist")
+        self.assertIn("runner.js", bundle_file.read_text(encoding="utf-8"))
+
+        py_wrapper = scripts_dir / "runner.py"
+        self.assertTrue(py_wrapper.exists(), "Python wrapper runner.py must exist")
+
+        # Markdown links must be remapped
+        updated_md = (staging / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("python scripts/runner.py", updated_md)
+
+        # Validator must pass
+        pkg_script = SKILL_DIR / "scripts" / "validate_and_package_zip.py"
+        proc_pass = subprocess.run([sys.executable, str(pkg_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc_pass.returncode, 0, f"Validator should pass: {proc_pass.stderr}")
+
+    def test_12_marketing_bloat_pruning_and_rpc_size_limit(self):
+        """Test marketing bloat (banner/header) and root licenses are purged, and RPC size limit is enforced."""
+        staging = self.temp_dir / "stage_bloat"
+        staging.mkdir(parents=True)
+        (staging / "SKILL.md").write_text(
+            "---\nname: bloat-skill\ndescription: Test bloat pruning and size limits. Use when cleaning packages.\n---\n# Bloat\n",
+            encoding="utf-8"
+        )
+        (staging / "LICENSE").write_text("MIT License text that wastes storage\n", encoding="utf-8")
+        assets_dir = staging / "assets"
+        assets_dir.mkdir()
+        (assets_dir / "banner.png").write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 100)
+        (assets_dir / "readme-header.svg").write_text("<svg>header</svg>\n", encoding="utf-8")
+
+        transpile_script = SKILL_DIR / "scripts" / "lossless_gemini_transpiler.py"
+        proc = subprocess.run([sys.executable, str(transpile_script), str(staging)], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, f"Transpilation failed: {proc.stderr}")
+
+        self.assertFalse((staging / "LICENSE").exists(), "Root LICENSE must be purged")
+        self.assertFalse((assets_dir / "banner.png").exists(), "assets/banner.png must be purged")
+        self.assertFalse((assets_dir / "readme-header.svg").exists(), "assets/readme-header.svg must be purged")
+
 if __name__ == "__main__":
     unittest.main()

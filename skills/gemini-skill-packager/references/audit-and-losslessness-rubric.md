@@ -22,6 +22,10 @@ Every packaged skill must pass 100% of these assertions before being declared up
 | **ZR-10** | Archive Integrity | `zipfile.ZipFile(zip_path).testzip()` | Returns None (zero errors) |
 | **ZR-11** | Strict Lossless Media | Zero dropped source images/assets; all media retained or mapped | Returns True |
 | **ZR-12** | Offline Sandbox Gate | Zero unhandled external network calls in executable scripts | Returns True |
+| **ZR-13** | Web UI RPC Message Budget | Compressed `.zip` size `< 2.0 MB` target (`< 3.0 MB` hard limit) | Returns True |
+| **ZR-14** | Shebang Line-1 Invariant | Hashbang `#!` starts strictly at Line 1 Byte 0 in executable scripts | Returns True |
+| **ZR-15** | Zero Raw JS in Web UI | Archive contains zero raw `.js` files; bundled into self-hydrating Python runtime | Returns True |
+| **ZR-16** | Image Fan-Out Staging Gate | Total raster images `<= 8` or consolidated into genre contact sheets | Returns True |
 
 ---
 

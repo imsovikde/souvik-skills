@@ -177,6 +177,17 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False, strict_lossless: 
                     for sec_re in SECRET_REGEXES:
                         if sec_re.search(text_content):
                             errors.append(f"Potential hardcoded secret matching {sec_re.pattern} found in {rel_file}.")
+                    # Check shebang line-1 invariant (Google sandbox and UNIX loaders require #! on line 1, byte 0)
+                    if suffix in [".py", ".sh", ".js"]:
+                        if "#!" in text_content and not text_content.startswith("#!"):
+                            errors.append(f"Shebang Line-1 Invariant violated in {rel_file}: shebang '#!' must be at Line 1 Byte 0.")
+                    # Web UI code execution whitelist constraint (.py and .sh only)
+                    if suffix in [".js", ".mjs", ".cjs", ".ts"]:
+                        msg = f"Raw JavaScript/TypeScript file '{rel_file}' is rejected by Gemini Web UI upload filter (supports .py and .sh). Use Python self-hydrating runtime bundling."
+                        if strict_lossless:
+                            errors.append(msg)
+                        else:
+                            warnings.append(msg)
                     # Check for unhandled external network calls in scripts (Google Support constraint)
                     if "scripts" in rel_file.parts and suffix in [".py", ".sh", ".js", ".txt"]:
                         has_ext_net = False
@@ -194,22 +205,30 @@ def audit_directory(skill_dir: Path, ultra_safe: bool = False, strict_lossless: 
                 except Exception:
                     pass
 
+    raster_images = [f for f in all_files if f.suffix.lower() in [".jpg", ".jpeg", ".png", ".gif", ".webp"]]
     meta["file_count"] = len(all_files)
+    meta["raster_image_count"] = len(raster_images)
     meta["uncompressed_size_bytes"] = total_uncompressed_bytes
     meta["max_depth"] = max_depth
+
+    # Staging fan-out warning for raster images
+    if len(raster_images) > 8:
+        warnings.append(f"Raster image count ({len(raster_images)}) exceeds recommended Web UI staging limit of 8 images. Consider consolidating into genre contact sheets (atlas-*.jpg) to prevent staging fan-out failure.")
 
     # File count constraints (Google Gemini Apps enforces a hard ceiling of 100 files; > 100 triggers 'The skill folder contains too many files')
     if len(all_files) > 100:
         errors.append(f"Total file count ({len(all_files)}) exceeds Gemini maximum ceiling of 100 files (Google constraint: 'The skill folder contains too many files'). Consolidate fragmented reference files into structured manuals while preserving all media.")
-    elif len(all_files) > 95:
-        warnings.append(f"File count ({len(all_files)}) is approaching the Gemini ceiling of 100 files.")
+    elif len(all_files) > 45:
+        warnings.append(f"Total file count ({len(all_files)}) exceeds recommended Web UI limit of 45 files. File counts approaching 100 increase browser upload latency and staging risks.")
 
     if ultra_safe and len(all_files) > 10:
         errors.append(f"Ultra-Safe mode requires <= 10 files (found {len(all_files)}). Run transpiler with --ultra-safe.")
 
-    # Size constraints
-    if total_uncompressed_bytes > 100 * 1024 * 1024:
-        errors.append(f"Uncompressed package size ({total_uncompressed_bytes / (1024*1024):.2f} MB) exceeds 100 MB.")
+    # Size constraints (Web UI batchexecute gRPC payload limits)
+    if total_uncompressed_bytes > 10 * 1024 * 1024:
+        errors.append(f"Uncompressed package size ({total_uncompressed_bytes / (1024*1024):.2f} MB) exceeds 10 MB ceiling.")
+    elif total_uncompressed_bytes > 3 * 1024 * 1024:
+        warnings.append(f"Uncompressed package size ({total_uncompressed_bytes / (1024*1024):.2f} MB) exceeds recommended Web UI budget of 3.0 MB.")
 
     return errors, warnings, meta
 
@@ -252,6 +271,14 @@ def package_to_zip(skill_dir: Path, output_zip_path: Path, wrap_folder: bool = F
             raise RuntimeError(f"Corrupted archive entry detected: {bad_file}")
 
     compressed_size = output_zip_path.stat().st_size
+    # Check Web UI batchexecute gRPC payload limits (4.00 MiB limit after 4/3x Base64 expansion)
+    if compressed_size > 3 * 1024 * 1024:
+        raise ValueError(
+            f"Packaged ZIP size ({compressed_size / (1024*1024):.2f} MB) exceeds 3.0 MB ceiling. "
+            "With Base64 4/3x expansion, this breaches Google batchexecute gRPC 4.00 MiB max_receive_message_length limit "
+            "and triggers 'There was an error uploading the skill. Please try again'."
+        )
+
     return {
         "zip_path": str(output_zip_path.resolve()),
         "compressed_size_bytes": compressed_size,

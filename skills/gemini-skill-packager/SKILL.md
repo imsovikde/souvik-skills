@@ -43,7 +43,10 @@ Apply deterministic transpilation:
 - Clean YAML frontmatter: keep only `name` and `description` (plus optional standard keys).
 - Losslessly migrate all proprietary platform keys (`disable-model-invocation`, `tools`, `version`, `tags`) into `## Preserved Platform Metadata & Trigger Contract` at the head of `SKILL.md`.
 - Safely remap unsupported extensions (`.ts`, `.sql`, `.graphql`, `Makefile`, etc.) by appending `.txt`, and update all relative references across markdown documents.
-- Inject `GEMINI_OFFLINE_ADAPTER` into Python scripts to ensure graceful offline execution.
+- Bundle JavaScript scripts into `engine_esm_bundle.json` and generate self-hydrating Python wrappers (`.py`) writing `{"type": "module"}` to `/tmp/<skill>-runtime/`, guaranteeing zero `.js` files in the final archive.
+- Preserve Shebang Line-1 Invariant: hashbang directives remain strictly at Line 1 Byte 0.
+- Purge marketing bloat (`assets/banner.png`, `assets/readme-header.svg`) and root licenses to protect the 2.0 MB package size budget.
+- Inject `GEMINI_OFFLINE_ADAPTER` into scripts to ensure graceful offline execution.
 - Strip zero-width Unicode characters and redact sample API keys.
 
 ```bash
@@ -54,6 +57,9 @@ Use `--ultra-safe` when packaging for chat attachment limits (consolidates refer
 
 ### Stage 3: Audit & Deterministic ZIP Packaging
 Audit the staged skill against all Gemini constraints (exact `SKILL.md` casing, file count ceilings, size budgets, path depth, whitelist compliance) and build a reproducible `.zip` archive:
+- Enforce Web UI synchronous RPC limits: `< 2.0 MB` compressed (hard limit `< 3.0 MB` to prevent Google `batchexecute` 4.00 MiB gRPC overflow).
+- Enforce Web UI code whitelist: only `.py` and `.sh` executable code permitted.
+- Enforce raster image limits: `<= 8` images recommended (consolidates large photo sets into genre contact sheets).
 
 ```bash
 python skills/gemini-skill-packager/scripts/validate_and_package_zip.py <staging-directory> -o <output-path.zip> [--wrap-folder]
