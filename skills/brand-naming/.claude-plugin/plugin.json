@@ -1,5 +1,5 @@
 {
   "name": "brand-naming",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "Combined brand naming strategy skill — Generation Mode (names from brief) and Evaluation Mode (score/rank existing names). Integrates SMILE & SCRATCH, Sound Symbolism, Naming Matrix, Marty Neumeier 8 criteria, and Catchword 10 touchstones into a single multi-framework workflow. Use when naming a company, product, or startup; generating or scoring name candidates; or checking domain and trademark availability."
 }
