@@ -195,6 +195,16 @@
           "type": "json",
           "path": "skills/indian-legal-verification/.claude-plugin/plugin.json",
           "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": ".claude-plugin/marketplace.json",
+          "jsonpath": "$.plugins[18].version"
+        },
+        {
+          "type": "json",
+          "path": "skills/universal-video-downloader/.claude-plugin/plugin.json",
+          "jsonpath": "$.version"
         }
       ]
     }

@@ -60,6 +60,7 @@ npm run build
 | `local-systematic-verification-ocr` | Precision-first document transcription and mathematical OCR for non-OCR PDFs and images with 12-level systematic verification, multi-engine cross-checking, and zero-hallucination guarantees. |
 | `gemini-skill-packager` | Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. |
 | `indian-legal-verification` | Master Indian legal writer, advisor, and verification engine for drafting fully validated emails, notices, and complaints. |
+| `universal-video-downloader` | Multi-quality public media and stream downloader for YouTube, Vimeo, Twitch, and direct HLS/DASH streams with REA evidence probing and lossless merging. |
 
 ## Cross-Agent Install
 
@@ -86,6 +87,7 @@ npx -y skills add imsovikde/souvik-skills --skill merge-gate --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill local-systematic-verification-ocr --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill gemini-skill-packager --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill indian-legal-verification --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill universal-video-downloader --agent <agent>
 ```
 
 ### Global
@@ -109,6 +111,7 @@ npx -y skills add imsovikde/souvik-skills --skill merge-gate --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill local-systematic-verification-ocr --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill gemini-skill-packager --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill indian-legal-verification --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill universal-video-downloader --agent <agent> -g
 ```
 
 ### Try Once
@@ -132,6 +135,7 @@ npx -y skills use imsovikde/souvik-skills@merge-gate | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@local-systematic-verification-ocr | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@gemini-skill-packager | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@indian-legal-verification | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@universal-video-downloader | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -164,6 +168,7 @@ Then install any skill you want:
 /plugin install local-systematic-verification-ocr@souvik-skills
 /plugin install gemini-skill-packager@souvik-skills
 /plugin install indian-legal-verification@souvik-skills
+/plugin install universal-video-downloader@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -214,6 +219,7 @@ npx @imsovikde/skills install merge-gate
 npx @imsovikde/skills install local-systematic-verification-ocr
 npx @imsovikde/skills install gemini-skill-packager
 npx @imsovikde/skills install indian-legal-verification
+npx @imsovikde/skills install universal-video-downloader
 ```
 
 Install every skill:
@@ -262,6 +268,7 @@ Use $merge-gate to evaluate this pull request against main, verify full-stack in
 Use $local-systematic-verification-ocr to transcribe this scanned PDF into verified Markdown with 100% verified-or-flagged coverage, multi-engine deterministic cross-checking, and symbol-by-symbol formula verification.
 Use $gemini-skill-packager to transpile, validate, and package this skill into a zero-rejection ZIP archive for gemini.google.com.
 Use $indian-legal-verification to conduct multi-level verification and draft legally compliant notices and complaints under Indian law.
+Use $universal-video-downloader to inspect, probe, and download this media stream in full high quality.
 ```
 
 ## Repository Standard
