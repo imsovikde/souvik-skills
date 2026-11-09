@@ -119,6 +119,12 @@
       "path": "skills/indian-legal-verification",
       "manifest": "skills/indian-legal-verification/SKILL.md",
       "agent": "skills/indian-legal-verification/agents/openai.yaml"
+    },
+    {
+      "name": "universal-video-downloader",
+      "path": "skills/universal-video-downloader",
+      "manifest": "skills/universal-video-downloader/SKILL.md",
+      "agent": "skills/universal-video-downloader/agents/openai.yaml"
     }
   ]
 }

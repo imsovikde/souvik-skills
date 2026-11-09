@@ -1,0 +1,4 @@
+interface:
+  display_name: Universal Video Downloader
+  short_description: Multi-quality video and stream downloader for YouTube, Vimeo, Twitch, and direct public media streams
+  default_prompt: Use $universal-video-downloader to inspect, probe, and download this media stream in full high quality.

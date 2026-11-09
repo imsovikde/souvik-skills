@@ -1,0 +1,5 @@
+{
+  "name": "universal-video-downloader",
+  "version": "0.18.0",
+  "description": "Universal multi-quality video and media stream downloader supporting YouTube, Vimeo, Twitch, and direct public HLS/DASH/HTML5 streams with REA-style evidence probing, multi-resolution selection (4K/2160p, 1440p, 1080p, 720p, audio-only MP3), lossless stream merging, archive resume tracking, and conditional 18+ verification for adult content. Use when asked to probe, inspect, analyze, or download any publicly accessible video, playlist, or media stream across any website or direct URL."
+}
