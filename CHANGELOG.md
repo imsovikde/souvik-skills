@@ -2,6 +2,13 @@
 
 All notable changes to Souvik Skills are documented here.
 
+## [0.19.1](https://github.com/imsovikde/souvik-skills/compare/v0.19.0...v0.19.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* **brand-naming:** align version to 0.19.0 to match package version ([#70](https://github.com/imsovikde/souvik-skills/issues/70)) ([3e84ec6](https://github.com/imsovikde/souvik-skills/commit/3e84ec6665ce30ec77e969295167a5c96fd627e3))
+
 ## [0.19.0](https://github.com/imsovikde/souvik-skills/compare/v0.18.0...v0.19.0) (2026-11-09)
 
 
