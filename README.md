@@ -61,6 +61,7 @@ npm run build
 | `gemini-skill-packager` | Transpile, sanitize, validate, and package any agent skill into a zero-rejection lossless ZIP bundle for gemini.google.com. |
 | `indian-legal-verification` | Master Indian legal writer, advisor, and verification engine for drafting fully validated emails, notices, and complaints. |
 | `universal-video-downloader` | Multi-quality public media and stream downloader for YouTube, Vimeo, Twitch, and direct HLS/DASH streams with REA evidence probing and lossless merging. |
+| `brand-naming` | Strategic brand naming — generate names from a brief or evaluate existing candidates using SMILE & SCRATCH, phonosemantics, Naming Matrix, Neumeier, and Catchword frameworks. |
 
 ## Cross-Agent Install
 
@@ -88,6 +89,7 @@ npx -y skills add imsovikde/souvik-skills --skill local-systematic-verification-
 npx -y skills add imsovikde/souvik-skills --skill gemini-skill-packager --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill indian-legal-verification --agent <agent>
 npx -y skills add imsovikde/souvik-skills --skill universal-video-downloader --agent <agent>
+npx -y skills add imsovikde/souvik-skills --skill brand-naming --agent <agent>
 ```
 
 ### Global
@@ -112,6 +114,7 @@ npx -y skills add imsovikde/souvik-skills --skill local-systematic-verification-
 npx -y skills add imsovikde/souvik-skills --skill gemini-skill-packager --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill indian-legal-verification --agent <agent> -g
 npx -y skills add imsovikde/souvik-skills --skill universal-video-downloader --agent <agent> -g
+npx -y skills add imsovikde/souvik-skills --skill brand-naming --agent <agent> -g
 ```
 
 ### Try Once
@@ -136,6 +139,7 @@ npx -y skills use imsovikde/souvik-skills@local-systematic-verification-ocr | <a
 npx -y skills use imsovikde/souvik-skills@gemini-skill-packager | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@indian-legal-verification | <agent-cli>
 npx -y skills use imsovikde/souvik-skills@universal-video-downloader | <agent-cli>
+npx -y skills use imsovikde/souvik-skills@brand-naming | <agent-cli>
 ```
 
 ## Claude Code Marketplace
@@ -169,6 +173,7 @@ Then install any skill you want:
 /plugin install gemini-skill-packager@souvik-skills
 /plugin install indian-legal-verification@souvik-skills
 /plugin install universal-video-downloader@souvik-skills
+/plugin install brand-naming@souvik-skills
 ```
 
 Refresh to the latest catalog after new skills ship:
@@ -220,6 +225,7 @@ npx @imsovikde/skills install local-systematic-verification-ocr
 npx @imsovikde/skills install gemini-skill-packager
 npx @imsovikde/skills install indian-legal-verification
 npx @imsovikde/skills install universal-video-downloader
+npx @imsovikde/skills install brand-naming
 ```
 
 Install every skill:
@@ -269,6 +275,7 @@ Use $local-systematic-verification-ocr to transcribe this scanned PDF into verif
 Use $gemini-skill-packager to transpile, validate, and package this skill into a zero-rejection ZIP archive for gemini.google.com.
 Use $indian-legal-verification to conduct multi-level verification and draft legally compliant notices and complaints under Indian law.
 Use $universal-video-downloader to inspect, probe, and download this media stream in full high quality.
+Use $brand-naming to generate strategic name candidates from a brief or evaluate and score existing names for this brand.
 ```
 
 ## Repository Standard

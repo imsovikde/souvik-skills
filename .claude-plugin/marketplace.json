@@ -430,6 +430,30 @@
         "dash",
         "media"
       ]
+    },
+    {
+      "name": "brand-naming",
+      "source": "./skills/brand-naming",
+      "description": "Combined brand naming strategy skill — Generation Mode (names from brief) and Evaluation Mode (score/rank existing names). Integrates SMILE & SCRATCH, Sound Symbolism, Naming Matrix, Marty Neumeier 8 criteria, and Catchword 10 touchstones into a single multi-framework workflow. Use when naming a company, product, or startup; generating or scoring name candidates; or checking domain and trademark availability.",
+      "version": "0.18.0",
+      "author": {
+        "name": "Souvik Dey",
+        "email": "imsovikde@gmail.com"
+      },
+      "homepage": "https://souvik-skills.vercel.app/skills/brand-naming",
+      "repository": "https://github.com/imsovikde/souvik-skills",
+      "license": "MIT",
+      "category": "Brand Strategy",
+      "tags": [
+        "brand-naming",
+        "naming-strategy",
+        "smile-scratch",
+        "phonosemantics",
+        "naming-matrix",
+        "brand-strategy",
+        "startup-naming",
+        "domain-strategy"
+      ]
     }
   ]
 }

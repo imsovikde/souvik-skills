@@ -125,6 +125,12 @@
       "path": "skills/universal-video-downloader",
       "manifest": "skills/universal-video-downloader/SKILL.md",
       "agent": "skills/universal-video-downloader/agents/openai.yaml"
+    },
+    {
+      "name": "brand-naming",
+      "path": "skills/brand-naming",
+      "manifest": "skills/brand-naming/SKILL.md",
+      "agent": "skills/brand-naming/agents/openai.yaml"
     }
   ]
 }

@@ -1,0 +1,4 @@
+interface:
+  display_name: Brand Naming
+  short_description: Strategic brand naming — generate names from a brief or evaluate existing candidates using SMILE & SCRATCH, phonosemantics, Naming Matrix, Neumeier, and Catchword frameworks
+  default_prompt: Use $brand-naming to help me name this brand.
